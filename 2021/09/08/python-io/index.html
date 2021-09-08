@@ -28,7 +28,7 @@
 <meta property="og:description" content="python 기초개념 마지막 편, 데이터 입출력에 대해 알아보자!여러 번 연습해봐야 겠다…!!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-08T04:15:42.948Z">
-<meta property="article:modified_time" content="2021-09-08T04:24:50.980Z">
+<meta property="article:modified_time" content="2021-09-08T09:03:44.529Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="data">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-08 13:15:42 / Modified: 13:24:50" itemprop="dateCreated datePublished" datetime="2021-09-08T13:15:42+09:00">2021-09-08</time>
+              <time title="Created: 2021-09-08 13:15:42 / Modified: 18:03:44" itemprop="dateCreated datePublished" datetime="2021-09-08T13:15:42+09:00">2021-09-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,9 +250,21 @@
 <p>파이썬은 print()를 통해서 stdout을 사용자에게 출력할 수 있다.</p>
 </blockquote>
 <blockquote>
-<p>이와 같은 표현을 list comprehension이라고 한다.<br>L = []<br>for x in range(1, 5):<br>    L.append(x)<br>L</p>
+<p>이와 같은 표현을 list comprehension이라고 한다.</p>
 </blockquote>
-<p>L = list(range(1, 5))<br>L = [x for x in range(1, 5)]<br>L</p>
+<pre>
+<code>
+L = []
+for x in range(1, 5):
+    L.append(x)
+L
+
+L = list(range(1, 5))
+L = [x for x in range(1, 5)]
+L
+</code>
+</pre>
+
 <h1 id="File-I-O"><a href="#File-I-O" class="headerlink" title="File I/O"></a>File I/O</h1><blockquote>
 <p>파이썬에서는 open()을 이용해서 파일을 손쉽게 열 수 있다.<br>open()을 통해 파일을 열고 난뒤엔, close()를 통해서 닫아줘야 한다. ( close를 하&gt;지 않으면 jupyter가 계속해서 파일을 점유하고 있게 되어, 시스템 낭비가 일어난다.<br>open() 함수는 다양한 옵션을 제공하지만 기본적으로는 txt파일을 여는 것을 기본으&gt;로 가정한다.<br>다른 타입의 파일을 열기 위해선 다른 라이브러리들이 필요하다.</p>
 </blockquote>
@@ -265,49 +277,103 @@
 <p>텍스트 파일을 여는 방법에는 read(), readline(), readlines(), for문을 이용한 방&gt;법이 있다. 코드를 통해 각 방법의 차이를 알아보자.</p>
 </blockquote>
 <ul>
-<li><p>f.read()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, ‘r’,  encoding=”utf-8”) as f:<br>  data = f.read()<br>data</p>
+<li>f.read()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.</li>
+</ul>
+<pre>
+<code>
+with open("/Users/user/Downloads/data/test.txt", 'r',  encoding="utf-8") as f:
+data = f.read()
+data
+</code>
+</pre>
+
 <blockquote>
 <p>f. read 함수는 txt 파일에 있는 모든 글자를 가져와서 하나의 string으로 저장한다.</p>
 </blockquote>
-</li>
-<li><p>f.readline()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, ‘r’,  encoding=”utf-8”) as f:<br>  data = f.readline()</p>
+<ul>
+<li>f.readline()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.</li>
+</ul>
+<pre>
+<code>
+with open("/Users/user/Downloads/data/test.txt", 'r',  encoding="utf-8") as f:
+data = f.readline()
+</code>
+</pre>
+
 <blockquote>
 <p>f.readline 함수는 txt 파일에 있는 첫번째 줄만 가져온다.</p>
 </blockquote>
-</li>
-<li><p>f.readlines()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  data = f.readlines()</p>
+<ul>
+<li>f.readlines()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.</li>
+</ul>
+<pre>
+<code>
+with open("/Users/user/Downloads/data/test.txt", "r", encoding='utf-8') as f:
+data = f.readlines()
+</code>
+</pre>
+
 <blockquote>
 <p>f.readlines 함수는 txt 파일에 있는 모든 텍스트를 한줄</p>
 </blockquote>
-</li>
-<li><p>for문을 통해 data 폴더안에 있는 test.txt를 read mode로 열어서 출력해봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  for line in f:</p>
-<pre><code>  print(line)
-</code></pre>
+<ul>
+<li>for문을 통해 data 폴더안에 있는 test.txt를 read mode로 열어서 출력해봅니다.</li>
+</ul>
+<pre>
+<code>
+with open("/Users/user/Downloads/data/test.txt", "r", encoding='utf-8') as f:
+    for line in f:
+        print(line)
+</code>
+</pre>
+
 <blockquote>
 <p>f.line 함수는 모든 텍스트를 한줄로, string으로 가져온다.<br>제대로 데이터가 저장되어 있는지, 불러서 확인 가능.</p>
 </blockquote>
-</li>
-<li><p>test.txt를 read mode로 열고 할 일이 끝나면 자동으로 닫는다.<br>output = []<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  for line in f:</p>
-<pre><code>  line = line.strip()
-  if len(line) &gt; 1:
-      output.append(line)
-</code></pre>
-<p>output</p>
+<ul>
+<li>test.txt를 read mode로 열고 할 일이 끝나면 자동으로 닫는다.</li>
+</ul>
+<pre>
+<code>
+output = []
+ 
+with open("/Users/user/Downloads/data/test.txt", "r", encoding='utf-8') as f:
+for line in f:
+    line = line.strip()
+    if len(line) > 1:
+        output.append(line)
+output
+</code>
+</pre>
+
 <blockquote>
 <p>한글자 이상인 텍스트만 output list에 저장한다.</p>
 </blockquote>
-</li>
-</ul>
 <ul>
-<li><p>result.txt로 output list에 있는 내용을 저장하기 위해 write mode로 열었다.<br>with open(“/Users/user/Downloads/data/test.txt”, “w”, encoding=’utf-8’) as f:<br>  for line in output:</p>
-<pre><code>  print(line, file=f)
-</code></pre>
-</li>
-<li><p>OPTIONAL) pickle 라이브러리를 통해서 파이썬 object 자체를 저장하기<br>import pickle</p>
-</li>
+<li>result.txt로 output list에 있는 내용을 저장하기 위해 write mode로 열었다.</li>
 </ul>
-<p>with open(“/Users/user/Downloads/data/test.pk”, “wb”, encoding=”utf-8”) as f:<br>    pickle.dump(output, f)</p>
-<p>with open(“/Users/user/Downloads/data/test.pk”, “rb”, encoding=”utf-8”) as f:<br>    output = pickle.load(f)</p>
+<pre>
+<code>
+with open("/Users/user/Downloads/data/test.txt", "w", encoding='utf-8') as f:
+    for line in output:
+        print(line, file=f)
+</code>
+</pre>
+
+<ul>
+<li>OPTIONAL) pickle 라이브러리를 통해서 파이썬 object 자체를 저장하기</li>
+</ul>
+<pre>
+<code>
+import pickle
+
+with open("/Users/user/Downloads/data/test.pk", "wb", encoding="utf-8") as f:
+pickle.dump(output, f)
+
+with open("/Users/user/Downloads/data/test.pk", "rb", encoding="utf-8") as f:
+output = pickle.load(f)
+</code>
+</pre>
 
     </div>
 
