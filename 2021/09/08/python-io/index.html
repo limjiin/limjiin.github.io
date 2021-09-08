@@ -20,19 +20,23 @@
     var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="This is first post! I’m very excited!!!">
+  <meta name="description" content="파이썬의 기초 개념을 정리해보았다.python 기초개념 마지막 편, 데이터 입출력에 대해 알아보자!여러 번 연습해봐야 겠다…!!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first post">
-<meta property="og:url" content="https://limjiin.github.io/2021/08/24/first-post/index.html">
+<meta property="og:title" content="python-basic">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/08/python-io/index.html">
 <meta property="og:site_name" content="야무진의 기술 블로그">
-<meta property="og:description" content="This is first post! I’m very excited!!!">
+<meta property="og:description" content="파이썬의 기초 개념을 정리해보았다.python 기초개념 마지막 편, 데이터 입출력에 대해 알아보자!여러 번 연습해봐야 겠다…!!">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-24T08:51:32.471Z">
-<meta property="article:modified_time" content="2021-09-08T01:13:25.159Z">
+<meta property="article:published_time" content="2021-09-08T04:15:42.948Z">
+<meta property="article:modified_time" content="2021-09-08T04:23:07.189Z">
 <meta property="article:author" content="limjiin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="data">
+<meta property="article:tag" content="input">
+<meta property="article:tag" content="output">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://limjiin.github.io/2021/08/24/first-post/">
+<link rel="canonical" href="https://limjiin.github.io/2021/09/08/python-io/">
 
 
 <script id="page-configurations">
@@ -45,7 +49,7 @@
   };
 </script>
 
-  <title>first post | 야무진의 기술 블로그</title>
+  <title>python-basic | 야무진의 기술 블로그</title>
   
 
 
@@ -166,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/08/24/first-post/">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/08/python-io/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          first post
+          python-basic
         </h1>
 
         <div class="post-meta">
@@ -188,16 +192,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-08-24 17:51:32" itemprop="dateCreated datePublished" datetime="2021-08-24T17:51:32+09:00">2021-08-24</time>
+              <time title="Created: 2021-09-08 13:15:42 / Modified: 13:23:07" itemprop="dateCreated datePublished" datetime="2021-09-08T13:15:42+09:00">2021-09-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-08 10:13:25" itemprop="dateModified" datetime="2021-09-08T10:13:25+09:00">2021-09-08</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
 
           
   
@@ -208,8 +215,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2021/08/24/first-post/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/08/24/first-post/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/09/08/python-io/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/08/python-io/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -224,8 +231,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>This is first post!</p>
-<p>I’m very excited!!!</p>
+        <p>파이썬의 기초 개념을 정리해보았다.<br>python 기초개념 마지막 편, 데이터 입출력에 대해 알아보자!<br>여러 번 연습해봐야 겠다…!!</p>
+<span id="more"></span>
+
+<h1 id="I-O란"><a href="#I-O란" class="headerlink" title="I/O란?"></a>I/O란?</h1><blockquote>
+<p>프로그램 입장에서 들어오는 모든 데이터를 input, 나가는 모든 데이터를 output이라고 한다.<br>메인 메모리 입장에서 생각하는 들어오고 나가는 모든 데이터에 대해서 I/O 처리라고부릅니다. (단, CPU와의 소통은 제외)</p>
+</blockquote>
+<blockquote>
+<p>사용자로 부터 키보드로 입력받는 것을 stdin이라고 하며, 사용자에게 다시 모니터로 출력되는 것을 stdout이라고 한다.<br>통상적으로는 Unix 환경(터미널 환경)에서 부르던 용어인데, 프로그래밍에 자주 등장하기 때문에 소개한다.</p>
+</blockquote>
+<blockquote>
+<p>프로그램은 메인 메모리 상에 존재하기 때문에, 스토리지로부터 파일을 불러오는 것&gt;도 input이고, 프로그램의 결과를 스토리지에 저장하는 것도 output이다. 이러한 작업을 file I/O로 통칭한다.<br>스토리지와 프로그램 사이의 I/O를 file I/O라고 합니다.</p>
+</blockquote>
+<h1 id="STDIN-STDOUT-Standard-IN-Standard-OUT"><a href="#STDIN-STDOUT-Standard-IN-Standard-OUT" class="headerlink" title="STDIN / STDOUT (Standard IN, Standard OUT)"></a>STDIN / STDOUT (Standard IN, Standard OUT)</h1><blockquote>
+<p>파이썬은 input()을 통해서 stdin을 사용자로부터 입력받을 수 있다.<br>stdin은 무조건 문자열 타입이기 때문에,  type casting을 통해서 다른 데이터 타입&gt;으로 바꾸어 사용해야 한다.</p>
+</blockquote>
+<blockquote>
+<p>파이썬은 print()를 통해서 stdout을 사용자에게 출력할 수 있다.</p>
+</blockquote>
+<blockquote>
+<p>이와 같은 표현을 list comprehension이라고 한다.<br>L = []<br>for x in range(1, 5):<br>    L.append(x)<br>L</p>
+</blockquote>
+<p>L = list(range(1, 5))<br>L = [x for x in range(1, 5)]<br>L</p>
+<h1 id="File-I-O"><a href="#File-I-O" class="headerlink" title="File I/O"></a>File I/O</h1><blockquote>
+<p>파이썬에서는 open()을 이용해서 파일을 손쉽게 열 수 있다.<br>open()을 통해 파일을 열고 난뒤엔, close()를 통해서 닫아줘야 한다. ( close를 하&gt;지 않으면 jupyter가 계속해서 파일을 점유하고 있게 되어, 시스템 낭비가 일어난다.<br>open() 함수는 다양한 옵션을 제공하지만 기본적으로는 txt파일을 여는 것을 기본으&gt;로 가정한다.<br>다른 타입의 파일을 열기 위해선 다른 라이브러리들이 필요하다.</p>
+</blockquote>
+<ul>
+<li>e.g. csv, excel 파일을 열기 위해 pandas, csv, openpyxl 라이브러리를 사용할 수 &gt;있다.</li>
+<li>e.g. png, jpg 파일을 열기 위해 PIL, opencv 라이브러리를 사용할 수 있다.</li>
+<li>e.g. pk, pkl 파일을 열기 위해 pickle 라이브러리를 사용할 수 있다.</li>
+</ul>
+<blockquote>
+<p>텍스트 파일을 여는 방법에는 read(), readline(), readlines(), for문을 이용한 방&gt;법이 있다. 코드를 통해 각 방법의 차이를 알아보자.</p>
+</blockquote>
+<ul>
+<li><p>f.read()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, ‘r’,  encoding=”utf-8”) as f:<br>  data = f.read()<br>data</p>
+<blockquote>
+<p>f. read 함수는 txt 파일에 있는 모든 글자를 가져와서 하나의 string으로 저장한다.</p>
+</blockquote>
+</li>
+<li><p>f.readline()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, ‘r’,  encoding=”utf-8”) as f:<br>  data = f.readline()</p>
+<blockquote>
+<p>f.readline 함수는 txt 파일에 있는 첫번째 줄만 가져온다.</p>
+</blockquote>
+</li>
+<li><p>f.readlines()를 통해 data 폴더안에 있는 test.txt를 read mode로 열어봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  data = f.readlines()</p>
+<blockquote>
+<p>f.readlines 함수는 txt 파일에 있는 모든 텍스트를 한줄</p>
+</blockquote>
+</li>
+<li><p>for문을 통해 data 폴더안에 있는 test.txt를 read mode로 열어서 출력해봅니다.<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  for line in f:</p>
+<pre><code>  print(line)
+</code></pre>
+<blockquote>
+<p>f.line 함수는 모든 텍스트를 한줄로, string으로 가져온다.<br>제대로 데이터가 저장되어 있는지, 불러서 확인 가능.</p>
+</blockquote>
+</li>
+<li><p>test.txt를 read mode로 열고 할 일이 끝나면 자동으로 닫는다.<br>output = []<br>with open(“/Users/user/Downloads/data/test.txt”, “r”, encoding=’utf-8’) as f:<br>  for line in f:</p>
+<pre><code>  line = line.strip()
+  if len(line) &gt; 1:
+      output.append(line)
+</code></pre>
+<p>output</p>
+<blockquote>
+<p>한글자 이상인 텍스트만 output list에 저장한다.</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>result.txt로 output list에 있는 내용을 저장하기 위해 write mode로 열었다.<br>with open(“/Users/user/Downloads/data/test.txt”, “w”, encoding=’utf-8’) as f:<br>  for line in output:</p>
+<pre><code>  print(line, file=f)
+</code></pre>
+</li>
+<li><p>OPTIONAL) pickle 라이브러리를 통해서 파이썬 object 자체를 저장하기<br>import pickle</p>
+</li>
+</ul>
+<p>with open(“/Users/user/Downloads/data/test.pk”, “wb”, encoding=”utf-8”) as f:<br>    pickle.dump(output, f)</p>
+<p>with open(“/Users/user/Downloads/data/test.pk”, “rb”, encoding=”utf-8”) as f:<br>    output = pickle.load(f)</p>
 
     </div>
 
@@ -234,6 +316,12 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/data/" rel="tag"># data</a>
+              <a href="/tags/input/" rel="tag"># input</a>
+              <a href="/tags/output/" rel="tag"># output</a>
+          </div>
 
         
 
@@ -241,13 +329,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/24/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2021/09/08/python-controlflow/" rel="prev" title="python-controlflow">
+      <i class="fa fa-chevron-left"></i> python-controlflow
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/09/06/python-basic/" rel="next" title="python-basic">
-      python-basic <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -313,6 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O%EB%9E%80"><span class="nav-number">1.</span> <span class="nav-text">I&#x2F;O란?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STDIN-STDOUT-Standard-IN-Standard-OUT"><span class="nav-number">2.</span> <span class="nav-text">STDIN &#x2F; STDOUT (Standard IN, Standard OUT)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-I-O"><span class="nav-number">3.</span> <span class="nav-text">File I&#x2F;O</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -452,9 +538,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://limjiin.github.io/2021/08/24/first-post/";
-    this.page.identifier = "2021/08/24/first-post/";
-    this.page.title = "first post";
+    this.page.url = "https://limjiin.github.io/2021/09/08/python-io/";
+    this.page.identifier = "2021/09/08/python-io/";
+    this.page.title = "python-basic";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
