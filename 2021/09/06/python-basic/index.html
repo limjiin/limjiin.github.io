@@ -28,7 +28,7 @@
 <meta property="og:description" content="파이썬의 기초 개념을 정리해보았다.시작이 반이니까, 1편부터 정복해보자.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-06T12:55:25.892Z">
-<meta property="article:modified_time" content="2021-09-08T01:26:59.793Z">
+<meta property="article:modified_time" content="2021-09-08T01:42:58.281Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="dtype">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-08 10:26:59" itemprop="dateModified" datetime="2021-09-08T10:26:59+09:00">2021-09-08</time>
+                <time title="Modified: 2021-09-08 10:42:58" itemprop="dateModified" datetime="2021-09-08T10:42:58+09:00">2021-09-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,17 +256,26 @@
 <li>‘’’</li>
 <li>  ‘’’ : docstring 여러줄의 주석</li>
 </ul>
-<h2 id="변수의-종류-dtype"><a href="#변수의-종류-dtype" class="headerlink" title="변수의 종류(dtype)"></a>변수의 종류(dtype)</h2><ul>
+<h2 id="변수와-저장-variable-and-define"><a href="#변수와-저장-variable-and-define" class="headerlink" title="변수와 저장 (variable and define)"></a>변수와 저장 (variable and define)</h2><h2 id="변수의-종류-dtype"><a href="#변수의-종류-dtype" class="headerlink" title="변수의 종류(dtype)"></a>변수의 종류(dtype)</h2><ul>
 <li>정수 int</li>
 <li>실수 float</li>
 <li>문자열 str</li>
 <li>불리언 : true, false</li>
 <li>객체 : class, model</li>
-<li>input(‘입력받을 데이터의 설명:’)</li>
+<li>문자열 저장은 ‘’, “” 로 감싼 텍스트로 가능하다.</li>
+<li>input(‘입력받을 데이터의 설명:’)<blockquote>
+<p>입력받은 결과를 변수에 함께 저장<br>입력받은 결과 또한 문자형식으로 저장<br>숫자형태로 인식하기 위해 데이터 타입 변환이 필요함</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="변수-값의-형변환-type-cating"><a href="#변수-값의-형변환-type-cating" class="headerlink" title="변수 값의 형변환(type cating)"></a>변수 값의 형변환(type cating)</h2><blockquote>
+<p>int(), float(), str() 명령어를 사용</p>
+</blockquote>
+<ul>
 <li>문자열 &gt; 실수 &gt; 정수: 반대의 경우는 조건이 생김</li>
 </ul>
 <h2 id="변수-이름-짓기"><a href="#변수-이름-짓기" class="headerlink" title="변수 이름 짓기"></a>변수 이름 짓기</h2><blockquote>
-<p>대소문자 구분<br>한글 사용 가능<br>띄어쓰기 금지<br>특수문자 _만 가능<br>숫자 가능하지만, 시작은 안됨<br>예약어 금지</p>
+<p>대소문자 구분<br>한글 사용 가능<br>띄어쓰기 금지<br>특수문자 _만 가능<br>숫자 가능하지만, 시작은 안됨<br>동사, 명사 - 형용사 금지<br>표기법 다<br>예약어 금지</p>
 </blockquote>
 <ul>
 <li>int float str bool</li>
@@ -283,11 +292,11 @@
 <li>else is with</li>
 <li>except lambda yield</li>
 </ul>
-<h2 id="print-출력"><a href="#print-출력" class="headerlink" title="print 출력"></a>print 출력</h2><blockquote>
-<p>따옴표는 작은, 큰 모두 가능<br>New format string<br>파이썬 3.6버전 이후 권장하는 출력방식<br>기존 format string 보다 사람이 보기에 직관적이고 명확한 문자와 변수간 관계 확인이 가능하다.</p>
+<h2 id="출력-print"><a href="#출력-print" class="headerlink" title="출력 (print)"></a>출력 (print)</h2><blockquote>
+<p>소괄호 안에 숫자, 따옴표로 감싼 문자, 변수 가<br>따옴표는 작은, 큰 모두 가능<br>New format string<br>파이썬 3.6버전 이후 권장하는 출력방식<br>기존 format string 보다 사람이 보기에 직관적이고 명확한 문자와 변수간 관계 확인이 가능하다.</p>
 </blockquote>
 <ul>
-<li>print(f’{name}의 키는 {hight}cm이고 몸무게는 {weight}kg입니다. 직업은 {job}입니다.’)</li>
+<li>print(f’{양name}의 키는 {hight}cm이고 몸무게는 {weight}kg입니다. 직업은 {job}입니다.’)</li>
 </ul>
 <h2 id="연산"><a href="#연산" class="headerlink" title="연산"></a>연산</h2><ul>
 <li><code>+</code>  : 더하기</li>
@@ -310,6 +319,9 @@
 <li><code>bool</code> 타입으로 결과값을 내준다.</li>
 <li>참인지 거짓인지 <code>True</code>합, <code>False</code>로 구분가능한 데이터</li>
 </ul>
+<h2 id="조건-곱-조건-합"><a href="#조건-곱-조건-합" class="headerlink" title="조건 곱, 조건 합"></a>조건 곱, 조건 합</h2><blockquote>
+<p>0 : False, 1 : True<br>and : 곱연산, or : 합연산</p>
+</blockquote>
 
     </div>
 
@@ -403,7 +415,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jupyter-notebook-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.</span> <span class="nav-text">jupyter notebook 사용법</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98%EC%9D%98-%EC%A2%85%EB%A5%98-dtype"><span class="nav-number">2.</span> <span class="nav-text">변수의 종류(dtype)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98-%EC%9D%B4%EB%A6%84-%EC%A7%93%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">변수 이름 짓기</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#print-%EC%B6%9C%EB%A0%A5"><span class="nav-number">4.</span> <span class="nav-text">print 출력</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%97%B0%EC%82%B0"><span class="nav-number">5.</span> <span class="nav-text">연산</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4-%EC%97%B0%EC%82%B0"><span class="nav-number">6.</span> <span class="nav-text">조건 연산</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#jupyter-notebook-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.</span> <span class="nav-text">jupyter notebook 사용법</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98%EC%99%80-%EC%A0%80%EC%9E%A5-variable-and-define"><span class="nav-number">2.</span> <span class="nav-text">변수와 저장 (variable and define)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98%EC%9D%98-%EC%A2%85%EB%A5%98-dtype"><span class="nav-number">3.</span> <span class="nav-text">변수의 종류(dtype)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98-%EA%B0%92%EC%9D%98-%ED%98%95%EB%B3%80%ED%99%98-type-cating"><span class="nav-number">4.</span> <span class="nav-text">변수 값의 형변환(type cating)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B3%80%EC%88%98-%EC%9D%B4%EB%A6%84-%EC%A7%93%EA%B8%B0"><span class="nav-number">5.</span> <span class="nav-text">변수 이름 짓기</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%B6%9C%EB%A0%A5-print"><span class="nav-number">6.</span> <span class="nav-text">출력 (print)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%97%B0%EC%82%B0"><span class="nav-number">7.</span> <span class="nav-text">연산</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4-%EC%97%B0%EC%82%B0"><span class="nav-number">8.</span> <span class="nav-text">조건 연산</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4-%EA%B3%B1-%EC%A1%B0%EA%B1%B4-%ED%95%A9"><span class="nav-number">9.</span> <span class="nav-text">조건 곱, 조건 합</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
