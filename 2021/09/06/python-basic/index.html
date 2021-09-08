@@ -28,7 +28,7 @@
 <meta property="og:description" content="파이썬의 기초 개념을 정리해보았다.시작이 반이니까, 1편부터 정복해보자.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-06T12:55:25.892Z">
-<meta property="article:modified_time" content="2021-09-08T04:17:35.538Z">
+<meta property="article:modified_time" content="2021-09-08T09:21:41.337Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="dtype">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-08 13:17:35" itemprop="dateModified" datetime="2021-09-08T13:17:35+09:00">2021-09-08</time>
+                <time title="Modified: 2021-09-08 18:21:41" itemprop="dateModified" datetime="2021-09-08T18:21:41+09:00">2021-09-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,50 +275,59 @@
 <li>문자열 &gt; 실수 &gt; 정수: 반대의 경우는 조건이 생김</li>
 </ul>
 <h2 id="변수-이름-짓기"><a href="#변수-이름-짓기" class="headerlink" title="변수 이름 짓기"></a>변수 이름 짓기</h2><blockquote>
-<p>대소문자 구분<br>한글 사용 가능<br>띄어쓰기 금지<br>특수문자 _만 가능<br>숫자 가능하지만, 시작은 안됨<br>동사, 명사 - 형용사 금지<br>표기법 다<br>예약어 금지</p>
+<p>대소문자 구분<br>한글 사용 가능<br>띄어쓰기 금지<br>특수문자 <em>만 가능</em><br>숫자 가능하지만, 시작은 안됨<br>동사, 명사 - 형용사 금지<br>표기법 다<br>예약어 금지</p>
 </blockquote>
-<ul>
-<li>int float str bool</li>
-<li>sum min max sorted</li>
-<li>list dict tuple set</li>
-<li>and exec not</li>
-<li>assert finally or</li>
-<li>break for pass</li>
-<li>class from print</li>
-<li>continue global raise</li>
-<li>def if return</li>
-<li>del import try</li>
-<li>elif in while</li>
-<li>else is with</li>
-<li>except lambda yield</li>
-</ul>
+<pre>
+<code>
+int float str bool
+sum min max sorted
+list dict tuple set
+and exec not
+assert finally or
+break for pass
+class from print
+continue global raise
+def if return
+del import try
+elif in while
+else is with
+except lambda yield
+</code>
+</pre>
+
 <h2 id="출력-print"><a href="#출력-print" class="headerlink" title="출력 (print)"></a>출력 (print)</h2><blockquote>
 <p>소괄호 안에 숫자, 따옴표로 감싼 문자, 변수 가<br>따옴표는 작은, 큰 모두 가능<br>New format string<br>파이썬 3.6버전 이후 권장하는 출력방식<br>기존 format string 보다 사람이 보기에 직관적이고 명확한 문자와 변수간 관계 확인이 가능하다.</p>
 </blockquote>
 <ul>
 <li>print(f’{양name}의 키는 {hight}cm이고 몸무게는 {weight}kg입니다. 직업은 {job}입니다.’)</li>
 </ul>
-<h2 id="연산"><a href="#연산" class="headerlink" title="연산"></a>연산</h2><ul>
-<li><code>+</code>  : 더하기</li>
-<li><code>-</code>  : 빼기</li>
-<li><code>*</code>  : 곱하기</li>
-<li><code>**</code> : 거듭제곱</li>
-<li><code>/</code>  : 나누기</li>
-<li><code>//</code> : 몫</li>
-<li><code>%</code>  : 나머지</li>
-</ul>
-<h2 id="조건-연산"><a href="#조건-연산" class="headerlink" title="조건 연산"></a>조건 연산</h2><ul>
-<li><code>and</code>, <code>&amp;</code>  : 동시충족</li>
-<li><code>or</code>, <code>|</code> : 조건충족</li>
-<li><code>in</code> : 보유여부  (멤버연산자라 부릅니다)</li>
-<li><code>is</code> : 같음여부</li>
-<li><code>not</code> : 다름여부</li>
-<li><code>==</code> : 같은값인지 확인</li>
-<li><code>!=</code>: 다른값인지 확인</li>
-<li><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> : 대소비교</li>
-<li><code>bool</code> 타입으로 결과값을 내준다.</li>
-<li>참인지 거짓인지 <code>True</code>합, <code>False</code>로 구분가능한 데이터</li>
-</ul>
+<h2 id="연산"><a href="#연산" class="headerlink" title="연산"></a>연산</h2><pre>
+<code>
+`+`  : 더하기
+`-`  : 빼기
+`*`  : 곱하기
+`**` : 거듭제곱
+`/`  : 나누기
+`//` : 몫
+`%`  : 나머지
+</code>
+</pre>
+
+<h2 id="조건-연산"><a href="#조건-연산" class="headerlink" title="조건 연산"></a>조건 연산</h2><pre>
+<code>
+`and`, `&`  : 동시충족
+`or`, `|` : 조건충족
+`in` : 보유여부  (멤버연산자라 부릅니다)
+`is` : 같음여부
+`not` : 다름여부
+`==` : 같은값인지 확인
+`!=`: 다른값인지 확인
+`<`, `>`, `<=`, `>=` : 대소비교
+`bool` 타입으로 결과값을 내준다.
+참인지 거짓인지 `True`합, `False`로 구분가능한 데이터
+</code>
+</pre>
+
 <h2 id="조건-곱-조건-합"><a href="#조건-곱-조건-합" class="headerlink" title="조건 곱, 조건 합"></a>조건 곱, 조건 합</h2><blockquote>
 <p>0 : False, 1 : True<br>and : 곱연산, or : 합연산</p>
 </blockquote>
