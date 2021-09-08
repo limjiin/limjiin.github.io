@@ -28,12 +28,13 @@
 <meta property="og:description" content="파이썬의 기초 개념을 정리해보았다.2편은 sequence(list, tuple, dict 등)를 정복한다!(개인적으로 재미 없,,,,)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-08T01:10:18.261Z">
-<meta property="article:modified_time" content="2021-09-08T01:27:35.624Z">
+<meta property="article:modified_time" content="2021-09-08T01:59:02.926Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="list">
 <meta property="article:tag" content="dict">
 <meta property="article:tag" content="tuple">
+<meta property="article:tag" content="set">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://limjiin.github.io/2021/09/08/python-sequence/">
@@ -194,7 +195,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-08 10:10:18 / Modified: 10:27:35" itemprop="dateCreated datePublished" datetime="2021-09-08T10:10:18+09:00">2021-09-08</time>
+              <time title="Created: 2021-09-08 10:10:18 / Modified: 10:59:02" itemprop="dateCreated datePublished" datetime="2021-09-08T10:10:18+09:00">2021-09-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,32 +235,101 @@
         <p>파이썬의 기초 개념을 정리해보았다.<br>2편은 sequence(list, tuple, dict 등)를 정복한다!<br>(개인적으로 재미 없,,,,)</p>
 <span id="more"></span>
 
+<h2 id="자료-구조"><a href="#자료-구조" class="headerlink" title="자료 구조"></a>자료 구조</h2><blockquote>
+<p>list, tuple, dict, set</p>
+</blockquote>
 <h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><blockquote>
-<p>순서가 있다.<br><strong><code>[ ]</code></strong> 대괄호로 묶어 사용한다.<br>리스트 안에 들어가는 요소들은 ,(쉼표)로 구분한다.<br>리스트의 인덱싱(indexing), 슬라이싱(slicing)<br>리스트의 특정 항목에 접근(색인)<br>인덱싱은 하나의 값에 접근, 슬라이싱은 여러개의 값의 묶음에 접근<br>리스트의 순서를 인덱스라고 하며 0부터 시작<br>내부 명령어<br>리스트는 자료구조를 갖고 있으면서 리스트 작업을 위해 필요한 내부명령어도 함께 제공한다.<br>이후 자세히 다루지만 지금은 사용하는 방법 정도만을 기억해두시면 됩니다<br>리스트이름 뒤 .(콤마)로 명령어에 접근이 가능합니다.</p>
+<p>순서가 있다.<br><strong><code>[ ]</code></strong> 대괄호로 묶어 사용한다.<br>리스트 안에 들어가는 요소들은 ,(쉼표)로 구분한다.<br>리스트 내부에는 정수, 실수, 문자열 뿐만 아니라 자료구조인 list 와 기타 자료구조도 포함 가능</p>
+</blockquote>
+<blockquote>
+<p>리스트 갯수 세기</p>
+</blockquote>
+<ul>
+<li>len()</li>
+</ul>
+<h2 id="리스트의-인덱싱-indexing-슬라이싱-slicing"><a href="#리스트의-인덱싱-indexing-슬라이싱-slicing" class="headerlink" title="리스트의 인덱싱(indexing), 슬라이싱(slicing)"></a>리스트의 인덱싱(indexing), 슬라이싱(slicing)</h2><blockquote>
+<p>리스트의 특정 항목에 접근(색인)<br>인덱싱은 하나의 값에 접근, 슬라이싱은 여러개의 값의 묶음에 접근<br>리스트의 순서를 인덱스라고 하며 0부터 시작</p>
+</blockquote>
+<ul>
+<li>리스트 전체 항목 중 2의 배수 인덱스 항목 가져오기: wallet[::2]</li>
+</ul>
+<h2 id="리스트-편집"><a href="#리스트-편집" class="headerlink" title="리스트 편집"></a>리스트 편집</h2><blockquote>
+<p>내부 명령어<br>리스트는 자료구조를 갖고 있으면서 리스트 작업을 위해 필요한 내부명령어도 함께 제공<br>리스트이름 뒤 .(콤마)로 명령어에 접근 가능</p>
 </blockquote>
 <ul>
 <li>list_name.func()</li>
 <li>.append() : 추가할 값 전달하여 리스트에 추가</li>
+<li>.remove() : 특정 항목 삭 </li>
 <li>.pop() : 마지막 항목 삭제</li>
 <li>.reverse() : 정렬 없이 역순</li>
 <li>.count() : 숫자</li>
+</ul>
+<h2 id="리스트-연산어"><a href="#리스트-연산어" class="headerlink" title="리스트 연산어"></a>리스트 연산어</h2><ul>
+<li>max(값), min, sum, 값 in제 변수</li>
+<li>뎃셈 연산: num1 + num2 </li>
+<li>곱셉 연산: num1 * 2</li>
+<li>조건연산자 테스트: 1 in num1</li>
+</ul>
+<h2 id="리스트-삭제"><a href="#리스트-삭제" class="headerlink" title="리스트 삭제"></a>리스트 삭제</h2><ul>
 <li>.clear() : 리스트는 남아있지만 내부 항목은 모두 삭제합니다.</li>
 <li>del</li>
-<li>max(값), min, sum, 값 in 변수</li>
 </ul>
 <h2 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h2><blockquote>
 <p>연산이나 입력값을 전달하는 자료구조로는 잘 사용하지 않고 결과값을 출력하는 경우 많이 사용한다.<br>( ) 소괄호로 묶어 사용한다.<br>구분은 , 콤마로 사용한다.</p>
 </blockquote>
-<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><blockquote>
-<p>key : value<br>{ } 중괄호로 묶어 사용한다.<br>딕셔너리 요소 구분은 리스트와 마찬가지로 쉼표<br>중괄호 내 key : value 값을 전달하고 각 항목의 구분은 쉼표<br>리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능</p>
+<blockquote>
+<p>인덱스 불가 : 한 번 튜플에 들어간 값은 변경이 불가함<br>값 추가는 가능하다.</p>
 </blockquote>
 <ul>
+<li>del : 전체 삭제만 가능하다.</li>
+</ul>
+<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><blockquote>
+<p>key : value<br>{ } 중괄호로 묶어 사용한다.<br>딕셔너리 요소 구분은 리스트와 마찬가지로 쉼표<br>중괄호 내 key : value 값을 전달하고 각 항목의 구분은 쉼표</p>
+</blockquote>
+<blockquote>
+<p>딕셔너리 갯수 세기</p>
+</blockquote>
+<ul>
+<li>len()</li>
+</ul>
+<h2 id="딕셔너리-편집"><a href="#딕셔너리-편집" class="headerlink" title="딕셔너리 편집"></a>딕셔너리 편집</h2><ul>
+<li><p>딕셔너리에 point card key를 갖는 해피포인트 문자열을 값으로 저장<br>wallet[‘point card’] = ‘해피포인트’<br>wallet</p>
+</li>
+<li><p>딕셔너리 특정 항목 업데이트<br>wallet.update({‘point card’:’CJ one’})<br>wallet</p>
+</li>
+<li><p>딕셔너리 내부 속성 값에 접근해서 값 업데이트도 가능하다.</p>
+</li>
+<li><p>wallet의 coin key값을 갖는 값에 50원:1 값을 추가한다.<br>wallet[‘coin’][‘50원’] = 1<br>wallet</p>
+</li>
+<li><p>딕셔너리 특정 value값 빼오기<br>wallet.pop(100)<br>wallet</p>
+</li>
+</ul>
+<h2 id="딕셔너리-삭제"><a href="#딕셔너리-삭제" class="headerlink" title="딕셔너리 삭제"></a>딕셔너리 삭제</h2><ul>
+<li>del : 항목 제거</li>
+<li>.clear() : 전체 삭제</li>
+</ul>
+<h2 id="딕셔너리-추가-명령"><a href="#딕셔너리-추가-명령" class="headerlink" title="딕셔너리 추가 명령"></a>딕셔너리 추가 명령</h2><h2 id="리스트와-마찬가지로-딕셔너리-내부에-리스트등-타-자료구조-저장-가능"><a href="#리스트와-마찬가지로-딕셔너리-내부에-리스트등-타-자료구조-저장-가능" class="headerlink" title="리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능"></a>리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능</h2><ul>
 <li>.keys() : 키 값을 확인</li>
 <li>.values() : 값을 확인</li>
 <li>.items() : key, value 쌍 확인</li>
 </ul>
 <h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><blockquote>
-<p>데이터셋의 고유값을 확인하는 용도로도 사용(중복제거)<br>{ } 대괄호로 묶어 사용한다.<br>집합 연산을 지원한다.</p>
+<p>데이터셋의 고유값을 확인하는 용도로도 사용(중복제거)<br>{ } 대괄호로 묶어 사용한다.</p>
+</blockquote>
+<h1 id="셋-편집"><a href="#셋-편집" class="headerlink" title="셋 편집"></a>셋 편집</h1><blockquote>
+<p>셋 값 하나삭제<br>test_set1.discard(5)<br>test_set1</p>
+</blockquote>
+<blockquote>
+<p>셋에 값 하나 추가</p>
+</blockquote>
+<ul>
+<li><p>중복을 허용하지 않기 때문에 셋에 같은 값이 있을 경우 추가하지 않음<br>test_set1.add(5)<br>test_set1</p>
+</li>
+<li><p>셋에 값 여러개 추가<br>test_set1.update({5, 6, 7})<br>test_set1</p>
+</li>
+</ul>
+<blockquote>
+<p>집합 연산을 지원한다.</p>
 </blockquote>
 <ul>
 <li>.update() : 여러 개 추가</li>
@@ -268,6 +338,9 @@
 <li>.union() : 합집합</li>
 <li>.difference() : 차집합</li>
 <li>and, or 값도 활용 가능</li>
+</ul>
+<h2 id="셋-삭제"><a href="#셋-삭제" class="headerlink" title="셋 삭제"></a>셋 삭제</h2><ul>
+<li>del</li>
 </ul>
 
     </div>
@@ -282,6 +355,7 @@
               <a href="/tags/list/" rel="tag"># list</a>
               <a href="/tags/dict/" rel="tag"># dict</a>
               <a href="/tags/tuple/" rel="tag"># tuple</a>
+              <a href="/tags/set/" rel="tag"># set</a>
           </div>
 
         
@@ -362,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">1.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple"><span class="nav-number">2.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dict"><span class="nav-number">3.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">4.</span> <span class="nav-text">set</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%9E%90%EB%A3%8C-%EA%B5%AC%EC%A1%B0"><span class="nav-number">1.</span> <span class="nav-text">자료 구조</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%9D%B8%EB%8D%B1%EC%8B%B1-indexing-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-slicing"><span class="nav-number">3.</span> <span class="nav-text">리스트의 인덱싱(indexing), 슬라이싱(slicing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8E%B8%EC%A7%91"><span class="nav-number">4.</span> <span class="nav-text">리스트 편집</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EC%97%B0%EC%82%B0%EC%96%B4"><span class="nav-number">5.</span> <span class="nav-text">리스트 연산어</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EC%82%AD%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">리스트 삭제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple"><span class="nav-number">7.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dict"><span class="nav-number">8.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%ED%8E%B8%EC%A7%91"><span class="nav-number">9.</span> <span class="nav-text">딕셔너리 편집</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EC%82%AD%EC%A0%9C"><span class="nav-number">10.</span> <span class="nav-text">딕셔너리 삭제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EC%B6%94%EA%B0%80-%EB%AA%85%EB%A0%B9"><span class="nav-number">11.</span> <span class="nav-text">딕셔너리 추가 명령</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%EB%A7%88%EC%B0%AC%EA%B0%80%EC%A7%80%EB%A1%9C-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EB%82%B4%EB%B6%80%EC%97%90-%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%93%B1-%ED%83%80-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-%EC%A0%80%EC%9E%A5-%EA%B0%80%EB%8A%A5"><span class="nav-number">12.</span> <span class="nav-text">리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">13.</span> <span class="nav-text">set</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%85%8B-%ED%8E%B8%EC%A7%91"><span class="nav-number"></span> <span class="nav-text">셋 편집</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%85%8B-%EC%82%AD%EC%A0%9C"><span class="nav-number">1.</span> <span class="nav-text">셋 삭제</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -389,7 +463,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
