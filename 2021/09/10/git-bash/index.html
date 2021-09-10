@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="개발자의 기본 툴, git bash!차근 차근 배워서 협업 시 유용하게 사용해보쟈&gt;&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git-bash">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/10/git-bash/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="개발자의 기본 툴, git bash!차근 차근 배워서 협업 시 유용하게 사용해보쟈&gt;&lt;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-10T12:43:48.553Z">
+<meta property="article:modified_time" content="2021-09-10T13:28:30.373Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="gitbash">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/09/10/git-bash/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>git-bash | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/10/git-bash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git-bash
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-10 21:43:48 / Modified: 22:28:30" itemprop="dateCreated datePublished" datetime="2021-09-10T21:43:48+09:00">2021-09-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/09/10/git-bash/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/10/git-bash/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>개발자의 기본 툴, git bash!<br>차근 차근 배워서 협업 시 유용하게 사용해보쟈&gt;&lt;</p>
+<span id="more"></span>
+
+<h2 id="Shell-Command"><a href="#Shell-Command" class="headerlink" title="Shell Command"></a>Shell Command</h2><ul>
+<li>cd : 상하위 폴더로 이동</li>
+<li>mkdir : 폴더 생성</li>
+<li>pwd</li>
+<li>touch : 파일 생성</li>
+<li>mv 폴더명: 폴더로 이동</li>
+<li>mv 파일명 파일명 : 파일명 변경</li>
+<li>cp : 복사</li>
+<li>rm : 삭제</li>
+<li>rm -rf : 완전 삭제</li>
+<li>chmod</li>
+<li>cat : 파일 내용 확인</li>
+<li>vi : 파일 내용 수정</li>
+</ul>
+<h2 id="Recap-Vim-command"><a href="#Recap-Vim-command" class="headerlink" title="Recap - Vim command"></a>Recap - Vim command</h2><ul>
+<li>h j k l - left, down, up, right</li>
+<li>i : insert</li>
+<li>v : visual</li>
+<li>ESC : back to normal mode</li>
+<li>d : delete</li>
+<li>dd : delete a line</li>
+<li>y : yank</li>
+<li>yy : yank a line</li>
+<li>p : paste</li>
+<li>u : undo</li>
+<li>a : append</li>
+<li>A : append from end of line</li>
+<li>o : open line(under)</li>
+<li>O : open line(upper)</li>
+<li>H : move to the top of the screen</li>
+<li>L : move to the bottom of the screen</li>
+</ul>
+<h2 id="Command-mode"><a href="#Command-mode" class="headerlink" title="Command mode"></a>Command mode</h2><ul>
+<li>:q : quit</li>
+<li>:q! : quit discarding all changes</li>
+<li>:w : write</li>
+<li>:wq : write and quit</li>
+<li>{number} : jump to {number}th line</li>
+</ul>
+<h2 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h2><p>&lt; !– 주석표기 –&gt;</p>
+<p>&lt; !– 제목 텍스트 –&gt;</p>
+<h1 id="h1"><a href="#h1" class="headerlink" title="h1"></a>h1</h1><h2 id="h2"><a href="#h2" class="headerlink" title="h2"></a>h2</h2><h3 id="h3"><a href="#h3" class="headerlink" title="h3"></a>h3</h3><h4 id="h4"><a href="#h4" class="headerlink" title="h4"></a>h4</h4><h5 id="h5"><a href="#h5" class="headerlink" title="h5"></a>h5</h5><h6 id="h6"><a href="#h6" class="headerlink" title="h6"></a>h6</h6><p>&lt; !– 순서 없는 리스트(- * + 혼용 가능) –&gt;</p>
+<p>-Item1<br>    -Item1-1<br>        -Item1-1-1<br>*Item2<br>+Item</p>
+<p>&lt; !– 순서 있는 리스트 –&gt;</p>
+<ol>
+<li>Item1</li>
+<li>Item2</li>
+</ol>
+<p>&lt; !– 하이퍼링크 –&gt;<br>[링크텍스트](링크 URL)</p>
+<p>&lt; !– 이미지 –&gt;<br>![대체 텍스트](이미지 URL)</p>
+<h3 id="Repo"><a href="#Repo" class="headerlink" title="Repo"></a>Repo</h3><ul>
+<li><p>mkdir first-repo &amp;&amp; cd first repo</p>
+</li>
+<li><p>git init</p>
+</li>
+<li><p>git remote add origin <a target="_blank" rel="noopener" href="https://github.com/%7Busername%7D/%7Breponame%7D.git">https://github.com/{username}/{reponame}.git</a></p>
+</li>
+<li><p>touch README.md</p>
+</li>
+<li><p>git add README.md</p>
+</li>
+<li><p>git commit -m “docs: Create README.md”</p>
+</li>
+<li><p>git push -u origin master/main</p>
+</li>
+<li><p>make some change on README.md</p>
+</li>
+<li><p>git add </p>
+</li>
+<li><p>git commit</p>
+</li>
+<li><p>git push origin master/main</p>
+</li>
+</ul>
+<h2 id="Commit-Convention"><a href="#Commit-Convention" class="headerlink" title="Commit Convention"></a>Commit Convention</h2><ul>
+<li><p>제목은 50자 이내</p>
+</li>
+<li><p>제목과 내용 사이 한 칸</p>
+</li>
+<li><p>prefix를 사용하여 한 눈에 커밋의 용도를 알기 쉽게 한다.</p>
+</li>
+<li><p>feat : features : 기능 개발 관련</p>
+</li>
+<li><p>docs : documentations</p>
+</li>
+<li><p>conf : configurations : 환경 설정 관련</p>
+</li>
+<li><p>test : test</p>
+</li>
+<li><p>fix : bug-fix : 오류 개선 혹으 ㄴ버그 패치</p>
+</li>
+<li><p>refactor : refactoring</p>
+</li>
+<li><p>ci : Continuous Integration</p>
+</li>
+<li><p>build : Build</p>
+</li>
+<li><p>perf : Performance</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.conventionalcommits.org/ko/v1.0.0/">커밋메시지참고</a></p>
+<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><ul>
+<li>git clone {repo address}</li>
+<li>git add</li>
+<li>git commit</li>
+<li>git push</li>
+</ul>
+<h2 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h2><ul>
+<li><p>분기점을 생성하여 독립적으로 코드를 변경할 수 있도록 도와주는 모델</p>
+</li>
+<li><p>master, develop</p>
+</li>
+<li><p>git branch : available local branch</p>
+</li>
+<li><p>git branch -r : available remote branch</p>
+</li>
+<li><p>git branch -a : available all branch</p>
+</li>
+<li><p>git branch stem : create</p>
+</li>
+<li><p>git checkout stem : checkout</p>
+</li>
+<li><p>git checkout -b new-stem : create &amp; checkout</p>
+</li>
+<li><p>git commit -a -m ‘edit readme.md’ : make changes inside</p>
+</li>
+<li><p>git checkout master : make changes inside</p>
+</li>
+<li><p>git merge stem : merge</p>
+</li>
+<li><p>git branch -D stem : delete</p>
+</li>
+<li><p>git push origin stem : push with specified remote branch</p>
+</li>
+<li><p>git diff master/main stem : see the difference between two branches</p>
+</li>
+</ul>
+<h2 id="Undoing"><a href="#Undoing" class="headerlink" title="Undoing"></a>Undoing</h2><ul>
+<li>git checkout – . or git checkout – {filename}</li>
+</ul>
+<h2 id="Unstaging"><a href="#Unstaging" class="headerlink" title="Unstaging"></a>Unstaging</h2><ul>
+<li>git reset HEAD {filename}</li>
+</ul>
+<h2 id="Unstaging-and-Remove"><a href="#Unstaging-and-Remove" class="headerlink" title="Unstaging and Remove"></a>Unstaging and Remove</h2><ul>
+<li>git rm -f {filename}</li>
+</ul>
+<h2 id="Edit-latest-commit"><a href="#Edit-latest-commit" class="headerlink" title="Edit latest commit"></a>Edit latest commit</h2><ul>
+<li>git commit –amend</li>
+</ul>
+<h2 id="Edit-prior-commit"><a href="#Edit-prior-commit" class="headerlink" title="Edit prior commit"></a>Edit prior commit</h2><ul>
+<li>git rebase -i <commit></li>
+</ul>
+<h2 id="abort-rebase"><a href="#abort-rebase" class="headerlink" title="abort rebase"></a>abort rebase</h2><ul>
+<li>git rebase –abort</li>
+</ul>
+<h2 id="Complete-rebase"><a href="#Complete-rebase" class="headerlink" title="Complete rebase"></a>Complete rebase</h2><ul>
+<li>git rebase –continue</li>
+</ul>
+<h2 id="Reset-commit-Revert"><a href="#Reset-commit-Revert" class="headerlink" title="Reset commit : Revert"></a>Reset commit : Revert</h2><ul>
+<li>git revert –no-commit HEAD~3</li>
+<li>git commit</li>
+<li>git push origin <branch></li>
+<li>잘못하기 전 과거로 돌아가 최신을 유지하면서 되돌렸다는 이력을 commit으로 남겨 모든 팀원이 이 사항을 공유하고 주지시킬 수 있음</li>
+</ul>
+<h2 id="Fork-and-Merge"><a href="#Fork-and-Merge" class="headerlink" title="Fork and Merge"></a>Fork and Merge</h2><ul>
+<li><p>git clone {링크}</p>
+</li>
+<li><p>git branch -a</p>
+</li>
+<li><p>git checkout -b new-feature</p>
+</li>
+<li><p>git add file</p>
+</li>
+<li><p>git commit -m “commit message”</p>
+</li>
+<li><p>git push origin new-feature</p>
+</li>
+</ul>
+<h2 id="Update-develop-branch"><a href="#Update-develop-branch" class="headerlink" title="Update develop branch"></a>Update develop branch</h2><ul>
+<li>git fetch upstream develop</li>
+<li>git merge FETCH_HEAD</li>
+<li>git remote add pmorigin {PM repo addr}</li>
+<li>git fetch pmorigin develop</li>
+<li>git merge FETCH_HEAD</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/gitbash/" rel="tag"># gitbash</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/10/python-numpy/" rel="prev" title="python-package-numpy">
+      <i class="fa fa-chevron-left"></i> python-package-numpy
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Command"><span class="nav-number">1.</span> <span class="nav-text">Shell Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recap-Vim-command"><span class="nav-number">2.</span> <span class="nav-text">Recap - Vim command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-mode"><span class="nav-number">3.</span> <span class="nav-text">Command mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Markdown"><span class="nav-number">4.</span> <span class="nav-text">Markdown</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#h1"><span class="nav-number"></span> <span class="nav-text">h1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#h2"><span class="nav-number">1.</span> <span class="nav-text">h2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#h3"><span class="nav-number">1.1.</span> <span class="nav-text">h3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#h4"><span class="nav-number">1.1.1.</span> <span class="nav-text">h4</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#h5"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">h5</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#h6"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">h6</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repo"><span class="nav-number">1.2.</span> <span class="nav-text">Repo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-Convention"><span class="nav-number">2.</span> <span class="nav-text">Commit Convention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone"><span class="nav-number">3.</span> <span class="nav-text">git clone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Branch"><span class="nav-number">4.</span> <span class="nav-text">Branch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Undoing"><span class="nav-number">5.</span> <span class="nav-text">Undoing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unstaging"><span class="nav-number">6.</span> <span class="nav-text">Unstaging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unstaging-and-Remove"><span class="nav-number">7.</span> <span class="nav-text">Unstaging and Remove</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edit-latest-commit"><span class="nav-number">8.</span> <span class="nav-text">Edit latest commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edit-prior-commit"><span class="nav-number">9.</span> <span class="nav-text">Edit prior commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#abort-rebase"><span class="nav-number">10.</span> <span class="nav-text">abort rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complete-rebase"><span class="nav-number">11.</span> <span class="nav-text">Complete rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reset-commit-Revert"><span class="nav-number">12.</span> <span class="nav-text">Reset commit : Revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fork-and-Merge"><span class="nav-number">13.</span> <span class="nav-text">Fork and Merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update-develop-branch"><span class="nav-number">14.</span> <span class="nav-text">Update develop branch</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/09/10/git-bash/";
+    this.page.identifier = "2021/09/10/git-bash/";
+    this.page.title = "git-bash";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
