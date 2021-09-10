@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.특히 controlflow는 많이 사용할 것이기 때문에제대로 공부해서 익히도록 해보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-controlflow 2편">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/10/python-controlflow-2/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.특히 controlflow는 많이 사용할 것이기 때문에제대로 공부해서 익히도록 해보자!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-10T03:17:20.724Z">
+<meta property="article:modified_time" content="2021-09-10T03:31:57.349Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="for">
+<meta property="article:tag" content="while">
+<meta property="article:tag" content="try">
+<meta property="article:tag" content="except">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/09/10/python-controlflow-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>python-controlflow 2편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/10/python-controlflow-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-controlflow 2편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-10 12:17:20 / Modified: 12:31:57" itemprop="dateCreated datePublished" datetime="2021-09-10T12:17:20+09:00">2021-09-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/09/10/python-controlflow-2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/10/python-controlflow-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.<br>특히 controlflow는 많이 사용할 것이기 때문에<br>제대로 공부해서 익히도록 해보자!</p>
+<span id="more"></span>
+
+<h1 id="for-문의-중첩"><a href="#for-문의-중첩" class="headerlink" title="for 문의 중첩"></a>for 문의 중첩</h1><pre>
+<code>
+for i in range(1,6): # 위에 있는 for문의 순환이 이루어짐
+    print(i)
+    for j in range(0,3): # 온전히 다 실행이 된 이후에야
+        print(i, j)
+</pre>
+</code>
+
+<h2 id="range-함수"><a href="#range-함수" class="headerlink" title="range 함수"></a>range 함수</h2><pre>
+<code>
+range(x, y, z)
+</pre>
+</code>
+
+<blockquote>
+<p>x: start point<br>y: end point + 1<br>z: steps</p>
+</blockquote>
+<ul>
+<li>자료구조를 순환하는 for문의 활용(매우 중요)</li>
+<li>횟수뿐 아니라 구간이 정해져 있는 데이터를 인덱스 넘버도 순환 작업가능</li>
+<li>실제 분석에서도 가장 많이 사용하는 형태가 됩니다.</li>
+</ul>
+<h2 id="test-list-내부를-순환하면서-i를-정의"><a href="#test-list-내부를-순환하면서-i를-정의" class="headerlink" title="test_list 내부를 순환하면서 i를 정의"></a>test_list 내부를 순환하면서 i를 정의</h2><pre>
+<code>
+test_list = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+for item in test_list:
+    print(item * 2)
+</pre>
+</code>
+
+<blockquote>
+<p>횟수뿐 아니라 구간이 정해져 있는 데이터를 순환하면서도 작업가능<br>enumerate() 함수안의 자료구조의 인덱스와 함께 루프</p>
+</blockquote>
+<pre>
+<code>
+test_list = ['서울', '용산구', '해방촌', '르카페', '재즈', '치즈', '요리']
+for index, item in enumerate(test_list):
+    print(index, item)
+    if index == 4:
+        test_list[index] = '시티팝'
+test_list
+</code>
+</pre>
+
+<blockquote>
+<p>횟수뿐 아니라 구간이 정해져 있는 데이터를 순환하면서도 작업가능<br>자료구조 2개를 동시에 순환하면서 작업 가능</p>
+</blockquote>
+<pre>
+<code>
+test_list1 = ['이름', '사는곳', '사는동네', '좋아하는 카페', '음악', '반려묘', '취미']
+test_list2 = ['변치웅', '서울 용산구', '해방촌', '르카페', '재즈', '치즈', '요리']
+test_list3 = [1, 2, 3, 4, 5, 6, 7]
+for item1, item2, item3 in zip(test_list1, test_list2, test_list3): 
+    print(item1, ':',item2, ':', item3)
+</code>
+</pre>
+
+<blockquote>
+<p>순환하는 자료구조의 갯수는 상관 없으나 변수를 추가해줘야 함.</p>
+</blockquote>
+<h2 id="images"><a href="#images" class="headerlink" title="images"></a>images</h2><h2 id="–-OK"><a href="#–-OK" class="headerlink" title="– OK"></a>– OK</h2><h2 id="–-NG"><a href="#–-NG" class="headerlink" title="– NG"></a>– NG</h2><pre>
+<code>
+for files in images:
+    if files == OK:
+        new_file_path = file_path + '/OK'
+        os.chdir(new_file_path):
+            for files 2 in  os.listdir():
+                open(files2)
+</code>
+</pre>
+
+<blockquote>
+<p>상, 하위 폴더 상관 없이 모든 폴더를 돌며, 원하는 값을 가져온다.<br>폴더구조를 순환하는 for문의 활용</p>
+</blockquote>
+<pre>
+<code>
+import os
+for file_nm in os.listdir():
+    # print(file_nm)
+    # 조건문을 활용해서 폴더 내 원하는 확장자명을 가진 파일만 작업
+    if file_nm[-5:] == 'ipynb':
+        print(file_nm)
+        # 원하는 작업들 나열
+</code>
+</pre>
+
+<h1 id="심플한list-comprehension-구문"><a href="#심플한list-comprehension-구문" class="headerlink" title="심플한list comprehension 구문"></a>심플한list comprehension 구문</h1><blockquote>
+<p>if문이 추가된 리스트 컴프리헨션 구문<br>뒤에 추가되는 if 문이 참일 경우에만 i를 추가한다.</p>
+</blockquote>
+<pre>
+<code>
+test_list = [i for i in range(10)]
+test_list
+
+test_list = [i for i in range(10) if i % 2 == 0]
+test_list
+</code>
+</pre>
+
+<h1 id="dictionary-Comperhension"><a href="#dictionary-Comperhension" class="headerlink" title="dictionary Comperhension"></a>dictionary Comperhension</h1><pre>
+<code>
+test_dict = &#123;key:val for key, val in zip(test_list1, test_list2)&#125;
+test_dict
+</code>
+</pre>
+
+<h1 id="while"><a href="#while" class="headerlink" title="while"></a>while</h1><blockquote>
+<p>코드의 무한 반복적인 실행을 위한 반복문<br>조건식이 참일 경우 실행코드가 무한반복하여 실행 됨<br>보통은 프로그램을 실행 대기상태로 두거나 입력값을 받는 등의 용도로 사용.(데이터 분석 사용빈도 낮음)</p>
+</blockquote>
+<h2 id="while문의-구조"><a href="#while문의-구조" class="headerlink" title="while문의 구조"></a>while문의 구조</h2><blockquote>
+<p><strong><code>while</code> <code>조건식</code> <code>:</code></strong> # 조건식이 참이라면<br><strong><code>실행코드</code></strong> # 코드가 무한반복 실행<br><code>while</code> 문의 조건식이 참일 경우 무조건 실행되게끔 짜여진 구조.<br><code>while</code> 문을 사용 할 때에는 반복구문을 어떻게 종료 해야할지 설정해야 함.</p>
+</blockquote>
+<h2 id="기본적인-while-구문"><a href="#기본적인-while-구문" class="headerlink" title="기본적인 while 구문"></a>기본적인 while 구문</h2><blockquote>
+<p>for문과는 달리 조건식을 while 구문 바로 뒤에 적어줌<br>while문의 무한루프를 컨트롤 하기위한 변수 설정하고 조건식을 추가하여 코드실행을 컨트롤</p>
+</blockquote>
+<pre>
+<code>
+a = 0
+while True :
+    print("무한 반복 중", ':', a)
+    a = a + 1
+    if a > 10 :
+        break
+
+a = 0
+while a <= 10 :
+    print("무한 반복 중", ':', a)
+    a = a + 1
+</code>
+</pre>
+
+<h3 id="1-100까지의-합-while-문"><a href="#1-100까지의-합-while-문" class="headerlink" title="1~100까지의 합 : while 문"></a>1~100까지의 합 : while 문</h3><pre>
+<code>
+a = 1
+total = 0
+while True :
+    total += a
+    a += 1
+    if a == 101:
+        break
+print(total)
+</code>
+</pre>
+
+<h1 id="try-except-오류처리-혹은-예외처리"><a href="#try-except-오류처리-혹은-예외처리" class="headerlink" title="try, except(오류처리 혹은 예외처리)"></a><strong>try, except(오류처리 혹은 예외처리)</strong></h1><blockquote>
+<p><strong><code>try</code></strong>, <strong><code>except</code></strong> 구문은 오류 발생가능성이 있는 구문을 처리하거나<br>반드시 오류가 발생하는 구문을 감싸 정상적인 프로그램 흐름이 이어질 수 있도록 처리하는 예외처리 구문입니다.<br><strong><code>try</code></strong> <strong><code>:</code></strong><br><strong>[처리하고 싶은 코드]</strong><br><strong><code>except</code></strong> <strong><code>[오류명]</code></strong> <strong><code>:</code></strong><br><strong>[try로 처리하지 못한 작업을 처리하기 위한 코드]</strong></p>
+</blockquote>
+<pre>
+<code>
+total = 0
+test_list = [1, 2, '3', 4, 5, 6, 7, '5', 9, 10]
+
+try:
+    for item in test_list:
+        total += item
+
+except TypeError:
+    for item in test_list:
+        total += int(item)
+
+print(total)
+
+
+try:
+    num_list = []
+    for i in range(2):
+        num = input('숫자를 입력하세요 : ') # 문자를 입력하여 에러발생
+        num = int(num) # 값에러
+        num_list.append(num)
+        a = num_list[5] # 인덱스에러발생
+        b = sum(a) # 타입에러
+
+except ValueError:
+    print('문자가 입력되었습니다. 숫자를 다시 입력해주세요.')
+
+except IndexError:
+    num_list[-1]
+</code>
+</pre>
+
+<h1 id="연습문제"><a href="#연습문제" class="headerlink" title="연습문제"></a>연습문제</h1><blockquote>
+<p>간단한 ATM기 시스템을 만들어보겠습니다.<br>사용자로부터 메뉴를 입력받습니다.</p>
+</blockquote>
+<ol>
+<li>입금</li>
+<li>출금</li>
+<li>잔액확인</li>
+<li>종료<blockquote>
+<p>입력받은 메뉴에 따라 계좌잔액에 입금과 출금을 적용하고 잔액을 출력해봅시다.<br>종료메뉴는 while 문을 빠져나오도록 프로그램을 종료시킵니다.</p>
+</blockquote>
+</li>
+</ol>
+<pre>
+<code>
+balance = 0
+
+while True:
+    print('''
+    어서오세요. SSAC 뱅크 입니다.
+    원하시는 메뉴를 선택해주세요.
+
+    1. 입금
+    2. 출금
+    3. 잔액 확인
+    4. 종료
+    ''')
+
+    menu = int(input('메뉴를 입력해주세요.:'))
+
+    if menu == 1 :
+        saving = int(input('입금 할 금액을 입력해주세요.:'))
+        balance += saving
+        print(f'현재 잔액은 &#123;balance&#125;원 입니다.')
+
+    elif menu == 2 :
+        withdraw = int(input('출금 할 금액을 입력해주세요.:')) 
+        if balance < withdraw : 
+            print(f'잔액이 부족합니다.')
+            continue
+        else:
+            balance -= withdraw
+            print(f'&#123;withdraw&#125;원이 출금되었습니다.')
+
+    elif menu == 3:
+        print(f'&#123;balance&#125;원의 잔액이 남아있습니다.')
+
+    elif menu == 4:
+        break
+
+    if not menu:
+        break
+
+print('서비스가 종료되었습니다.')
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/for/" rel="tag"># for</a>
+              <a href="/tags/while/" rel="tag"># while</a>
+              <a href="/tags/try/" rel="tag"># try</a>
+              <a href="/tags/except/" rel="tag"># except</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/08/python-io/" rel="prev" title="python-data-io">
+      <i class="fa fa-chevron-left"></i> python-data-io
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#for-%EB%AC%B8%EC%9D%98-%EC%A4%91%EC%B2%A9"><span class="nav-number">1.</span> <span class="nav-text">for 문의 중첩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#range-%ED%95%A8%EC%88%98"><span class="nav-number">1.1.</span> <span class="nav-text">range 함수</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test-list-%EB%82%B4%EB%B6%80%EB%A5%BC-%EC%88%9C%ED%99%98%ED%95%98%EB%A9%B4%EC%84%9C-i%EB%A5%BC-%EC%A0%95%EC%9D%98"><span class="nav-number">1.2.</span> <span class="nav-text">test_list 내부를 순환하면서 i를 정의</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#images"><span class="nav-number">1.3.</span> <span class="nav-text">images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%93-OK"><span class="nav-number">1.4.</span> <span class="nav-text">– OK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%93-NG"><span class="nav-number">1.5.</span> <span class="nav-text">– NG</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%8B%AC%ED%94%8C%ED%95%9Clist-comprehension-%EA%B5%AC%EB%AC%B8"><span class="nav-number">2.</span> <span class="nav-text">심플한list comprehension 구문</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dictionary-Comperhension"><span class="nav-number">3.</span> <span class="nav-text">dictionary Comperhension</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#while"><span class="nav-number">4.</span> <span class="nav-text">while</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#while%EB%AC%B8%EC%9D%98-%EA%B5%AC%EC%A1%B0"><span class="nav-number">4.1.</span> <span class="nav-text">while문의 구조</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-while-%EA%B5%AC%EB%AC%B8"><span class="nav-number">4.2.</span> <span class="nav-text">기본적인 while 구문</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-100%EA%B9%8C%EC%A7%80%EC%9D%98-%ED%95%A9-while-%EB%AC%B8"><span class="nav-number">4.2.1.</span> <span class="nav-text">1~100까지의 합 : while 문</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#try-except-%EC%98%A4%EB%A5%98%EC%B2%98%EB%A6%AC-%ED%98%B9%EC%9D%80-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC"><span class="nav-number">5.</span> <span class="nav-text">try, except(오류처리 혹은 예외처리)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">연습문제</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/09/10/python-controlflow-2/";
+    this.page.identifier = "2021/09/10/python-controlflow-2/";
+    this.page.title = "python-controlflow 2편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
