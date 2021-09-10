@@ -20,24 +20,21 @@
     var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="파이썬의 기초 개념을 정리해보았다.2편은 sequence(list, tuple, dict 등)를 정복한다!(개인적으로 재미 없,,,,)">
+  <meta name="description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 numpy대해 배워보자!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python-sequence">
-<meta property="og:url" content="https://limjiin.github.io/2021/09/08/python-sequence/index.html">
+<meta property="og:title" content="python-package-numpy">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/10/python-numpy/index.html">
 <meta property="og:site_name" content="야무진의 기술 블로그">
-<meta property="og:description" content="파이썬의 기초 개념을 정리해보았다.2편은 sequence(list, tuple, dict 등)를 정복한다!(개인적으로 재미 없,,,,)">
+<meta property="og:description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 numpy대해 배워보자!">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-08T01:10:18.261Z">
-<meta property="article:modified_time" content="2021-09-08T09:25:39.303Z">
+<meta property="article:published_time" content="2021-09-10T08:02:06.733Z">
+<meta property="article:modified_time" content="2021-09-10T08:55:29.917Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
-<meta property="article:tag" content="list">
-<meta property="article:tag" content="dict">
-<meta property="article:tag" content="tuple">
-<meta property="article:tag" content="set">
+<meta property="article:tag" content="numpy">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://limjiin.github.io/2021/09/08/python-sequence/">
+<link rel="canonical" href="https://limjiin.github.io/2021/09/10/python-numpy/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>python-sequence | 야무진의 기술 블로그</title>
+  <title>python-package-numpy | 야무진의 기술 블로그</title>
   
 
 
@@ -171,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/08/python-sequence/">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/10/python-numpy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          python-sequence
+          python-package-numpy
         </h1>
 
         <div class="post-meta">
@@ -195,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-08 10:10:18 / Modified: 18:25:39" itemprop="dateCreated datePublished" datetime="2021-09-08T10:10:18+09:00">2021-09-08</time>
+              <time title="Created: 2021-09-10 17:02:06 / Modified: 17:55:29" itemprop="dateCreated datePublished" datetime="2021-09-10T17:02:06+09:00">2021-09-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,8 +213,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2021/09/08/python-sequence/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/08/python-sequence/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2021/09/10/python-numpy/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/10/python-numpy/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -232,165 +229,213 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>파이썬의 기초 개념을 정리해보았다.<br>2편은 sequence(list, tuple, dict 등)를 정복한다!<br>(개인적으로 재미 없,,,,)</p>
+        <p>파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.<br>package에서 가장 자주 사용하는 numpy대해 배워보자!</p>
 <span id="more"></span>
 
-<h2 id="자료-구조"><a href="#자료-구조" class="headerlink" title="자료 구조"></a>자료 구조</h2><blockquote>
-<p>list, tuple, dict, set</p>
+<h1 id="Numpy-Numeric-python"><a href="#Numpy-Numeric-python" class="headerlink" title="Numpy (Numeric python)"></a>Numpy (Numeric python)</h1><blockquote>
+<p>패키지 이름과 같이 <strong>수리적 파이썬 활용</strong>을 위한 파이썬 패키지<br><strong>선형대수학 구현</strong>과 <strong>과학적 컴퓨팅 연산</strong>을 위한 함수를 제공<br>(key) <code>nparray</code> 다차원 배열을 사용하여 <strong>벡터의 산술 연산</strong>이 가능<br><strong>브로드캐스팅</strong>을 활용하여 shape(형태 혹은 모양)이 다른 데이터의 연산이 가능<br>기존 언어에서는 제공 X<br>굉장히 파워풀한 기능으로서 빅데이터 연산에 굉장히 효율이 좋음     </p>
 </blockquote>
-<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><blockquote>
-<p>순서가 있다.<br><strong><code>[ ]</code></strong> 대괄호로 묶어 사용한다.<br>리스트 안에 들어가는 요소들은 ,(쉼표)로 구분한다.<br>리스트 내부에는 정수, 실수, 문자열 뿐만 아니라 자료구조인 list 와 기타 자료구조도 포함 가능</p>
+<h4 id="Numpy-사용을-위해-패키지-불러들이기"><a href="#Numpy-사용을-위해-패키지-불러들이기" class="headerlink" title="Numpy 사용을 위해 패키지 불러들이기"></a>Numpy 사용을 위해 패키지 불러들이기</h4><p>import numpy as np</p>
+<blockquote>
+<p>관례적으로 np라는 약자를 많이 사용하게 됩니다.<br>파이썬을 사용하는 대부분의 유저들이 사용하고 있는 닉네임이니 이건 꼭 지켜서 사용해주시는 것을 추천드립니다.</p>
+</blockquote>
+<h4 id="데이터분석을-위한-잠깐의-선형대수학"><a href="#데이터분석을-위한-잠깐의-선형대수학" class="headerlink" title="데이터분석을 위한 잠깐의 선형대수학"></a>데이터분석을 위한 잠깐의 선형대수학</h4><blockquote>
+<p>데이터의 구분에 따른 표현 방법과 예시</p>
+</blockquote>
+<ul>
+<li>스칼라<br>  1, 3.14, 실수 혹은 정수  </li>
+<li>벡터<br>  [1, 2, 3, 4], 문자열  </li>
+<li>3 X 4 매트릭스<br>  [[1, 2, 3, 4],<br>   [5, 6, 7, 8],<br>   [9, 0, 11, 12]]</li>
+<li>2 X 3 X 4 텐서<br>  [[[1, 2, 3, 4],<br>   [5, 6, 7, 8],<br>   [9, 0, 11, 12]],<br>   [[1, 2, 3, 4],<br>   [5, 6, 7, 8],<br>   [9, 0, 11, 12]]]</li>
+</ul>
+<blockquote>
+<p>데이터 형태에 따른 사칙연산</p>
+</blockquote>
+<ul>
+<li>스칼라 +, -, *, / -&gt; 결과도 스칼라  </li>
+<li>벡터 +, -, 내적 -&gt; +, - 결과는 벡터, 내적 결과는 스칼라  </li>
+<li>매트릭스 +, -, *, /  </li>
+<li>텐서 +, -, *, / </li>
+</ul>
+<blockquote>
+<p>*벡터와 벡터의 내적이 이루어지려면  </p>
+</blockquote>
+<ul>
+<li><ol>
+<li>벡터가 마주하는 shape의 갯수(길이)가 같아야 합니다.</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>연산 앞에 위치한 벡터는 전치(transpose) 되어야 합니다.</li>
+</ol>
+</li>
+<li>(2, 1) &lt;&gt; (1, 2) : 1 끼리 묶임</li>
+<li>(2, 3) &lt;&gt; (3, 4) : 3 끼리 묶임</li>
+</ul>
+<h4 id="브로드캐스팅"><a href="#브로드캐스팅" class="headerlink" title="브로드캐스팅"></a>브로드캐스팅</h4><blockquote>
+<p>파이썬 넘파이 연산은 브로드캐스팅을 지원합니다.<br>벡터연산 시 shape이 큰 벡터의 길이만큼 shape이 작은 벡터가 연장되어 연산됩니다.</p>
+</blockquote>
+<h4 id="Numpy-function-함수-유니버셜-함수"><a href="#Numpy-function-함수-유니버셜-함수" class="headerlink" title="Numpy function(함수) - 유니버셜 함수"></a>Numpy function(함수) - 유니버셜 함수</h4><blockquote>
+<p><code>numpy</code>는 컴퓨팅연산을 위한 다양한 연산함수를 제공합니다.  </p>
+<blockquote>
+<p>연산함수 기본구조<br>ex) <strong><code>np.sum</code></strong>(연산대상, axis=연산방향)<br><strong><code>dtype()</code></strong></p>
+</blockquote>
 </blockquote>
 <blockquote>
-<p>리스트 갯수 세기</p>
+<p>수리연산</p>
 </blockquote>
 <ul>
-<li>len()</li>
+<li><strong><code>prod()</code></strong></li>
+<li><strong><code>dot()</code></strong></li>
+<li><strong><code>sum()</code></strong></li>
+<li><strong><code>cumprod()</code></strong></li>
+<li><strong><code>cumsum()</code></strong></li>
+<li><strong><code>abs()</code></strong></li>
+<li><strong><code>sqaure()</code></strong> 제곱</li>
+<li><strong><code>sqrt()</code></strong> 루</li>
+<li><strong><code>exp()</code></strong> 지수</li>
+<li><strong><code>log()</code></strong></li>
 </ul>
-<h2 id="리스트의-인덱싱-indexing-슬라이싱-slicing"><a href="#리스트의-인덱싱-indexing-슬라이싱-slicing" class="headerlink" title="리스트의 인덱싱(indexing), 슬라이싱(slicing)"></a>리스트의 인덱싱(indexing), 슬라이싱(slicing)</h2><blockquote>
-<p>리스트의 특정 항목에 접근(색인)<br>인덱싱은 하나의 값에 접근, 슬라이싱은 여러개의 값의 묶음에 접근<br>리스트의 순서를 인덱스라고 하며 0부터 시작</p>
+<blockquote>
+<p>통계연산</p>
 </blockquote>
 <ul>
-<li>리스트 전체 항목 중 2의 배수 인덱스 항목 가져오기: wallet[::2]</li>
+<li><strong><code>mean()</code></strong></li>
+<li><strong><code>std()</code></strong></li>
+<li><strong><code>var()</code></strong></li>
+<li><strong><code>max()</code></strong></li>
+<li><strong><code>min()</code></strong></li>
+<li><strong><code>argmax()</code></strong> 최댓값 인덱스</li>
+<li><strong><code>argmin()</code></strong> 최솟값 인덱스</li>
 </ul>
-<h2 id="리스트-편집"><a href="#리스트-편집" class="headerlink" title="리스트 편집"></a>리스트 편집</h2><blockquote>
-<p>내부 명령어<br>리스트는 자료구조를 갖고 있으면서 리스트 작업을 위해 필요한 내부명령어도 함께 제공<br>리스트이름 뒤 .(콤마)로 명령어에 접근 가능</p>
+<blockquote>
+<p>로직연산</p>
 </blockquote>
 <ul>
-<li>list_name.func()</li>
-<li>.append() : 추가할 값 전달하여 리스트에 추가</li>
-<li>.remove() : 특정 항목 삭 </li>
-<li>.pop() : 마지막 항목 삭제</li>
-<li>.reverse() : 정렬 없이 역순</li>
-<li>.count() : 숫자</li>
+<li><strong><code>arange()</code></strong></li>
+<li><strong><code>isnan()</code></strong> 값이 있는지 없는지</li>
+<li><strong><code>isinf()</code></strong> 무한대</li>
+<li><strong><code>unique()</code></strong> 고유값</li>
 </ul>
-<h2 id="리스트-연산어"><a href="#리스트-연산어" class="headerlink" title="리스트 연산어"></a>리스트 연산어</h2><ul>
-<li>max(값), min, sum, 값 in제 변수</li>
-<li>뎃셈 연산: num1 + num2 </li>
-<li>곱셉 연산: num1 * 2</li>
-<li>조건연산자 테스트: 1 in num1</li>
+<blockquote>
+<p>기하</p>
+</blockquote>
+<ul>
+<li><strong><code>shape()</code></strong></li>
+<li><strong><code>reshape()</code></strong> 모양 변경</li>
+<li><strong><code>ndim()</code></strong></li>
+<li><strong><code>transpose()</code></strong> 데이터 위치 변경 전치 행렬</li>
+<li>각종 연산 함수 참고: <a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/reference/routines.math.html">https://numpy.org/doc/stable/reference/routines.math.html</a></li>
 </ul>
-<h2 id="리스트-삭제"><a href="#리스트-삭제" class="headerlink" title="리스트 삭제"></a>리스트 삭제</h2><ul>
-<li>.clear() : 리스트는 남아있지만 내부 항목은 모두 삭제합니다.</li>
-<li>del</li>
-</ul>
-<h2 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h2><blockquote>
-<p>연산이나 입력값을 전달하는 자료구조로는 잘 사용하지 않고 결과값을 출력하는 경우 많이 사용한다.<br>( ) 소괄호로 묶어 사용한다.<br>구분은 , 콤마로 사용한다.</p>
+<h4 id="numpy-함수-실습"><a href="#numpy-함수-실습" class="headerlink" title="numpy 함수 실습"></a>numpy 함수 실습</h4><blockquote>
+<p>함수 예제를 위한 데이터셋</p>
+</blockquote>
+<p>test_list = [1, 2, 3, 4]<br>test_list2 = [[1, 3], [5, 7]]<br>test_flist = [1, 3.14, -4.5]<br>test_list_2nd = [[1, 2, 3],<br>              [4, 5, 6],<br>              [7, 8, 9]]<br>test_list_3rd = [[[1, 2, 3, 4],<br>              [5, 6, 7, 8]],</p>
+<pre><code>          [[1, 2, 3, 4],
+           [5, 6, 7, 8]],
+
+          [[1, 2, 3, 4],
+           [5, 6, 7, 8]]]
+</code></pre>
+<p>test_exp = [0, 1, 10]<br>test_nan = [0, np.nan, np.inf]</p>
+<blockquote>
+<p>곱연산<br>np.prod(test_list)</p>
 </blockquote>
 <blockquote>
-<p>인덱스 불가 : 한 번 튜플에 들어간 값은 변경이 불가함<br>값 추가는 가능하다.</p>
-</blockquote>
-<ul>
-<li>del : 전체 삭제만 가능하다.</li>
-</ul>
-<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h2><blockquote>
-<p>key : value<br>{ } 중괄호로 묶어 사용한다.<br>딕셔너리 요소 구분은 리스트와 마찬가지로 쉼표<br>중괄호 내 key : value 값을 전달하고 각 항목의 구분은 쉼표</p>
+<p>누적곱연산<br>np.cumprod(test_list)</p>
 </blockquote>
 <blockquote>
-<p>딕셔너리 갯수 세기</p>
+<p>누적합연산<br>np.cumsum(test_list)</p>
 </blockquote>
-<ul>
-<li>len()</li>
-</ul>
-<h2 id="딕셔너리-편집"><a href="#딕셔너리-편집" class="headerlink" title="딕셔너리 편집"></a>딕셔너리 편집</h2><ul>
-<li>딕셔너리에 point card key를 갖는 해피포인트 문자열을 값으로 저장</li>
-</ul>
-<pre>
-<code>
-wallet['point card'] = '해피포인트'
-wallet
-</code>
-</pre>
-
-<ul>
-<li>딕셔너리 특정 항목 업데이트</li>
-</ul>
-<pre>
-<code>
-wallet.update(&#123;'point card':'CJ one'&#125;)
-wallet
-</code>
-</pre>
-
-<ul>
-<li>딕셔너리 내부 속성 값에 접근해서 값 업데이트도 가능하다.</li>
-<li>wallet의 coin key값을 갖는 값에 50원:1 값을 추가한다.</li>
-</ul>
-<pre>
-<code>
-wallet['coin']['50원'] = 1
-wallet
-</code>
-</pre>
-
-<ul>
-<li>딕셔너리 특정 value값 빼오기</li>
-</ul>
-<pre>
-<code>
-wallet.pop(100)
-wallet
-</code>
-</pre>
-
-<h2 id="딕셔너리-삭제"><a href="#딕셔너리-삭제" class="headerlink" title="딕셔너리 삭제"></a>딕셔너리 삭제</h2><ul>
-<li>del : 항목 제거</li>
-<li>.clear() : 전체 삭제</li>
-</ul>
-<h2 id="딕셔너리-추가-명령"><a href="#딕셔너리-추가-명령" class="headerlink" title="딕셔너리 추가 명령"></a>딕셔너리 추가 명령</h2><h2 id="리스트와-마찬가지로-딕셔너리-내부에-리스트등-타-자료구조-저장-가능"><a href="#리스트와-마찬가지로-딕셔너리-내부에-리스트등-타-자료구조-저장-가능" class="headerlink" title="리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능"></a>리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능</h2><ul>
-<li>.keys() : 키 값을 확인</li>
-<li>.values() : 값을 확인</li>
-<li>.items() : key, value 쌍 확인</li>
-</ul>
-<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><blockquote>
-<p>데이터셋의 고유값을 확인하는 용도로도 사용(중복제거)<br>{ } 대괄호로 묶어 사용한다.</p>
-</blockquote>
-<h1 id="셋-편집"><a href="#셋-편집" class="headerlink" title="셋 편집"></a>셋 편집</h1><blockquote>
-<p>셋 값 하나삭제</p>
-</blockquote>
-<pre>
-<code>
-test_set1.discard(5)
-test_set1
-</code>
-</pre>
-
 <blockquote>
-<p>셋에 값 하나 추가</p>
+<p>절대값<br>np.abs(test_flist)</p>
 </blockquote>
-<ul>
-<li>중복을 허용하지 않기 때문에 셋에 같은 값이 있을 경우 추가하지 않음</li>
-</ul>
-<pre>
-<code>
-test_set1.add(5)
-test_set1
-</code>
-</pre>
-
-<ul>
-<li>셋에 값 여러개 추가</li>
-</ul>
-<pre>
-<code>
-test_set1.update(&#123;5, 6, 7&#125;)
-test_set1
-</code>
-</pre>
-
 <blockquote>
-<p>집합 연산을 지원한다.</p>
+<p>평균<br>np.mean(test_list)</p>
+</blockquote>
+<blockquote>
+<p>표준편차<br>np.std(test_list)</p>
+</blockquote>
+<blockquote>
+<p>분산<br>np.var(test_list)</p>
+</blockquote>
+<blockquote>
+<p>최댓값 인덱스 </p>
 </blockquote>
 <ul>
-<li>.update() : 여러 개 추가</li>
-<li>.discard() :  하나 삭제</li>
-<li>.intersect() : 교집합</li>
-<li>.union() : 합집합</li>
-<li>.difference() : 차집합</li>
-<li>and, or 값도 활용 가능</li>
+<li>자주 사용합니다.</li>
+<li>최대값이 존재하고 있는 인덱스 넘버를 리턴 </li>
+<li>출력값이 인덱스</li>
 </ul>
-<h2 id="셋-삭제"><a href="#셋-삭제" class="headerlink" title="셋 삭제"></a>셋 삭제</h2><ul>
-<li>del</li>
+<p>np.argmax(test_list_2nd)</p>
+<blockquote>
+<p>최소값 인덱스</p>
+</blockquote>
+<p>np.argmin(test_list_2nd)</p>
+<blockquote>
+<p>범위설정</p>
+</blockquote>
+<ul>
+<li>(start point, end point - 1, 스텝수)</li>
+<li>range() 함수와 동일하게 작동함</li>
+</ul>
+<p>for i in range(0, 100, 10):<br>     print(i)</p>
+<p>np.arange(10, 101, 10)</p>
+<blockquote>
+<p>데이터 갯수 사이 범위 설정<br>-시작 포인트, 마지막 포인트 - 1, 데이터 갯수</p>
+</blockquote>
+<p>np.linspace(0, 10, 150)</p>
+<blockquote>
+<p>결측 확인<br>np.isnan(test_nan)</p>
+</blockquote>
+<blockquote>
+<p>발산 확인(무한대)<br>np.isinf(test_nan)</p>
+</blockquote>
+<blockquote>
+<p>고유값 확인<br>np.unique(test_list_3rd)</p>
+</blockquote>
+<blockquote>
+<p>고유값 갯수 확인<br>len(np.unique(test_list_3rd))</p>
+</blockquote>
+<blockquote>
+<p>데이터 구조(모양)확인</p>
+</blockquote>
+<ul>
+<li>세로, 가로, value 갯수<br>np.shape(test_list_3rd)</li>
+</ul>
+<blockquote>
+<p>데이터 shape 변경</p>
+</blockquote>
+<ul>
+<li>어떤 조건에서 reshape 가능한가? 데이터 내부에 존재하는 속성 갯수가 같아야 함.</li>
+</ul>
+<p>np.reshape(test_list_3rd, (3, 8))</p>
+<ul>
+<li>3 * 2 * 4 = 2 * 2 * 6 = 4 * 6 = 3 * 8</li>
+</ul>
+<blockquote>
+<p>데이터 차원확인</p>
+</blockquote>
+<ul>
+<li>데이터가 존재하는 축방향이 늘어나면 차원 수도 늘어남</li>
+<li>매트릭스는 2차원 데이터임.</li>
+<li>데이터 분석에서는 열 기준으로 차원을 이야기함</li>
+</ul>
+<p>np.ndim(test_list_3rd)</p>
+<blockquote>
+<p>전치 행렬<br>test_list_2nd<br>[[1, 2, 3],<br>[4, 5, 6],<br>[7, 8, 9]]</p>
+</blockquote>
+<p>np.transpose(test_list_2nd)</p>
+<p>array([[1, 4, 7],<br>       [2, 5, 8],<br>       [3, 6, 9]])</p>
+<ul>
+<li>2 &lt;&gt; 4, 3 &lt;&gt; 7, 6 &lt;&gt; 8 = 전치 행렬</li>
+</ul>
+<h4 id="Numpy-array-배열-행렬"><a href="#Numpy-array-배열-행렬" class="headerlink" title="Numpy array (배열, 행렬)"></a>Numpy array (배열, 행렬)</h4><blockquote>
+<p>numpy 연산의 기본이 되는 데이터 구조입니다.<br>리스트보다 간편하게 만들 수 있으며 <strong>연산이 빠른</strong> 장점이 있습니다.<br><strong>브로드캐스팅 연산을 지원</strong>합니다.<br>단, <strong>같은 type</strong>의 데이터만 저장 가능합니다.<br>array 또한 numpy의 기본 함수로서 생성 가능합니다.<br>array 함수 호출 기본구조  </p>
+</blockquote>
+<ul>
+<li>ex) <strong><code>np.array(배열변환 대상 데이터)</code></strong>  </li>
+<li>ex) <strong><code>np.arange(start, end-1, step_forward)</code></strong></li>
 </ul>
 
     </div>
@@ -402,10 +447,7 @@ test_set1
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/python/" rel="tag"># python</a>
-              <a href="/tags/list/" rel="tag"># list</a>
-              <a href="/tags/dict/" rel="tag"># dict</a>
-              <a href="/tags/tuple/" rel="tag"># tuple</a>
-              <a href="/tags/set/" rel="tag"># set</a>
+              <a href="/tags/numpy/" rel="tag"># numpy</a>
           </div>
 
         
@@ -414,13 +456,10 @@ test_set1
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/09/06/python-basic/" rel="prev" title="python-basic">
-      <i class="fa fa-chevron-left"></i> python-basic
+    <a href="/2021/09/10/python-packages/" rel="prev" title="python-packages">
+      <i class="fa fa-chevron-left"></i> python-packages
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/09/08/python-controlflow/" rel="next" title="python-controlflow">
-      python-controlflow <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -486,7 +525,7 @@ test_set1
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%9E%90%EB%A3%8C-%EA%B5%AC%EC%A1%B0"><span class="nav-number">1.</span> <span class="nav-text">자료 구조</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%9D%B8%EB%8D%B1%EC%8B%B1-indexing-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-slicing"><span class="nav-number">3.</span> <span class="nav-text">리스트의 인덱싱(indexing), 슬라이싱(slicing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8E%B8%EC%A7%91"><span class="nav-number">4.</span> <span class="nav-text">리스트 편집</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EC%97%B0%EC%82%B0%EC%96%B4"><span class="nav-number">5.</span> <span class="nav-text">리스트 연산어</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EC%82%AD%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">리스트 삭제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tuple"><span class="nav-number">7.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dict"><span class="nav-number">8.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%ED%8E%B8%EC%A7%91"><span class="nav-number">9.</span> <span class="nav-text">딕셔너리 편집</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EC%82%AD%EC%A0%9C"><span class="nav-number">10.</span> <span class="nav-text">딕셔너리 삭제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EC%B6%94%EA%B0%80-%EB%AA%85%EB%A0%B9"><span class="nav-number">11.</span> <span class="nav-text">딕셔너리 추가 명령</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%EB%A7%88%EC%B0%AC%EA%B0%80%EC%A7%80%EB%A1%9C-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-%EB%82%B4%EB%B6%80%EC%97%90-%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%93%B1-%ED%83%80-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-%EC%A0%80%EC%9E%A5-%EA%B0%80%EB%8A%A5"><span class="nav-number">12.</span> <span class="nav-text">리스트와 마찬가지로 딕셔너리 내부에 리스트등 타 자료구조 저장 가능</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">13.</span> <span class="nav-text">set</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%85%8B-%ED%8E%B8%EC%A7%91"><span class="nav-number"></span> <span class="nav-text">셋 편집</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%85%8B-%EC%82%AD%EC%A0%9C"><span class="nav-number">1.</span> <span class="nav-text">셋 삭제</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Numpy-Numeric-python"><span class="nav-number">1.</span> <span class="nav-text">Numpy (Numeric python)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-%EC%82%AC%EC%9A%A9%EC%9D%84-%EC%9C%84%ED%95%B4-%ED%8C%A8%ED%82%A4%EC%A7%80-%EB%B6%88%EB%9F%AC%EB%93%A4%EC%9D%B4%EA%B8%B0"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Numpy 사용을 위해 패키지 불러들이기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9E%A0%EA%B9%90%EC%9D%98-%EC%84%A0%ED%98%95%EB%8C%80%EC%88%98%ED%95%99"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">데이터분석을 위한 잠깐의 선형대수학</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%BA%90%EC%8A%A4%ED%8C%85"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">브로드캐스팅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-function-%ED%95%A8%EC%88%98-%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Numpy function(함수) - 유니버셜 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#numpy-%ED%95%A8%EC%88%98-%EC%8B%A4%EC%8A%B5"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">numpy 함수 실습</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-array-%EB%B0%B0%EC%97%B4-%ED%96%89%EB%A0%AC"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">Numpy array (배열, 행렬)</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -626,9 +665,9 @@ test_set1
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://limjiin.github.io/2021/09/08/python-sequence/";
-    this.page.identifier = "2021/09/08/python-sequence/";
-    this.page.title = "python-sequence";
+    this.page.url = "https://limjiin.github.io/2021/09/10/python-numpy/";
+    this.page.identifier = "2021/09/10/python-numpy/";
+    this.page.title = "python-package-numpy";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
