@@ -28,7 +28,7 @@
 <meta property="og:description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 numpy대해 배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-10T08:02:06.733Z">
-<meta property="article:modified_time" content="2021-09-10T12:25:25.117Z">
+<meta property="article:modified_time" content="2021-09-10T12:30:25.228Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="numpy">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-10 17:02:06 / Modified: 21:25:25" itemprop="dateCreated datePublished" datetime="2021-09-10T17:02:06+09:00">2021-09-10</time>
+              <time title="Created: 2021-09-10 17:02:06 / Modified: 21:30:25" itemprop="dateCreated datePublished" datetime="2021-09-10T17:02:06+09:00">2021-09-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,10 +318,7 @@ import numpy as np
 <h4 id="Numpy-function-함수-유니버셜-함수"><a href="#Numpy-function-함수-유니버셜-함수" class="headerlink" title="Numpy function(함수) - 유니버셜 함수"></a>Numpy function(함수) - 유니버셜 함수</h4><blockquote>
 <p><code>numpy</code>는 컴퓨팅연산을 위한 다양한 연산함수를 제공합니다.<br>연산함수 기본구조<br>ex) <strong><code>np.sum</code></strong>(연산대상, axis=연산방향)<br><strong><code>dtype()</code></strong></p>
 </blockquote>
-<blockquote>
-<p>수리연산</p>
-</blockquote>
-<ul>
+<h6 id="수리연산"><a href="#수리연산" class="headerlink" title="수리연산"></a>수리연산</h6><ul>
 <li><strong><code>prod()</code></strong></li>
 <li><strong><code>dot()</code></strong></li>
 <li><strong><code>sum()</code></strong></li>
@@ -333,10 +330,7 @@ import numpy as np
 <li><strong><code>exp()</code></strong> 지수</li>
 <li><strong><code>log()</code></strong></li>
 </ul>
-<blockquote>
-<p>통계연산</p>
-</blockquote>
-<ul>
+<h6 id="통계연산"><a href="#통계연산" class="headerlink" title="통계연산"></a>통계연산</h6><ul>
 <li><strong><code>mean()</code></strong></li>
 <li><strong><code>std()</code></strong></li>
 <li><strong><code>var()</code></strong></li>
@@ -345,19 +339,13 @@ import numpy as np
 <li><strong><code>argmax()</code></strong> 최댓값 인덱스</li>
 <li><strong><code>argmin()</code></strong> 최솟값 인덱스</li>
 </ul>
-<blockquote>
-<p>로직연산</p>
-</blockquote>
-<ul>
+<h6 id="로직연산"><a href="#로직연산" class="headerlink" title="로직연산"></a>로직연산</h6><ul>
 <li><strong><code>arange()</code></strong></li>
 <li><strong><code>isnan()</code></strong> 값이 있는지 없는지</li>
 <li><strong><code>isinf()</code></strong> 무한대</li>
 <li><strong><code>unique()</code></strong> 고유값</li>
 </ul>
-<blockquote>
-<p>기하</p>
-</blockquote>
-<ul>
+<h6 id="기하"><a href="#기하" class="headerlink" title="기하"></a>기하</h6><ul>
 <li><strong><code>shape()</code></strong></li>
 <li><strong><code>reshape()</code></strong> 모양 변경</li>
 <li><strong><code>ndim()</code></strong></li>
@@ -387,76 +375,70 @@ test_nan = [0, np.nan, np.inf]
 </code>
 </pre>
 
-<blockquote>
-<p>곱연산</p>
-</blockquote>
+<ul>
+<li>곱연산</li>
+</ul>
 <pre>
 <code>
 np.prod(test_list)
 </code>
 </pre>
 
-<blockquote>
-<p>누적곱연산</p>
-</blockquote>
+<ul>
+<li>누적곱연산</li>
+</ul>
 <pre>
 <code>
 np.cumprod(test_list)
 </code>
 </pre>
 
-<blockquote>
-<p>누적합연산</p>
-</blockquote>
+<ul>
+<li>누적합연산</li>
+</ul>
 <pre>
 <code>
 np.cumsum(test_list)
 </code>
 </pre>
 
-<blockquote>
-<p>절대값</p>
-</blockquote>
+<ul>
+<li><p>절대값</p>
 <pre>
 <code>
 np.abs(test_flist)
 </code>
-</pre>
-
-<blockquote>
-<p>평균</p>
-</blockquote>
+</pre></li>
+<li><p>평균</p>
+</li>
+</ul>
 <pre>
 <code>
 np.mean(test_list)
 </code>
 </pre>
 
-<blockquote>
-<p>표준편차</p>
-</blockquote>
+<ul>
+<li><p>표준편차</p>
 <pre>
 <code>
 np.std(test_list)
 </code>
-</pre>
-
-<blockquote>
-<p>분산</p>
-</blockquote>
+</pre></li>
+<li><p>분산</p>
+</li>
+</ul>
 <pre>
 <code>
 np.var(test_list)
 </code>
 </pre>
 
-<blockquote>
-<p>최댓값 인덱스 </p>
-</blockquote>
 <ul>
-<li>자주 사용합니다.</li>
-<li>최대값이 존재하고 있는 인덱스 넘버를 리턴 </li>
-<li>출력값이 인덱스</li>
+<li>최댓값 인덱스 <blockquote>
+<p>자주 사용합니다.<br>최대값이 존재하고 있는 인덱스 넘버를 리턴<br>출력값이 인덱스</p>
+</blockquote>
+</li>
 </ul>
 <pre>
 <code>
@@ -464,21 +446,20 @@ np.argmax(test_list_2nd)
 </code>
 </pre>
 
-<blockquote>
-<p>최소값 인덱스</p>
-</blockquote>
+<ul>
+<li>최소값 인덱스</li>
+</ul>
 <pre>
 <code>
 np.argmin(test_list_2nd)
 </code>
 </pre>
 
-<blockquote>
-<p>범위설정</p>
-</blockquote>
 <ul>
-<li>(start point, end point - 1, 스텝수)</li>
-<li>range() 함수와 동일하게 작동함</li>
+<li>범위설정<blockquote>
+<p>(start point, end point - 1, 스텝수)<br>range() 함수와 동일하게 작동함</p>
+</blockquote>
+</li>
 </ul>
 <pre>
 <code>
@@ -489,56 +470,59 @@ np.arange(10, 101, 10)
 </code>
 </pre>
 
-<blockquote>
-<p>데이터 갯수 사이 범위 설정<br>-시작 포인트, 마지막 포인트 - 1, 데이터 갯수</p>
+<ul>
+<li>데이터 갯수 사이 범위 설정 <blockquote>
+<p>시작 포인트, 마지막 포인트 - 1, 데이터 갯수</p>
 </blockquote>
+</li>
+</ul>
 <pre>
 <code>
 np.linspace(0, 10, 150)
 </code>
 </pre>
 
-<blockquote>
-<p>결측 확인</p>
-</blockquote>
+<ul>
+<li>결측 확인</li>
+</ul>
 <pre>
 <code>
 np.isnan(test_nan)
 </code>
 </pre>
 
-<blockquote>
-<p>발산 확인(무한대)</p>
-</blockquote>
+<ul>
+<li>발산 확인(무한대)</li>
+</ul>
 <pre>
 <code>
 np.isinf(test_nan)
 </code>
 </pre>
 
-<blockquote>
-<p>고유값 확인</p>
-</blockquote>
+<ul>
+<li>고유값 확인</li>
+</ul>
 <pre>
 <code>
 np.unique(test_list_3rd)
 </code>
 </pre>
 
-<blockquote>
-<p>고유값 갯수 확인</p>
-</blockquote>
+<ul>
+<li>고유값 갯수 확인</li>
+</ul>
 <pre>
 <code>
 len(np.unique(test_list_3rd))
 </code>
 </pre>
 
-<blockquote>
-<p>데이터 구조(모양)확인</p>
-</blockquote>
 <ul>
-<li>세로, 가로, value 갯수</li>
+<li>데이터 구조(모양)확인<blockquote>
+<p>세로, 가로, value 갯수</p>
+</blockquote>
+</li>
 </ul>
 <pre>
 <code>
@@ -546,11 +530,11 @@ np.shape(test_list_3rd)
 </code>
 </pre>
 
-<blockquote>
-<p>데이터 shape 변경</p>
-</blockquote>
 <ul>
-<li>어떤 조건에서 reshape 가능한가? 데이터 내부에 존재하는 속성 갯수가 같아야 함.</li>
+<li>데이터 shape 변경<blockquote>
+<p>어떤 조건에서 reshape 가능한가? 데이터 내부에 존재하는 속성 갯수가 같아야 함.</p>
+</blockquote>
+</li>
 </ul>
 <pre>
 <code>
@@ -559,13 +543,11 @@ np.reshape(test_list_3rd, (3, 8))
 </code>
 </pre>
 
-<blockquote>
-<p>데이터 차원확인</p>
-</blockquote>
 <ul>
-<li>데이터가 존재하는 축방향이 늘어나면 차원 수도 늘어남</li>
-<li>매트릭스는 2차원 데이터임.</li>
-<li>데이터 분석에서는 열 기준으로 차원을 이야기함</li>
+<li>데이터 차원확인<blockquote>
+<p>데이터가 존재하는 축방향이 늘어나면 차원 수도 늘어남<br>매트릭스는 2차원 데이터임.<br>데이터 분석에서는 열 기준으로 차원을 이야기함</p>
+</blockquote>
+</li>
 </ul>
 <pre>
 <code>
@@ -573,9 +555,9 @@ np.ndim(test_list_3rd)
 </code>
 </pre>
 
-<blockquote>
-<p>전치 행렬</p>
-</blockquote>
+<ul>
+<li>전치 행렬</li>
+</ul>
 <pre>
 <code>
 test_list_2nd
@@ -614,9 +596,12 @@ array_list = [1, 2, 4.5]
 </code>
 </pre>
 
-<blockquote>
-<p>np.arange 함수로 생성<br>단 reshape에 들어가는 숫자 2개의 곱은 arange의 수와 일치해야 함</p>
+<ul>
+<li>np.arange 함수로 생성<blockquote>
+<p>단 reshape에 들어가는 숫자 2개의 곱은 arange의 수와 일치해야 함</p>
 </blockquote>
+</li>
+</ul>
 <pre>
 <code>
 np.arange(35).reshape(5, 7)
@@ -994,10 +979,7 @@ pet == '개'
 </pre>
 
 <ul>
-<li>연산<blockquote>
-<p>‘개’의 갯수 합</p>
-</blockquote>
-</li>
+<li>‘개’의 갯수 합</li>
 </ul>
 <pre>
 <code>
@@ -1005,18 +987,18 @@ pet == '개'
 </code>
 </pre>
 
-<blockquote>
-<p>하나라도 있다면 출력</p>
-</blockquote>
+<ul>
+<li>하나라도 있다면 출력</li>
+</ul>
 <pre>
 <code>
 (pet == '개').any()
 </code>
 </pre>
 
-<blockquote>
-<p>전체 데이터가 ‘개’인지</p>
-</blockquote>
+<ul>
+<li>전체 데이터가 ‘개’인지</li>
+</ul>
 <pre>
 <code>
 (pet == '개').all()
@@ -1110,7 +1092,7 @@ pet == '개'
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Numpy-Numeric-python"><span class="nav-number">1.</span> <span class="nav-text">Numpy (Numeric python)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-%EC%82%AC%EC%9A%A9%EC%9D%84-%EC%9C%84%ED%95%B4-%ED%8C%A8%ED%82%A4%EC%A7%80-%EB%B6%88%EB%9F%AC%EB%93%A4%EC%9D%B4%EA%B8%B0"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Numpy 사용을 위해 패키지 불러들이기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9E%A0%EA%B9%90%EC%9D%98-%EC%84%A0%ED%98%95%EB%8C%80%EC%88%98%ED%95%99"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">데이터분석을 위한 잠깐의 선형대수학</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%BA%90%EC%8A%A4%ED%8C%85"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">브로드캐스팅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-function-%ED%95%A8%EC%88%98-%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Numpy function(함수) - 유니버셜 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#numpy-%ED%95%A8%EC%88%98-%EC%8B%A4%EC%8A%B5"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">numpy 함수 실습</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-array-%EB%B0%B0%EC%97%B4-%ED%96%89%EB%A0%AC"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">Numpy array (배열, 행렬)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-shape%EC%9D%80-%EC%A0%95%EC%88%98-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8A%9C%ED%94%8C-%EB%A1%9C%EB%A7%8C-%EC%9E%85%EB%A0%A5%EA%B0%80%EB%8A%A5%ED%95%A9%EB%8B%88%EB%8B%A4"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">자료구조 shape은 정수, **[ ]**리스트, ( ) 튜플 로만 입력가능합니다.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%86%8D%EC%84%B1-%EB%B0%8F-%EB%82%B4%EC%9E%A5%ED%95%A8%EC%88%98"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">array 속성 및 내장함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%97%B0%EC%82%B0"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">array 연산</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%96%89%EB%A0%AC%EB%82%B4%EC%A0%81"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">행렬내적</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B2%A1%ED%84%B0-%EA%B0%80%EC%A4%91%ED%95%A9"><span class="nav-number">1.0.0.11.</span> <span class="nav-text">벡터 가중합</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%B2%A1%ED%84%B0%EC%9D%98-%EA%B0%80%EC%A4%91%ED%95%A9-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C"><span class="nav-number">1.0.0.11.1.</span> <span class="nav-text">벡터의 가중합 연습문제</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%9D%B8%EB%8D%B1%EC%8B%B1-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-%EB%A7%A4%EC%9A%B0%EC%A4%91%EC%9A%94"><span class="nav-number">1.0.0.12.</span> <span class="nav-text">array 인덱싱, 슬라이싱(매우중요)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8C%AC%EC%8B%9C-%EC%9D%B8%EB%8D%B1%EC%8B%B1"><span class="nav-number">1.0.0.13.</span> <span class="nav-text">팬시 인덱싱</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Numpy-Numeric-python"><span class="nav-number">1.</span> <span class="nav-text">Numpy (Numeric python)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-%EC%82%AC%EC%9A%A9%EC%9D%84-%EC%9C%84%ED%95%B4-%ED%8C%A8%ED%82%A4%EC%A7%80-%EB%B6%88%EB%9F%AC%EB%93%A4%EC%9D%B4%EA%B8%B0"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Numpy 사용을 위해 패키지 불러들이기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9E%A0%EA%B9%90%EC%9D%98-%EC%84%A0%ED%98%95%EB%8C%80%EC%88%98%ED%95%99"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">데이터분석을 위한 잠깐의 선형대수학</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%BA%90%EC%8A%A4%ED%8C%85"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">브로드캐스팅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-function-%ED%95%A8%EC%88%98-%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Numpy function(함수) - 유니버셜 함수</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%EC%88%98%EB%A6%AC%EC%97%B0%EC%82%B0"><span class="nav-number">1.0.0.4.0.1.</span> <span class="nav-text">수리연산</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%ED%86%B5%EA%B3%84%EC%97%B0%EC%82%B0"><span class="nav-number">1.0.0.4.0.2.</span> <span class="nav-text">통계연산</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EB%A1%9C%EC%A7%81%EC%97%B0%EC%82%B0"><span class="nav-number">1.0.0.4.0.3.</span> <span class="nav-text">로직연산</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%EA%B8%B0%ED%95%98"><span class="nav-number">1.0.0.4.0.4.</span> <span class="nav-text">기하</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#numpy-%ED%95%A8%EC%88%98-%EC%8B%A4%EC%8A%B5"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">numpy 함수 실습</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Numpy-array-%EB%B0%B0%EC%97%B4-%ED%96%89%EB%A0%AC"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">Numpy array (배열, 행렬)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-shape%EC%9D%80-%EC%A0%95%EC%88%98-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8A%9C%ED%94%8C-%EB%A1%9C%EB%A7%8C-%EC%9E%85%EB%A0%A5%EA%B0%80%EB%8A%A5%ED%95%A9%EB%8B%88%EB%8B%A4"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">자료구조 shape은 정수, **[ ]**리스트, ( ) 튜플 로만 입력가능합니다.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%86%8D%EC%84%B1-%EB%B0%8F-%EB%82%B4%EC%9E%A5%ED%95%A8%EC%88%98"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">array 속성 및 내장함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%97%B0%EC%82%B0"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">array 연산</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%96%89%EB%A0%AC%EB%82%B4%EC%A0%81"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">행렬내적</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B2%A1%ED%84%B0-%EA%B0%80%EC%A4%91%ED%95%A9"><span class="nav-number">1.0.0.11.</span> <span class="nav-text">벡터 가중합</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%B2%A1%ED%84%B0%EC%9D%98-%EA%B0%80%EC%A4%91%ED%95%A9-%EC%97%B0%EC%8A%B5%EB%AC%B8%EC%A0%9C"><span class="nav-number">1.0.0.11.1.</span> <span class="nav-text">벡터의 가중합 연습문제</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-%EC%9D%B8%EB%8D%B1%EC%8B%B1-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-%EB%A7%A4%EC%9A%B0%EC%A4%91%EC%9A%94"><span class="nav-number">1.0.0.12.</span> <span class="nav-text">array 인덱싱, 슬라이싱(매우중요)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8C%AC%EC%8B%9C-%EC%9D%B8%EB%8D%B1%EC%8B%B1"><span class="nav-number">1.0.0.13.</span> <span class="nav-text">팬시 인덱싱</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
