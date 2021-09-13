@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="All stories about git, sql, python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://limjiin.github.io/categories/index.html">
+  <meta name="description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 테이블 형태의 데이터 구조를 가진  pandas 대해 배워보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-package-pandas-finance">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/13/python-pandas/index.html">
 <meta property="og:site_name" content="야무진의 기술 블로그">
-<meta property="og:description" content="All stories about git, sql, python">
+<meta property="og:description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 테이블 형태의 데이터 구조를 가진  pandas 대해 배워보자!">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-06T11:14:48.000Z">
-<meta property="article:modified_time" content="2021-09-06T13:36:03.689Z">
+<meta property="article:published_time" content="2021-09-13T03:17:26.611Z">
+<meta property="article:modified_time" content="2021-09-13T03:24:23.873Z">
 <meta property="article:author" content="limjiin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="pandas">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://limjiin.github.io/categories/">
+<link rel="canonical" href="https://limjiin.github.io/2021/09/13/python-pandas/">
 
 
 <script id="page-configurations">
@@ -40,13 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>categories | 야무진의 기술 블로그
-</title>
+  <title>python-package-pandas-finance | 야무진의 기술 블로그</title>
   
 
 
@@ -159,51 +160,177 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="en">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/13/python-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-package-pandas-finance
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">categories
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-<div class="post-meta">
+              <time title="Created: 2021-09-13 12:17:26 / Modified: 12:24:23" itemprop="dateCreated datePublished" datetime="2021-09-13T12:17:26+09:00">2021-09-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/09/13/python-pandas/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/13/python-pandas/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
   
 
-</div>
+        </div>
+      </header>
 
-</header>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              2 categories in total
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">9</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
+        <p>파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.<br>package에서 가장 자주 사용하는 테이블 형태의 데이터 구조를 가진  pandas 대해 배워보자!</p>
+<span id="more"></span>
+
+<h2 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h2><blockquote>
+<p>데이터 과학자를 위해 <strong>테이블형태</strong>로 데이터를 다룰 수 있게 해주는 패키지(python용 엑셀)<br>기존 데이터처리 라이브러리인 numpy 대신 주로 사용<br>일반인이 데이터분석을 접하기 쉽게 만들어준 결정적인 라이브러리<br>pandas만으로도 충분히 데이터 분석이 가능할 정도로 고수준의 함수들을 내장<br>앞으로 진행하는 데이터분석 과정에서 주로 사용하게 될 데이터구조</p>
+</blockquote>
+<pre>
+<code>
+# pandas 설치
+!pip install pandas
+
+# numpy import
+import numpy as np
+
+# pandas import
+import pandas as pd
+# pd라는 닉네임은 많은 파이썬 유저들이 사용하고 있는 닉네임, 분석을 위한 필수는 아니지만 되도록이면 위와 같이 사용을 해줍시다.
+
+pd.options.display.max_columns = 200
+# 불러들이는 데이터에 맞춰 모든 컬럼을 확인 가능하도록 옵션값을 주었습니다.
+pd.options.display.max_info_columns = 200
+# 그냥 실행 시키시고 지금 이해 못하셔도 좋습니다.
+</code>
+</pre>
+
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><blockquote>
+<p>엑셀에 익숙한 사용자를 위해 제작 된 <strong>테이블형태의 데이터 구조</strong><br>다양한 형태의 데이터를 받아 사용할 수 있으며 다양한 <strong>통계, 시각화 함수를 제공</strong>한다.  </p>
+</blockquote>
+<h4 id="데이터-불러오기"><a href="#데이터-불러오기" class="headerlink" title="데이터 불러오기"></a>데이터 불러오기</h4><p>pandas는 다양한 데이터 파일 형태를 지원하며 주로 csv, xlsx, sql, json을 사용합니다.</p>
+<ul>
+<li><strong><code>read_csv()</code></strong> </li>
+<li><strong><code>read_excel()</code></strong>  </li>
+<li><strong><code>read_sql()</code></strong>  </li>
+<li><strong><code>read_json()</code></strong>  </li>
+<li><strong><code>json_normalize()</code></strong></li>
+</ul>
+<pre>
+<code>
+# DataFrame 의 약자로서 형식적으로 df 변수명을 사용한다.
+# pandas패키지의 read_csv() 함수를 사용하여 loan.csv 파일을 불러들여 데이터프레임을 만들고 df 이름의 변수로 저장
+df = pd.read_csv('./data/loan1.csv')
+df
+</code>
+</pre>
+
+<h6 id="참고-쿼리를-사용하여-데이터베이스로부터-데이터프레임을-만드는-것도-가능합니다"><a href="#참고-쿼리를-사용하여-데이터베이스로부터-데이터프레임을-만드는-것도-가능합니다" class="headerlink" title="참고! 쿼리를 사용하여 데이터베이스로부터 데이터프레임을 만드는 것도 가능합니다."></a>참고! 쿼리를 사용하여 데이터베이스로부터 데이터프레임을 만드는 것도 가능합니다.</h6><blockquote>
+<p>데이터베이스로 부터 자료 읽기</p>
+</blockquote>
+<pre>
+<code>
+# 필요한 모듈 추가 설치 - 각 데이터베이스 별로 다릅니다.
+!pip install pymysql
+
+# sql 모듈 로드하기
+import pymysql
+# mysql, mariadb, sqlite, postgresql, ms-sql, oracle, mongodb
+
+# 접속하기
+# 접속방법 또한 DB 종류에 따라 다릅니다.
+con = pymysql.connect(host='db서버주소', port=3306, user='id', passwd='pwd', db='dbname')
+
+# query 만들기
+query = 'select * from samples'
+
+# 자료 불러오기
+data = pd.read_sql(query, con=con)
+</code>
+</pre>
+
+
+
+
     </div>
-    
 
     
     
     
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/pandas/" rel="tag"># pandas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/10/git-bash/" rel="prev" title="git-bash">
+      <i class="fa fa-chevron-left"></i> git-bash
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
 
 
           </div>
@@ -261,6 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pandas"><span class="nav-number">1.</span> <span class="nav-text">Pandas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame"><span class="nav-number">2.</span> <span class="nav-text">DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">2.0.1.</span> <span class="nav-text">데이터 불러오기</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%EC%B0%B8%EA%B3%A0-%EC%BF%BC%EB%A6%AC%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EB%A1%9C%EB%B6%80%ED%84%B0-%EB%8D%B0%EC%9D%B4%ED%84%B0%ED%94%84%EB%A0%88%EC%9E%84%EC%9D%84-%EB%A7%8C%EB%93%9C%EB%8A%94-%EA%B2%83%EB%8F%84-%EA%B0%80%EB%8A%A5%ED%95%A9%EB%8B%88%EB%8B%A4"><span class="nav-number">2.0.1.0.1.</span> <span class="nav-text">참고! 쿼리를 사용하여 데이터베이스로부터 데이터프레임을 만드는 것도 가능합니다.</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,9 +528,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://limjiin.github.io/categories/index.html";
-    this.page.identifier = "categories/index.html";
-    this.page.title = "categories";
+    this.page.url = "https://limjiin.github.io/2021/09/13/python-pandas/";
+    this.page.identifier = "2021/09/13/python-pandas/";
+    this.page.title = "python-package-pandas-finance";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
