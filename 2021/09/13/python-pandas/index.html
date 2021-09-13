@@ -28,7 +28,7 @@
 <meta property="og:description" content="파이썬의 기초 개념에서 부족한 내용을 다시 정리해본다.package에서 가장 자주 사용하는 테이블 형태의 데이터 구조를 가진  pandas 대해 배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-13T03:17:26.611Z">
-<meta property="article:modified_time" content="2021-09-13T03:35:04.687Z">
+<meta property="article:modified_time" content="2021-09-13T03:37:46.744Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="pandas">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-13 12:17:26 / Modified: 12:35:04" itemprop="dateCreated datePublished" datetime="2021-09-13T12:17:26+09:00">2021-09-13</time>
+              <time title="Created: 2021-09-13 12:17:26 / Modified: 12:37:46" itemprop="dateCreated datePublished" datetime="2021-09-13T12:17:26+09:00">2021-09-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,12 +320,10 @@ df1 = pd.read_excel('./data/loan1.xlsb',
                     sheet_name='',
                     engine='pyxlsb'
                     encoding='utf-8') # 윈도우는 cp949
-
-[pandas document](https://pandas.pydata.org/docs/)
-
 </code>
 </pre>
 
+<p><a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/">pandas document</a></p>
 <h2 id="데이터-살펴보기"><a href="#데이터-살펴보기" class="headerlink" title="데이터 살펴보기"></a>데이터 살펴보기</h2><blockquote>
 <p>데이터를 불러들인 후 가장 처음 하는 작업<br>데이터의 구조, 형태 파악하기</p>
 </blockquote>
@@ -360,7 +358,6 @@ df.index
 
 # 컬럼
 df.columns
-
 </code>
 </pre>
 
@@ -369,7 +366,6 @@ df.columns
 </blockquote>
 <pre>
 <code>
-
 df.iloc[0]
 # df.iloc[0].index
 # df.iloc[0].values
@@ -381,7 +377,6 @@ df.iloc[10:20:2]
 # 첫번째 0, 10, 20 인덱스 샘플 접근
 df.iloc[[0, 10, 20]]
 = df.take([0, 10, 20])
-
 </code>
 </pre>
 
@@ -390,7 +385,6 @@ df.iloc[[0, 10, 20]]
 </blockquote>
 <pre>
 <code>
-
 df['emp_title'].values
 # df[텍스트형태의 컬럼명]
 
@@ -400,7 +394,6 @@ values
 
 # 여러 컬럼 동시 접근
 df[['emp_title', 'int_rate']]
-
 </code>
 </pre>
 
