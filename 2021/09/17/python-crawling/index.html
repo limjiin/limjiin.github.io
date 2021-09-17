@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="웹크롤링 기초를 배워보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-crawler">
+<meta property="og:url" content="https://limjiin.github.io/2021/09/17/python-crawling/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="웹크롤링 기초를 배워보자!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-17T11:19:36.078Z">
+<meta property="article:modified_time" content="2021-09-17T11:23:37.722Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="crawler">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/09/17/python-crawling/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>python-crawler | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/17/python-crawling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-crawler
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-17 20:19:36 / Modified: 20:23:37" itemprop="dateCreated datePublished" datetime="2021-09-17T20:19:36+09:00">2021-09-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/09/17/python-crawling/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/17/python-crawling/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>웹크롤링 기초를 배워보자!</p>
+<span id="more"></span>
+
+<h1 id="데이터-크롤링"><a href="#데이터-크롤링" class="headerlink" title="데이터 크롤링"></a><strong>데이터 크롤링</strong></h1><h2 id="크롤링이란"><a href="#크롤링이란" class="headerlink" title="크롤링이란?"></a><strong>크롤링이란?</strong></h2><blockquote>
+<p>크롤러(crawler)는 자동화된 방법으로 웹을 탐색하는 컴퓨터 프로그램<br>‘웹 크롤링’(web crawling)??<br>‘데이터 크롤링’(data crawling)!!<br>구글링, 네이버 검색 등</p>
+</blockquote>
+<h2 id="웹-크롤링"><a href="#웹-크롤링" class="headerlink" title="웹 크롤링"></a><strong>웹 크롤링</strong></h2><blockquote>
+<p>웹 서비스 내 정보를 수집하는 일<br>필요한 정보가 있다면?<br>API 확인 -&gt; 없으면 직접 크롤링<br>다만 서비스 제공자의 입장에서는??</p>
+</blockquote>
+<h3 id="웹-서핑을-하는-의식의-흐름"><a href="#웹-서핑을-하는-의식의-흐름" class="headerlink" title="웹 서핑을 하는 의식의 흐름"></a>웹 <strong>서핑</strong>을 하는 의식의 흐름</h3><blockquote>
+<p>브라우저 오픈<br>원하는 인터넷페이지 주소 입력<br>화면이 열리면 찾고자 하는 정보를 스크롤 하면서 찾기<br>문자, 그림, 동영상 조회</p>
+</blockquote>
+<h3 id="웹-크롤링-하는-의식의-흐름"><a href="#웹-크롤링-하는-의식의-흐름" class="headerlink" title="웹 크롤링 하는 의식의 흐름"></a>웹 <strong>크롤링</strong> 하는 의식의 흐름</h3><blockquote>
+<p>정보를 가져오고자 하는 url 정의<br>url 정보로 requests로 정보 요청<br>text 정보를 html로 변환<br>html에서 우리가 필요한 정보만 선별</p>
+</blockquote>
+<h3 id="웹-크롤링을-위해-BeautifulSoup-사용"><a href="#웹-크롤링을-위해-BeautifulSoup-사용" class="headerlink" title="웹 크롤링을 위해 BeautifulSoup 사용"></a>웹 크롤링을 위해 BeautifulSoup 사용</h3><blockquote>
+<p>requests는 요청을 받기는 하지만 text로만 받음<br>API는 통신을 위해 정형화 된 데이터 형태의 text<br>우리가 원하는 데이터로 가공하기 위해 편의상 html로 변환<br>text를 html로 변환하는 모듈이 beautifulSoup</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></p>
+<h3 id="간단한-데이터-크롤링으로-기본-개념잡기"><a href="#간단한-데이터-크롤링으로-기본-개념잡기" class="headerlink" title="간단한 데이터 크롤링으로 기본 개념잡기"></a>간단한 데이터 크롤링으로 기본 개념잡기</h3><pre>
+<code>
+# 필요패키지 import
+import numpy as np
+import pandas as pd
+import requests # 크롤링에 사용하는 패키지
+from bs4 import BeautifulSoup # html 변환에 사용함
+
+# url정의
+url = 'https://naver.com'
+
+# requests로 url에 정보요청
+response= requests.get(url)
+
+# 정리되지 않은 정보
+response.text
+
+# 정보를 html 변환 (보기 쉽게)
+html = BeautifulSoup(response.text, 'html.parser')
+
+# html 내에서 우리가 보고 싶은 정보만 선별
+html.select('img')
+
+# 다음 뉴스 페이지 크롤링
+url1 = 'https://www.daum.net/'
+
+response = requests.get(url1)
+
+html1 = BeautifulSoup(response.text, 'html.parser')
+
+html1.select('img')
+</code>
+</pre>
+
+<h3 id="실제-개발자가-작성한-코드로-확인된다"><a href="#실제-개발자가-작성한-코드로-확인된다" class="headerlink" title="실제 개발자가 작성한 코드로 확인된다"></a>실제 개발자가 작성한 코드로 확인된다</h3><blockquote>
+<p>정제되지 않은 데이터로 가독성이 좋지 않음<br>우리는 이 중에서 우리가 원하는 정보를 선별해서 가져오는 작업을 진행합니다.<br>그러기에 html의 기본 구성을 살펴보도록 하겠습니다.</p>
+</blockquote>
+<h4 id="웹-페이지의-구성"><a href="#웹-페이지의-구성" class="headerlink" title="웹 페이지의 구성"></a>웹 페이지의 구성</h4><blockquote>
+<p><strong>HTML(Hyper Text Markup Language)</strong><br>www 를 구성하는데 사용하는 국제표준 언어로서 컨텐츠와 레이아웃을 담고 있다</p>
+</blockquote>
+<blockquote>
+<p><strong>&lt;태그&gt;</strong> 내용 <strong>&lt;/태그&gt;</strong><br>&lt;tag이름 class=”class이름1 class이름2” id=”주민번호” href=”주소”&gt;&lt;/tag이름&gt;</p>
+</blockquote>
+<blockquote>
+<p>형태나 속성을 묘사하기 위한 구조적 언어 : HTML, CSS (계층이 있음)<br>웹의 작동 및 제어를 위한 프로그래밍 언어 :  Js</p>
+</blockquote>
+<h4 id="셀렉터"><a href="#셀렉터" class="headerlink" title="셀렉터"></a>셀렉터</h4><blockquote>
+<p>용도 : html에서 내가 원하는 내용을 찾아내기 위해서<br><span class="news" id="1234">비비고 왕교자</span></p>
+</blockquote>
+<ul>
+<li><p>단일 셀렉터</p>
+<blockquote>
+<p>html.select(‘span’) # 태그 이름이 span인 친구들 다 들고 옴<br>tag : span<br>class(별명, 그룹명) : .news</p>
+</blockquote>
+</li>
+<li><p>클래스 포함 셀렉터</p>
+<blockquote>
+<p>html.select(‘span.news’)</p>
+</blockquote>
+</li>
+<li><p>id 포함 셀렉터</p>
+<blockquote>
+<p>id(고유값) : #1234<br>html.select(‘span#1234’)</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="복합-셀렉터"><a href="#복합-셀렉터" class="headerlink" title="복합 셀렉터"></a>복합 셀렉터</h4><pre><code>1. 조합 셀렉터
+&lt;span&gt;1&lt;/span&gt;
+&lt;span class=&quot;txt&quot;&gt;2&lt;/span&gt;
+&lt;em class=&quot;txt&quot;&gt;3&lt;/em&gt;
+
+태그 이름이 span이고 클래스 이름은 txt인 라인을 찾고 싶다. : span.txt
+li 태그 중에서 id가 name 인 라인을 찾고\ 싶다. : li#name
+
+2. 경로 셀렉터
+&lt;ul&gt;
+    &lt;li&gt;&lt;span&gt;이걸 찾으려면?&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span&gt;이건 아님&lt;/span&gt;
+
+ul 태그안 li 태그 안 span 라인을 찾는다
+ul &gt; li &gt; span 혹은 ul li span
+</code></pre>
+<pre>
+<code>
+# 슬의생 드라마 크롤링
+url2 = 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=%EC%8A%AC%EC%9D%98%EC%83%9D'
+
+response = requests.get(url2)
+
+html2 = BeautifulSoup(response.text, 'html.parser')
+
+html2.select('dd.cont')[0].text
+
+for con in html2.select('dd.cont'):
+    print(con.text)
+
+# 슬의생 기사 크롤링
+for title in html2.select('a.fn_tit_u')[1:]: #a.tit_main, fn_tit_n
+    print('-'*20)
+    print(title.text)
+
+# 3개 이상의 드라마 크롤링
+import time
+
+dr_nm = ['도깨비', '호텔델루나', '슬기로운의사생활']
+
+# name = input('제목을 입력해주세요 : ')
+
+for name in dr_nm:
+    # 순환은 빠르다
+    print('-'*20)
+    print(f'&#123;name&#125; 크롤링 중입니다.')
+    url3 = f'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q=&#123;name&#125;'
+
+    # 초당 40~50회 요청
+    # 다음에서 기계가 요청하는구나 막힘
+
+    # 차단막는 코드
+    seed = np.random.randint(100) # 시드도 난수로 만들고
+    np.random.seed(seed) # 시드 생성
+    a = np.random.randint(5) # 시드에서 난수 생성
+    time.sleep(a)
+
+    response = requests.get(url3)
+
+    html3 = BeautifulSoup(response.text, 'html.parser')
+
+    print(html3.select('dd.cont')[0].text)
+print('크롤링 종료')
+</code>
+</pre>
+
+<h2 id="다음에서-로또번호-가져오기"><a href="#다음에서-로또번호-가져오기" class="headerlink" title="다음에서 로또번호 가져오기"></a>다음에서 로또번호 가져오기</h2><ul>
+<li>로또 번호 1개 가져오기</li>
+</ul>
+<pre>
+<code>
+# url 설정
+url5 = 'https://search.daum.net/search?nil_suggest=btn&w=tot&DA=SBC&q=980%ED%9A%8C+%EB%8B%B9%EC%B2%A8+%EB%B2%88%ED%98%B8'
+
+# requests로 데이터 요청하기
+response = requests.get(url5)
+
+# html로 변환
+html5 = BeautifulSoup(response.text, 'html.parser')
+
+html5.select('span.ball')
+
+ball_num = []
+for ball in html5.select('span.ball')[:-2]:
+    ball = ball.text
+    ball_num.append(ball)
+ball_num
+</code>
+</pre>
+
+<ul>
+<li>전체 로또 번호 가져오기</li>
+</ul>
+<pre>
+<code>
+total_lotto = []
+
+for i in range(680, 981):
+    print('-'*20)
+    print(f'&#123;i&#125;회차 당첨번호 크롤링 중입니다.')
+    url5 = f'https://search.daum.net/search?nil_suggest=btn&w=tot&DA=SBC&q=&#123;i&#125;회
+차+당첨+번호'
+
+    # 차단막는 코드
+    seed = np.random.randint(100) # 시드도 난수로 만들고
+    np.random.seed(seed) # 시드 생성
+    a = np.random.randint(5) # 시드에서 난수 생성
+    time.sleep(a)
+
+    # requests로 데이터 요청하기
+    response = requests.get(url5)
+
+    # html로 변환
+    html5 = BeautifulSoup(response.text, 'html.parser')
+
+    lotto = []
+    for ball in html5.select('span.ball')[:-2]:
+        lotto.append(ball.text)
+    total_lotto.append(lotto)
+
+print('크롤링이 종료되었습니다.')
+</code>
+</pre>
+
+<ul>
+<li>로또 번호 그래프 만들기</li>
+</ul>
+<pre>
+<code>
+lotto_array = np.array(total_lotto)
+
+lotto_array.shape
+
+# 1열로 만들어줌
+lotto_array.reshape(-1, ).shape
+
+# countplot으로 만들기
+import seaborn as sns
+import matplotlib.pyplot as plt
+plt.figure(figsize=(15, 15))
+sns.countplot(lotto_array.reshape(-1, ))
+
+# 저장하기
+df = pd.DataFrame(total_lotto)
+df.to_csv('total_lotto.csv')
+</code>
+</pre>
+
+<h3 id="웹-크롤링-에러-코드"><a href="#웹-크롤링-에러-코드" class="headerlink" title="웹 크롤링 에러 코드"></a>웹 크롤링 에러 코드</h3><ul>
+<li>100 : 우리 이런정보 내주는거야</li>
+<li>200 : 성공</li>
+<li>300 : 우리 이 사이트 이리루 이사했어 일루가</li>
+<li>400 : 유저가 요청을 잘못한경우</li>
+<li>500 : 서버 문제</li>
+</ul>
+<pre>
+<code>
+requests.codes.ok
+</code>
+</pre>
+
+<pre>
+<code>
+# 차단막는 코드
+seed = np.random.randint(100)
+np.random.seed(seed)
+a = np.random.randint(5)
+</code>
+</pre>
+
+<h2 id="네이버-키워드로-검색한-결과를-크롤링"><a href="#네이버-키워드로-검색한-결과를-크롤링" class="headerlink" title="네이버 키워드로 검색한 결과를 크롤링"></a><strong>네이버 키워드로 검색한 결과를 크롤링</strong></h2><pre>
+<code>
+key_word = input('키워드를 입력하세요 : ')
+url = f'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=&#123;key_word&#125;'
+response = requests.get(url)
+html = BeautifulSoup(response.text, 'html.parser')
+for name in html.select('a.api_txt_lines'):
+    print(name.text, name.attrs['href'])
+
+    temp_url = name.attrs['href']
+</code>
+</pre>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/crawler/" rel="tag"># crawler</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/16/python-image-visualization/" rel="prev" title="python-image-visualization">
+      <i class="fa fa-chevron-left"></i> python-image-visualization
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%AC%EB%A1%A4%EB%A7%81"><span class="nav-number">1.</span> <span class="nav-text">데이터 크롤링</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%ED%81%AC%EB%A1%A4%EB%A7%81%EC%9D%B4%EB%9E%80"><span class="nav-number">1.1.</span> <span class="nav-text">크롤링이란?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81"><span class="nav-number">1.2.</span> <span class="nav-text">웹 크롤링</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%9B%B9-%EC%84%9C%ED%95%91%EC%9D%84-%ED%95%98%EB%8A%94-%EC%9D%98%EC%8B%9D%EC%9D%98-%ED%9D%90%EB%A6%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">웹 서핑을 하는 의식의 흐름</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81-%ED%95%98%EB%8A%94-%EC%9D%98%EC%8B%9D%EC%9D%98-%ED%9D%90%EB%A6%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">웹 크롤링 하는 의식의 흐름</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81%EC%9D%84-%EC%9C%84%ED%95%B4-BeautifulSoup-%EC%82%AC%EC%9A%A9"><span class="nav-number">1.2.3.</span> <span class="nav-text">웹 크롤링을 위해 BeautifulSoup 사용</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%AC%EB%A1%A4%EB%A7%81%EC%9C%BC%EB%A1%9C-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90%EC%9E%A1%EA%B8%B0"><span class="nav-number">1.2.4.</span> <span class="nav-text">간단한 데이터 크롤링으로 기본 개념잡기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%8B%A4%EC%A0%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80-%EC%9E%91%EC%84%B1%ED%95%9C-%EC%BD%94%EB%93%9C%EB%A1%9C-%ED%99%95%EC%9D%B8%EB%90%9C%EB%8B%A4"><span class="nav-number">1.2.5.</span> <span class="nav-text">실제 개발자가 작성한 코드로 확인된다</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9B%B9-%ED%8E%98%EC%9D%B4%EC%A7%80%EC%9D%98-%EA%B5%AC%EC%84%B1"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">웹 페이지의 구성</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%85%80%EB%A0%89%ED%84%B0"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">셀렉터</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B3%B5%ED%95%A9-%EC%85%80%EB%A0%89%ED%84%B0"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">복합 셀렉터</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%8B%A4%EC%9D%8C%EC%97%90%EC%84%9C-%EB%A1%9C%EB%98%90%EB%B2%88%ED%98%B8-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0"><span class="nav-number">1.3.</span> <span class="nav-text">다음에서 로또번호 가져오기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81-%EC%97%90%EB%9F%AC-%EC%BD%94%EB%93%9C"><span class="nav-number">1.3.1.</span> <span class="nav-text">웹 크롤링 에러 코드</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%84%A4%EC%9D%B4%EB%B2%84-%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A1%9C-%EA%B2%80%EC%83%89%ED%95%9C-%EA%B2%B0%EA%B3%BC%EB%A5%BC-%ED%81%AC%EB%A1%A4%EB%A7%81"><span class="nav-number">1.4.</span> <span class="nav-text">네이버 키워드로 검색한 결과를 크롤링</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/09/17/python-crawling/";
+    this.page.identifier = "2021/09/17/python-crawling/";
+    this.page.title = "python-crawler";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
