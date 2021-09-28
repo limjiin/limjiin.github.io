@@ -28,7 +28,7 @@
 <meta property="og:description" content="지난 시간에는 간단하게 웹크롤링 기초를 익혔지만,이번에는 lxml, css 등 다양한 웹크롤링을 배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-27T09:17:03.753Z">
-<meta property="article:modified_time" content="2021-09-27T10:01:15.207Z">
+<meta property="article:modified_time" content="2021-09-28T09:57:02.426Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="crawler">
@@ -190,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-09-27 18:17:03 / Modified: 19:01:15" itemprop="dateCreated datePublished" datetime="2021-09-27T18:17:03+09:00">2021-09-27</time>
+              <time title="Created: 2021-09-27 18:17:03" itemprop="dateCreated datePublished" datetime="2021-09-27T18:17:03+09:00">2021-09-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-28 18:57:02" itemprop="dateModified" datetime="2021-09-28T18:57:02+09:00">2021-09-28</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -840,9 +846,11 @@ html = """
 </code>
 </pre>
 
-<h4 id="예제로-BeautifulSoup-익히기"><a href="#예제로-BeautifulSoup-익히기" class="headerlink" title="예제로 BeautifulSoup 익히기"></a>예제로 BeautifulSoup 익히기</h4><pre>
+<h4 id="예제로-BeautifulSoup-익히기"><a href="#예제로-BeautifulSoup-익히기" class="headerlink" title="예제로 BeautifulSoup 익히기"></a>예제로 BeautifulSoup 익히기</h4><ul>
+<li>예제1(BeautifulSoup 기초)</li>
+</ul>
+<pre>
 <code>
-# 예제1(BeautifulSoup 기초)
 # bs4 초기화
 soup = BeautifulSoup(html, 'html.parser')
 
@@ -878,8 +886,14 @@ print(dir(p2))
 for v in p2.next_element:
     pass
     # print(v)
+</code>
+</pre>
 
-# 예제2(Find, Find_all) 
+<ul>
+<li>예제2(Find, Find_all) </li>
+</ul>
+<pre>
+<code>
 # bs4
 soup2 = BeautifulSoup(html, 'html.parser')
 
@@ -960,6 +974,456 @@ for t in link10:
         else:
             print('-----', t)
             print('-----', t.string)
+</code>
+</pre>
+
+<h1 id="Section04-2"><a href="#Section04-2" class="headerlink" title="Section04-2"></a>Section04-2</h1><ul>
+<li>BeautifulSoup</li>
+<li>BeautifulSoup 사용 스크랩핑(2) - 이미지 다운로드</li>
+</ul>
+<pre>
+<code>
+import os
+import urllib.parse as rep
+import urllib.request as req
+from fake_useragent import UserAgent
+from bs4 import BeautifulSoup
+
+# Header 정보 초기화
+opener = req.build_opener()
+
+# User-Agent 정보
+opener.addheaders = [('User-agent', UserAgent().ie)]
+
+# Header 정보 삽입
+req.install_opener(opener)
+
+# 네이버 이미지 기본 URL(크롬 개발자 도구)
+base = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query='
+
+# 검색어
+quote = rep.quote_plus('호랑이')
+
+# URL 완성
+url = base + quote
+
+# 요청 URL 확인
+print(f'Request URL : &#123;url&#125;')
+
+# Request
+res = req.urlopen(url)
+
+# 이미지 저장 경로
+savePath = 'C:/imagedown' # C:\\imagedown\\
+
+# 폴더 생성 예외 처리(문제 발생 시 프로그램 종료)
+try:
+    # 기본 폴더가 있는지 체크
+    if not (os.path.isdir(savePath)):
+        # 없으면 폴더 생성
+        os.makedirs(os.path.join(savePath))
+except OSError as e:
+    # 에러 내용
+    print('folder creation failed.')
+    print(f'folder name : &#123;e.filename&#125;')
+
+    # 런타임 에러
+    raise RuntiomeError('System Exit!')
+else:
+    # 폴더 생성이 되었거나, 존재할 경우
+    print('folder is created!')
+
+# bs4 초기화
+soup = BeautifulSoup(res, 'html.parser')
+
+# print(soup.prettify())
+
+# select 사용
+img_list = soup.select('div.img_area > a.thumb._thumb > img')
+
+# find_all 사용할 경우
+img_list2 = soup.find_all('a', class_='thumb _thumb')
+
+for v in img_list2:
+    img_t = v.find('img')
+    print(img_t.attrs['data-source'])
+
+# print(img_list)
+
+for i img in enumerate(img_list, 1):
+    print()
+    print()
+    # 속성 확인
+    # print(img['data-source'], i)
+    
+    # 저장 파일명 및 경로
+    fullFileName = os.path.join(savePath, savePath + str(i) + 'png')
+    
+    # 파일명
+    print(fullFileName)
+    
+    # 다운로드 요청(URL, 다운로드 경로)
+    # 이미지 최대 50장 저장
+    req.urlretrieve(img['data-source'], fulFileName)
+    
+# 다운로드 완료 시 출력
+print('downloads succeed!')
+__
+</code>
+</pre>
+
+<h1 id="Section04-3"><a href="#Section04-3" class="headerlink" title="Section04-3"></a>Section04-3</h1><ul>
+<li>BeautifulSoup</li>
+<li>BeautifulSoup 사용 스크랩핑(3) - 로그인 처리</li>
+</ul>
+<pre>
+<code>
+import requests as req
+from fake_useragent import UserAgent
+from bs4 import BeautifulSoup
+
+login_info = &#123;
+    'redirectUrl' : 'https://www.danawa.com/',
+    'loginMemberType' : 'general',
+    'id' : '1234',
+    'password' : 'a1234'
+&#125;
+
+# Headers 정보
+headers = &#123;
+    'User-Agent' : UserAgent().chrome,
+    'Referer' : 'https://auth.danawa.com/login?url=http%3A%2F%2Fwww.danawa.com%2F'
+&#125;
+
+with req.session() as s:
+    # Request(로그인 시도)
+    res = s.post('https://auth.danawa.com/login', login_info, headers=headers)
+    
+    # 로그인 시도 실패 시 예외
+    if res.status_code != 200:
+        raise Exception('Login failed!')
+        
+    # 본문 수신 데이터 확인
+    # print(res.content.decode('UTF-8'))
+    
+    # 로그인 성공 후 세션 정보를 가지고 페이지 이동
+    res = s.get('https://buyer.danawa.com/order/Order/orderList', headers=headers)
+    
+    # Euc-kr(한글 깨질 경우)
+    # res.encoding = 'euc-kr'
+    
+    # 페이지 이동 후 수신 데이터 확인
+    print(res.text)
+
+        # bs4 초기화
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    # 로그인 성공 체크
+    check_name = soup.find('p', class_='user')
+    print(check_name)
+
+    if check_name is None:
+        raise Exception('Login failed, worong Password')
+
+    # 선택자 사용
+    info_list = soup.select('div.my_info > div.sub_info > ul.info_list > li')
+
+    # 확인
+    print(info_list)
+
+    # 이 부분에서 재요청, 파일 다운로드, DB 저장, 파일쓰기(엑셀)
+
+    # 제목
+    print()
+    print('***** My Info *****')
+
+    for v in info_list:
+        # 속성 메소드 확인
+        # print(dir(v))
+
+        # 필요한 텍스트 추출
+        proc, val = v.find('span').string.strip(), v.find('strong').string.strip()
+        print(f'&#123;proc&#125; : &#123;val&#125;')
+</code>
+</pre>
+
+<h1 id="Section05-1"><a href="#Section05-1" class="headerlink" title="Section05-1"></a>Section05-1</h1><ul>
+<li>Selenium</li>
+<li>Selenium 사용 실습(1) - 설정 및 기본 테스트</li>
+</ul>
+<pre>
+<code>
+!pip install selenium
+
+# selenium 임포트
+from selenium import webdriver
+
+# webdriver 설정(Chrome, Firefox 등)
+browser = webdriver.Chrome('./chromedriver.exe')
+
+# 크롬 브라우저 내부 대기
+browser.implicitly_wait(5)
+
+# 속성 확인
+print(dir(browser))
+
+# 브라우저 사이즈
+# browser.set_window_size(1920, 1280) # maximize_window(), minimize_window()
+browser.maximize_window()
+
+# 페이지 이동
+browser.get('https://www.daum.net')
+
+# 페이지 내용
+print(f'Page Contents : &#123;browser.page_source&#125;')
+
+# 세션 값 출력
+print(f'Session ID : &#123;browser.session_id&#125;')
+
+# 타이틀 출력
+print(f'Title : &#123;browser.title&#125;')
+
+# 현재 URL 출력
+print(f'URL : &#123;browser.current_url&#125;')
+
+# 현재 쿠키 정보 출력
+print(f'URL : &#123;browser.get_cookies&#125;')
+
+# 검색창 input 선택
+element = browser.find_element_by_css_selector('div.inner_search > input.tf_keyword')
+
+# 검색어 입력
+element.send_keys('방탄소년단')
+
+# 검색(From Submit)
+element.submit()
+
+# 스크린 샷 저장 1
+browser.save_screenshot('C:/website_ch1.jpg')
+
+# 스크린 샷 저장 2
+browser.get_screenshot_as_file('C:/website_ch2.jpg')
+</code>
+</pre>
+
+<h1 id="Section05-2"><a href="#Section05-2" class="headerlink" title="Section05-2"></a>Section05-2</h1><ul>
+<li>Selenium</li>
+<li>Selenium 사용 실습(2) - 실습 프로젝트(1)</li>
+</ul>
+<pre>
+<code>
+!pip install xlsxwriter
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+# 엑셀 처리 선언
+workbook = xlsxwriter.Workbook("C:/crawling_result.xlsx")
+
+# 워크 시트
+worksheet = workbook.add_worksheet()
+
+# webdriver 설정(Chrome, Firefox 등) - 일반 모드
+browser = webdriver.Chrome('./chromedriver.exe')
+
+# 크롬 브라우저 내부 대기
+browser.implicitly_wait(5)
+
+# 브라우저 사이즈
+browser.set_window_size(1920, 1280)  # maximize_window(), minimize_window()
+
+# 페이지 이동
+browser.get('http://prod.danawa.com/list/?cate=112758&15main_11_02')
+
+# 3초간 대기
+time.sleep(3)
+
+# 현재 페이지
+cur_page_num = 1
+
+# 크롤링 페이지 수
+target_crawl_num = 3
+
+# 엑셀 행 수
+ins_cnt = 1
+
+while cur_page_num <= target_crawl_num:
+
+    # bs4 초기화
+    soup = BeautifulSoup(browser.page_source, "html.parser")
+
+    # 소스코드 정리
+    # print(soup.prettify())
+
+    # 메인 상품 리스트 선택
+    pro_list = soup.select('div.main_prodlist.main_prodlist_list > ul > li')
+
+    # 상품 리스트 확인
+    # print(pro_list)
+
+    # 페이지 번호 출력
+    print('****** Current Page : &#123;&#125;'.format(cur_page_num), ' ******')
+    print()
+
+    # 필요 정보 추출(페이지 이동 크롤링)
+    for v in pro_list:
+        # 임시 출력
+        # print(v)
+
+        # 불필요한 영역 패스
+        if not v.find('div', class_='ad_header'):
+            # 상품명, 이미지, 가격
+            prod_name = v.select('p.prod_name > a')[0].text.strip()
+            prod_price = v.select('p.price_sect > a')[0].text.strip()
+
+            # 이미지 요청 후 바이트 변환
+            # img_data = BytesIO(req.urlopen(v.select('a.thumb_link > img')[0]).read())
+
+            # 엑셀 저장(텍스트)
+            worksheet.write('A%s' % ins_cnt, prod_name)
+            worksheet.write('B%s' % ins_cnt, prod_price)
+
+            # 엑셀 저장(이미지)
+            # worksheet.insert_image('C%s' % ins_cnt, prod_name, &#123;'image_data': img_data&#125;)
+
+            # 다음 행 증가
+            ins_cnt += 1
+
+        print()
+
+    print()
+
+    # 페이지 별 스크린 샷 저장
+    browser.save_screenshot("c:/target_page&#123;&#125;.png".format(cur_page_num))
+
+    # 페이지 증가
+    cur_page_num += 1
+
+    if cur_page_num > target_crawl_num:
+        print('Crawling Succeed.')
+        break
+
+    # 페이지 이동 클릭
+    WebDriverWait(browser, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.number_wrap > a:nth-child(&#123;&#125;)'.format(cur_page_num)))).click()
+
+    # 소스코드 리로드
+    # browser.refresh()
+
+    # BeautifulSoup 인스턴스 삭제
+    del soup
+
+    # 4초간 대기
+    time.sleep(4)
+
+# 브라우저 종료
+browser.quit()
+
+# 엑셀 파일 닫기
+workbook.close()
+</code>
+</pre>
+
+<h6 id="엑셀-이미지-저장-제외한-크롤링"><a href="#엑셀-이미지-저장-제외한-크롤링" class="headerlink" title="엑셀, 이미지 저장 제외한 크롤링"></a>엑셀, 이미지 저장 제외한 크롤링</h6><pre>
+<code>
+# selenium 임포트
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from bs4 import BeautifulSoup
+import urllib.request as req
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+
+# 엑셀 처리 선언
+workbook = xlsxwriter.Workbook('C:/crawling_result.xlsx')
+
+# 워크 시트
+worksheet = workbook.add_worksheet()
+
+# webdriver 설정(Chrome, Firefox 등) - Headless 모드(실행 안됨)
+# browser = webdriver.Chrome('./chromedriver.exe', options=chrome_options)
+
+# webdriver 설정(Chrome, Firefox 등) - 일반 모드
+browser = webdriver.Chrome('./chromedriver.exe')
+
+# 크롬 브라우저 내부 대기
+browser.implicitly_wait(5)
+
+# 브라우저 사이즈
+browser.set_window_size(1920, 1280) # maximize_window(), minimize_window()
+
+# 페이지 이동
+browser.get('http://prod.danawa.com/list/?cate=112758')
+
+# 2초간 대기
+time.sleep(2)
+
+# 현재 페이지
+cur_page = 1
+
+# 크롤링 페이지 수
+target_crawl_num = 5
+
+while cur_page <= target_crawl_num:
+
+    #bs4 초기화
+    soup = BeautifulSoup(browser.page_source, 'html.parser')
+
+    # 소스코드 정리
+    # print(soup.prettify())
+
+    # 메인 상품 리소스 선택
+    pro_list = soup.select('div.main_prodlist.main_prodlist_list > ul > li')
+
+    # 상품 리스트 확인
+    # print(pro_list)
+
+    # 페이지 번호 출력
+    print(f'********** Current Page : &#123;cur_page&#125;', '**********')
+    print()
+
+    # 필요 정보 추출
+    for v in pro_list:
+        # 임시 출력
+        # print(v)
+
+        if not v.find('div', class_='ad_header'):
+
+            # 상품명, 이미지, 가격
+            print()
+            print(v.select('p.prod_name > a')[0].text.strip())
+            print(v.select('a.thumb_link > img'))
+            print(v.select('p.price_sect > a')[0].text.strip())
+
+
+        print()
+    print()
+
+    # 페이지 별 스크린 샷 저장
+    browser.save_screenshot(f'C:/target_page&#123;cur_page&#125;.png')
+
+    # 페이지 증가
+    cur_page += 1
+
+    if cur_page > target_crawl_num:
+        print('Crawling Succeed.')
+        break
+
+    # 페이지 이동 클릭
+    WebDriverWait(browser, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, f'div.number_wrap > a:nth-child(&#123;cur_page&#125;)'))).click()
+
+    # 3초간 대기
+    time.sleep(3)
+
+    # BeautifulSoup 인스턴스 삭제
+    del soup
+
+# 브라우저 종료
+browser.close()
 </code>
 </pre>
 
@@ -1050,7 +1514,7 @@ for t in link10:
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-1"><span class="nav-number">1.</span> <span class="nav-text">Section01-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-2"><span class="nav-number">2.</span> <span class="nav-text">Section01-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-3"><span class="nav-number">3.</span> <span class="nav-text">Section01-3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lxml-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">lxml 설치하기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lxml%EB%A1%9C-%EC%8A%A4%ED%81%AC%EB%9E%A9%ED%95%91%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">lxml로 스크랩핑하기</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-4"><span class="nav-number">4.</span> <span class="nav-text">Section01-4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-1"><span class="nav-number">5.</span> <span class="nav-text">Section02-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-2"><span class="nav-number">6.</span> <span class="nav-text">Section02-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-3"><span class="nav-number">7.</span> <span class="nav-text">Section02-3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-1"><span class="nav-number">8.</span> <span class="nav-text">Section03-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-2"><span class="nav-number">9.</span> <span class="nav-text">Section03-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-3"><span class="nav-number">10.</span> <span class="nav-text">Section03-3</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Rest-API-GET-POST-DELETE-PUT-UPDATE-REPLACE-FETCH-UPDATE-MODIFY"><span class="nav-number">10.0.0.0.0.1.</span> <span class="nav-text">Rest API : GET, POST, DELETE, PUT: UPDATE, REPLACE(FETCH : UPDATE, MODIFY)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section04-1"><span class="nav-number">11.</span> <span class="nav-text">Section04-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">this is h1 area</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">12.1.</span> <span class="nav-text">this is h2 area</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%98%88%EC%A0%9C%EB%A1%9C-BeautifulSoup-%EC%9D%B5%ED%9E%88%EA%B8%B0"><span class="nav-number">12.1.0.1.</span> <span class="nav-text">예제로 BeautifulSoup 익히기</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-1"><span class="nav-number">1.</span> <span class="nav-text">Section01-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-2"><span class="nav-number">2.</span> <span class="nav-text">Section01-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-3"><span class="nav-number">3.</span> <span class="nav-text">Section01-3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lxml-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">lxml 설치하기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lxml%EB%A1%9C-%EC%8A%A4%ED%81%AC%EB%9E%A9%ED%95%91%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">lxml로 스크랩핑하기</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section01-4"><span class="nav-number">4.</span> <span class="nav-text">Section01-4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-1"><span class="nav-number">5.</span> <span class="nav-text">Section02-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-2"><span class="nav-number">6.</span> <span class="nav-text">Section02-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section02-3"><span class="nav-number">7.</span> <span class="nav-text">Section02-3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-1"><span class="nav-number">8.</span> <span class="nav-text">Section03-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-2"><span class="nav-number">9.</span> <span class="nav-text">Section03-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section03-3"><span class="nav-number">10.</span> <span class="nav-text">Section03-3</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Rest-API-GET-POST-DELETE-PUT-UPDATE-REPLACE-FETCH-UPDATE-MODIFY"><span class="nav-number">10.0.0.0.0.1.</span> <span class="nav-text">Rest API : GET, POST, DELETE, PUT: UPDATE, REPLACE(FETCH : UPDATE, MODIFY)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section04-1"><span class="nav-number">11.</span> <span class="nav-text">Section04-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">this is h1 area</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">12.1.</span> <span class="nav-text">this is h2 area</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%98%88%EC%A0%9C%EB%A1%9C-BeautifulSoup-%EC%9D%B5%ED%9E%88%EA%B8%B0"><span class="nav-number">12.1.0.1.</span> <span class="nav-text">예제로 BeautifulSoup 익히기</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section04-2"><span class="nav-number">13.</span> <span class="nav-text">Section04-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section04-3"><span class="nav-number">14.</span> <span class="nav-text">Section04-3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section05-1"><span class="nav-number">15.</span> <span class="nav-text">Section05-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Section05-2"><span class="nav-number">16.</span> <span class="nav-text">Section05-2</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%EC%97%91%EC%85%80-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5-%EC%A0%9C%EC%99%B8%ED%95%9C-%ED%81%AC%EB%A1%A4%EB%A7%81"><span class="nav-number">16.0.0.0.0.1.</span> <span class="nav-text">엑셀, 이미지 저장 제외한 크롤링</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
