@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="이번에는 sql 조건문 활용과 피벗 테이블 그리고 집계함수에 대해 배워보쟈!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql-basic 4편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/08/sql-basic-4/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="이번에는 sql 조건문 활용과 피벗 테이블 그리고 집계함수에 대해 배워보쟈!">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/89237848/136556626-c9ca32b0-03f4-4721-a27f-b1c7b5490c81.PNG">
+<meta property="article:published_time" content="2021-10-08T12:21:46.679Z">
+<meta property="article:modified_time" content="2021-10-08T12:29:31.811Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/89237848/136556626-c9ca32b0-03f4-4721-a27f-b1c7b5490c81.PNG">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/08/sql-basic-4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>sql-basic 4편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/08/sql-basic-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql-basic 4편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-08 21:21:46 / Modified: 21:29:31" itemprop="dateCreated datePublished" datetime="2021-10-08T21:21:46+09:00">2021-10-08</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/08/sql-basic-4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/08/sql-basic-4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>이번에는 sql 조건문 활용과 피벗 테이블 그리고 집계함수에 대해 배워보쟈! </p>
+<span id="more"></span>
+
+<h1 id="조건문-활용하기"><a href="#조건문-활용하기" class="headerlink" title="조건문 활용하기"></a>조건문 활용하기</h1><h3 id="조건문-CASE-WHEN-사용법"><a href="#조건문-CASE-WHEN-사용법" class="headerlink" title="조건문 CASE WHEN 사용법"></a>조건문 CASE WHEN 사용법</h3><ul>
+<li>조건절은 FROM 키워드 뒤쪽으로 ORDER BY 키워드 보다는 앞쪽에 위치해야 한다.</li>
+</ul>
+<pre>
+<code>
+select 컬럼명1,
+       case when [조건1] then [결과값1]
+            when [조건2] then [결과값2]
+            else [결과값3]
+       end as 새로운 컬럼명
+from 테이블명;
+
+-----------------------------------------
+
+select case when gender = '001' then '여'
+            else '남' end as 성명;
+
+-----------------------------------------
+
+SELECT 별첨,
+        (
+         CASE
+             WHEN SCORE>= '90' THEN 'A학점'
+             WHEN (SCORE>= '80' AND SCORE < '90') THEN 'B학점'
+             WHEN (SCORE>= '70' AND SCORE < '80') THEN 'C학점'
+             WHEN (SCORE>= '60' AND SCORE < '70') THEN 'D학점'
+             ELSE 'F학점'
+         END
+        ) AS '학점'
+FROM TABLE;
+
+-----------------------------------------
+
+select
+    case dayofweek(now())
+        when '1' then '일요일'
+        when '2' then '월요일'
+        when '3' then '화요일'
+        when '4' then '수요일'
+        when '5' then '목요일'
+        when '6' then '금요일'
+        when '7' then '토요일'
+        else '나올 수 없음'
+    end as week;
+</code>
+</pre>
+
+<h3 id="IF-ELSE-사용법"><a href="#IF-ELSE-사용법" class="headerlink" title="IF ELSE 사용법"></a>IF ELSE 사용법</h3><ul>
+<li>IF(condition, value_if_true, value_if_false)로 조건절이 TRUE이면 첫번째 value, False면 두번째 valus 출력</li>
+</ul>
+<pre>
+<code>
+select if(dayofweek(now())=1, '월요일', '월요일아님');
+select if(dayofweek(now())<2 or dayofweek(now())>6, '주말', '주중');
+</code>
+</pre>
+
+<h1 id="SQL로-피벗-돌리기와-집계-함수-사용-결과의-필터링"><a href="#SQL로-피벗-돌리기와-집계-함수-사용-결과의-필터링" class="headerlink" title="SQL로 피벗 돌리기와 집계 함수 사용, 결과의 필터링"></a>SQL로 피벗 돌리기와 집계 함수 사용, 결과의 필터링</h1><h3 id="GROUP-BY-주요-개념"><a href="#GROUP-BY-주요-개념" class="headerlink" title="GROUP BY 주요 개념"></a>GROUP BY 주요 개념</h3><ul>
+<li>GROUP BY는 SQL을 사용하는 가장 중요한 이유 중 하나</li>
+<li>엑셀에서 피벗 기능과 거의 유사함</li>
+<li>집계 함수와 함께 사용하여 조회되는 데이터의 양을 줄일 수 있음</li>
+<li>SELECT 절에는 GROUP BY 절 뒤에 명시된 컬럼만을 사용할 수 있으며, GROUP BY절에 명시된 컬럼을 반드시 SELECT 절에 표현해준다.</li>
+<li>SELECT 뒤의 컬럼 순서는 사용자가 원하는 대로 나열하는 기준일 뿐이다. </li>
+<li>GROUP BY 뒤의 컬럼에 적은 순서대로 처리한다.</li>
+<li>GROUP BY의 내림차순 정렬 : 컬럼별로 지정이 가능하다. 기본 값은 오름차순이다.</li>
+</ul>
+<pre>
+<code>
+select name, continent, gnp
+from country;
+</code>
+</pre>
+
+<h3 id="컬럼명으로-GROUP-BY-하기"><a href="#컬럼명으로-GROUP-BY-하기" class="headerlink" title="컬럼명으로 GROUP BY 하기"></a>컬럼명으로 GROUP BY 하기</h3><pre>
+<code>
+select 그룹화할 컬럼명1, 그룹화할 컬럼명2, 집계함수
+from 테이블명
+group by 그룹화할 컬럼명1, 그룹화할 컬럼명2;
+</code>
+</pre>
+
+<h1 id="컬럼위치로-GROUP-BY-하기"><a href="#컬럼위치로-GROUP-BY-하기" class="headerlink" title="컬럼위치로 GROUP BY 하기"></a>컬럼위치로 GROUP BY 하기</h1><pre>
+<code>
+select 그룹화할 컬럼명1, 그룹화할 컬럼명2, 집계함수
+from 테이블명
+group by 1, 2;
+
+select name
+from country
+group by name; # 이름 정렬
+</code>
+</pre>
+
+<h5 id="참고-group-by와-distinct-의-차이"><a href="#참고-group-by와-distinct-의-차이" class="headerlink" title="참고 : group by와 distinct 의 차이?"></a>참고 : group by와 distinct 의 차이?</h5><pre>
+<code>
+select distinct name # 정렬하지 않음
+from country
+</code>
+</pre>
+
+<h3 id="집계-관련-함수"><a href="#집계-관련-함수" class="headerlink" title="집계 관련 함수"></a>집계 관련 함수</h3><p><img src="https://user-images.githubusercontent.com/89237848/136556626-c9ca32b0-03f4-4721-a27f-b1c7b5490c81.PNG" alt="aggregate"></p>
+<ul>
+<li>기본적으로 NULL값을 무시한다.</li>
+<li>GROUP BY 구분이 없는 쿼리 내에서 집계함수를 사용하면, 모든 행을 그룹화 하는 것과 동일함</li>
+<li>숫자 인수인 경우 분산 및 표준편차 함수는 DOUBLE 값을 반환함</li>
+</ul>
+<pre>
+<code>
+select continent, round(AVG(population), 0) as ppl_cnt
+from country
+group by continent;
+
+select continent, count(name) cnt
+from country
+group by continent;
+
+select continent, round(max(gnp), 0), round(avg(gnp), 0)
+from country
+group by continent;
+</code>
+</pre>
+
+<h3 id="GROUP-CONCAT-사용법"><a href="#GROUP-CONCAT-사용법" class="headerlink" title="GROUP_CONCAT() 사용법"></a>GROUP_CONCAT() 사용법</h3><ul>
+<li>그룹핑된 레코드를 원하는 구분자를 기준으로 문자열로 만들어줌<blockquote>
+<p>GROUP_CONCAT(필드명)<br>GROUP_CONCAT(필드명 separator ‘구분자’)<br>GROUP_CONCAT(distinct 필드명)<br>GROUP_CONCAT(필드명 order by 필드명)</p>
+</blockquote>
+</li>
+</ul>
+<pre>
+<code>
+select continent, group_concat(name)
+from country
+group by continent;
+
+select continent, group_concat(name separator ' ; ') # 구분자 지정 가능
+from country
+group by continent;
+
+select continent, group_concat(distinct name)
+from country
+group by continent;
+
+select continent, group_concat(name order by name desc)
+from country
+group by continent;
+</code>
+</pre>
+
+<h3 id="Having-절을-활용해서-집계결과-필터링-하기"><a href="#Having-절을-활용해서-집계결과-필터링-하기" class="headerlink" title="Having 절을 활용해서 집계결과 필터링 하기"></a>Having 절을 활용해서 집계결과 필터링 하기</h3><pre>
+<code>
+select 그룹화할 컬럼명1, 그룹화할 컬럼명2, 집계함수
+from 테이블명
+where 조건절
+group by 그룹화할 컬럼명1, 그룹화할 컬럼명2
+having 집계함수 조건; 
+</code>
+</pre>
+
+<h3 id="Having과-Group-by를-함께-사용할-때-순서"><a href="#Having과-Group-by를-함께-사용할-때-순서" class="headerlink" title="Having과 Group by를 함께 사용할 때 순서"></a>Having과 Group by를 함께 사용할 때 순서</h3><ul>
+<li>Having은 Group by 보다는 다음에, Order by 보다는 앞에</li>
+<li>Where 조건절의 필터는 데이터를 집계하기 전에 데이터를 읽어 들이는 시점에서 필터링 됨</li>
+<li>Having 조건절의 필터는 데이터를 집계한 후 값으로 필터링 됨</li>
+</ul>
+<pre>
+<code>
+select countrycode, count(language) as cnt, 
+        group_concat(language order by percentage desc),
+        group_concat(percentage order by percentage desc)
+from countrylanguage
+where percentage > 10
+group by countrycode
+having sum(percentage) < 80 and count(별첨) > 3;
+
+select countrycode, count(language) as cnt, 
+        group_concat(language order by percentage desc),
+        group_concat(percentage order by percentage desc)
+from countrylanguage
+where countrycode = 'KOR'
+group by countrycode;
+
+select continent, count(별첨) as cnt,
+    group_concat(name)
+from country
+group by continent
+having count(별첨) > 20;
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/08/sql-basic-3/" rel="prev" title="sql-basic 3편">
+      <i class="fa fa-chevron-left"></i> sql-basic 3편
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">조건문 활용하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-CASE-WHEN-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">조건문 CASE WHEN 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IF-ELSE-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.2.</span> <span class="nav-text">IF ELSE 사용법</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%EB%A1%9C-%ED%94%BC%EB%B2%97-%EB%8F%8C%EB%A6%AC%EA%B8%B0%EC%99%80-%EC%A7%91%EA%B3%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9-%EA%B2%B0%EA%B3%BC%EC%9D%98-%ED%95%84%ED%84%B0%EB%A7%81"><span class="nav-number">2.</span> <span class="nav-text">SQL로 피벗 돌리기와 집계 함수 사용, 결과의 필터링</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-BY-%EC%A3%BC%EC%9A%94-%EA%B0%9C%EB%85%90"><span class="nav-number">2.0.1.</span> <span class="nav-text">GROUP BY 주요 개념</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EB%AA%85%EC%9C%BC%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">2.0.2.</span> <span class="nav-text">컬럼명으로 GROUP BY 하기</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EC%9C%84%EC%B9%98%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">컬럼위치로 GROUP BY 하기</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%B0%B8%EA%B3%A0-group-by%EC%99%80-distinct-%EC%9D%98-%EC%B0%A8%EC%9D%B4"><span class="nav-number">3.0.0.0.1.</span> <span class="nav-text">참고 : group by와 distinct 의 차이?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A7%91%EA%B3%84-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">집계 관련 함수</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-CONCAT-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">3.0.2.</span> <span class="nav-text">GROUP_CONCAT() 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having-%EC%A0%88%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-%EC%A7%91%EA%B3%84%EA%B2%B0%EA%B3%BC-%ED%95%84%ED%84%B0%EB%A7%81-%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.3.</span> <span class="nav-text">Having 절을 활용해서 집계결과 필터링 하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having%EA%B3%BC-Group-by%EB%A5%BC-%ED%95%A8%EA%BB%98-%EC%82%AC%EC%9A%A9%ED%95%A0-%EB%95%8C-%EC%88%9C%EC%84%9C"><span class="nav-number">3.0.4.</span> <span class="nav-text">Having과 Group by를 함께 사용할 때 순서</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/08/sql-basic-4/";
+    this.page.identifier = "2021/10/08/sql-basic-4/";
+    this.page.title = "sql-basic 4편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
