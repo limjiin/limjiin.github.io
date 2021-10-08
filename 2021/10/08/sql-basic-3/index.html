@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/89237848/136554914-059d6989-ceea-4c22-9604-47aa0983bea8.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/89237848/136554982-e94addaf-24a3-4706-b445-40369a50ab8d.PNG">
 <meta property="article:published_time" content="2021-10-08T07:00:14.497Z">
-<meta property="article:modified_time" content="2021-10-08T12:14:16.965Z">
+<meta property="article:modified_time" content="2021-10-08T12:21:02.035Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="database">
@@ -197,7 +197,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-10-08 16:00:14 / Modified: 21:14:16" itemprop="dateCreated datePublished" datetime="2021-10-08T16:00:14+09:00">2021-10-08</time>
+              <time title="Created: 2021-10-08 16:00:14 / Modified: 21:21:02" itemprop="dateCreated datePublished" datetime="2021-10-08T16:00:14+09:00">2021-10-08</time>
             </span>
 
           
@@ -675,6 +675,119 @@ select substring('패스트캠퍼스', 2, 4)
 </code>
 </pre>
 
+<h1 id="숫자함수-다루기"><a href="#숫자함수-다루기" class="headerlink" title="숫자함수 다루기"></a>숫자함수 다루기</h1><h3 id="FORMAT-숫자-소수점자리수"><a href="#FORMAT-숫자-소수점자리수" class="headerlink" title="FORMAT(숫자, 소수점자리수)"></a>FORMAT(숫자, 소수점자리수)</h3><ul>
+<li>숫자를 지정한 자리 다음 숫자에 따라 반올림하고, 1000단귀로 ,를 표시해 줌</li>
+</ul>
+<pre>
+<code>
+SELECT FORMAT( 1000000.123456 , 4) ; -> 1,000,000.1235
+</code>
+</pre>
+
+<h3 id="BIN-숫자"><a href="#BIN-숫자" class="headerlink" title="BIN(숫자)"></a>BIN(숫자)</h3><ul>
+<li>숫자를 2진수로 변환</li>
+</ul>
+<pre>
+<code>
+select bin(10); -> 1010
+</code>
+</pre>
+
+<h3 id="HEX-숫자"><a href="#HEX-숫자" class="headerlink" title="HEX(숫자)"></a>HEX(숫자)</h3><ul>
+<li>숫자를 16진수로 변환</li>
+</ul>
+<pre>
+<code>
+select hex(16); -> 10
+</code>
+</pre>
+
+<h3 id="OCT-숫자"><a href="#OCT-숫자" class="headerlink" title="OCT(숫자)"></a>OCT(숫자)</h3><ul>
+<li>숫자를 8진수로 변환</li>
+</ul>
+<pre>
+<code>
+select oct(16); -> 20
+</code>
+</pre>
+
+<h3 id="ABS-숫자"><a href="#ABS-숫자" class="headerlink" title="ABS(숫자)"></a>ABS(숫자)</h3><ul>
+<li>숫자의 절대값을 변환</li>
+</ul>
+<pre>
+<code>
+select abs(-16); -> 16
+</code>
+</pre>
+
+<h3 id="CEILING-숫자"><a href="#CEILING-숫자" class="headerlink" title="CEILING(숫자)"></a>CEILING(숫자)</h3><ul>
+<li>숫자 보다 큰 정수 중 가장 작은 수</li>
+</ul>
+<pre>
+<code>
+select ceiling(16.3); -> 17
+</code>
+</pre>
+
+<h3 id="FLOOR-숫자"><a href="#FLOOR-숫자" class="headerlink" title="FLOOR(숫자)"></a>FLOOR(숫자)</h3><ul>
+<li>값보다 작은 정수 중 가장 큰 수</li>
+</ul>
+<pre>
+<code>
+select floor(16.7); -> 16
+</code>
+</pre>
+
+<h3 id="ROUND-숫자-ROUND-숫자-반올림자릿수"><a href="#ROUND-숫자-ROUND-숫자-반올림자릿수" class="headerlink" title="ROUND(숫자), ROUND(숫자, 반올림자릿수)"></a>ROUND(숫자), ROUND(숫자, 반올림자릿수)</h3><pre>
+<code>
+SELECT ROUND( 16.7 ) ; -> 17 
+
+SELECT ROUND( 16.7 , 1 ) ; -> 16.7 
+</code>
+</pre>
+
+<h3 id="TRUNCATE-숫자1-숫자2"><a href="#TRUNCATE-숫자1-숫자2" class="headerlink" title="TRUNCATE(숫자1, 숫자2)"></a>TRUNCATE(숫자1, 숫자2)</h3><ul>
+<li>숫자1을 소수점을 기준으로 숫자2 위치 이외의 값을 버림</li>
+</ul>
+<pre>
+<code>
+select truncate(123.456, 1);
+</code>
+</pre>
+
+<h3 id="CONV-숫자-진법-바꿀진법"><a href="#CONV-숫자-진법-바꿀진법" class="headerlink" title="CONV(숫자, 진법, 바꿀진법)"></a>CONV(숫자, 진법, 바꿀진법)</h3><ul>
+<li>숫자를 기존의 진법 계산에서 바꿀 진법 계산으로 변경</li>
+</ul>
+<pre>
+<code>
+select conv(11, 10, 2) # 10진법 11을 2진법으로 변환
+</code>
+</pre>
+
+<h3 id="POW-숫자1-숫자2-SQRT-숫자"><a href="#POW-숫자1-숫자2-SQRT-숫자" class="headerlink" title="POW(숫자1, 숫자2) SQRT(숫자)"></a>POW(숫자1, 숫자2) SQRT(숫자)</h3><ul>
+<li>거듭제곱 및 제곱근을 구함</li>
+</ul>
+<pre>
+<code>
+SELECT POW( 2, 3 ) ; -- 2의 3제곱 -> 8 
+
+SELECT SQRT( 9 ) ; -- 루트 9 -> 3 
+</code>
+</pre>
+
+<h3 id="MOD-숫자1-숫자2"><a href="#MOD-숫자1-숫자2" class="headerlink" title="MOD(숫자1, 숫자2)"></a>MOD(숫자1, 숫자2)</h3><ul>
+<li>숫자1에서 숫자2를 나눈 나머지 값을 반환</li>
+</ul>
+<pre>
+<code>
+SELECT MOD( 5, 3 ) ; -> 2 
+ 
+SELECT 5 % 3 ; -> 2 
+
+SELECT 5 MOD 3 ; -> 2 
+</code>
+</pre>
+
     </div>
 
     
@@ -762,7 +875,7 @@ select substring('패스트캠퍼스', 2, 4)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%82%A0%EC%A7%9C%ED%95%A8%EC%88%98-%EB%8B%A4%EB%A3%A8%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">날짜함수 다루기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%98%84%EC%9E%AC-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84%EC%9D%84-%EA%B5%AC%ED%95%98%EB%8A%94-%ED%95%A8%EC%88%98"><span class="nav-number">1.0.1.</span> <span class="nav-text">현재 날짜와 시간을 구하는 함수</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSDATE-%EC%99%80-NOW-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">1.0.2.</span> <span class="nav-text">SYSDATE()와 NOW()의 차이점</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NOW-%EB%8A%94-%ED%95%98%EB%82%98%EC%9D%98-%EC%BF%BC%EB%A6%AC-%EB%82%B4%EC%97%90%EC%84%9C-%EA%B0%99%EC%9D%80-%EA%B0%92%EC%9D%84-%EB%A6%AC%ED%84%B4%ED%95%B4-%EC%A4%8C-%EC%A0%9C%EC%9D%BC-%EB%A8%BC%EC%A0%80-%EC%8B%A4%ED%96%89%ED%95%9C-%EC%8B%9C%EC%A0%90"><span class="nav-number">1.0.3.</span> <span class="nav-text">NOW()는 하나의 쿼리 내에서 같은 값을 리턴해 줌 (제일 먼저 실행한 시점)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSDATE-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%A3%BC%EC%9D%98"><span class="nav-number">1.0.4.</span> <span class="nav-text">SYSDATE() 사용 시 주의</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADDDATE-date-INTERVAL-expr-type-ADDDATE-expr-days"><span class="nav-number">1.0.5.</span> <span class="nav-text">ADDDATE(date, INTERVAL expr type), ADDDATE(expr, days)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADDTIME-expr-expr2"><span class="nav-number">1.0.6.</span> <span class="nav-text">ADDTIME(expr, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CURDATE"><span class="nav-number">1.0.7.</span> <span class="nav-text">CURDATE()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-expr"><span class="nav-number">1.0.8.</span> <span class="nav-text">DATE(expr)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-expr-expr2"><span class="nav-number">1.0.9.</span> <span class="nav-text">DATEDIFF(expr, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-ADD-date-INTERVAL-expr-type-DATE-SUB-date-INTERVAL-expr-type"><span class="nav-number">1.0.10.</span> <span class="nav-text">DATE_ADD(date, INTERVAL expr type), DATE_SUB(date, INTERVAL expr type)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type%EA%B3%BC-expr-%ED%98%95%EC%8B%9D"><span class="nav-number">1.0.11.</span> <span class="nav-text">type과 expr 형식</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-FORMAT-date-format"><span class="nav-number">1.0.12.</span> <span class="nav-text">DATE_FORMAT(date format)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STR-TO-DATE-str-format"><span class="nav-number">1.0.13.</span> <span class="nav-text">STR_TO_DATE(str, format)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBTIME-expr1-expr2"><span class="nav-number">1.0.14.</span> <span class="nav-text">SUBTIME(expr1, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-expr-expr2"><span class="nav-number">1.0.15.</span> <span class="nav-text">TIMEDIFF(expr,expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAY-date-DAYOFMONTH-date"><span class="nav-number">1.0.16.</span> <span class="nav-text">DAY(date), DAYOFMONTH(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAYWEEK-date-DAYOFMONTH-date"><span class="nav-number">1.0.17.</span> <span class="nav-text">DAYWEEK(date), DAYOFMONTH(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXTRACT-type-FROM-date"><span class="nav-number">1.0.18.</span> <span class="nav-text">EXTRACT(type FROM date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QUARTER-date"><span class="nav-number">1.0.19.</span> <span class="nav-text">QUARTER(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LAST-DAY-date"><span class="nav-number">1.0.20.</span> <span class="nav-text">LAST_DAY(date)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%AC%B8%EC%9E%90%ED%95%A8%EC%88%98-%EB%8B%A4%EB%A3%A8%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text">문자함수 다루기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASCII-%EB%AC%B8%EC%9E%90-CHAR-%EC%95%84%EC%8A%A4%ED%82%A4%EC%BD%94%EB%93%9C"><span class="nav-number">2.0.1.</span> <span class="nav-text">ASCII(문자), CHAR(아스키코드)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%95%84%EC%8A%A4%ED%82%A4%EC%BD%94%EB%93%9C%EB%9E%80-%EB%AF%B8%EA%B5%AD%EC%97%90%EC%84%9C-%ED%91%9C%EC%A4%80%ED%99%94%ED%95%9C-%EC%A0%95%EB%B3%B4-%EA%B5%90%ED%99%98%EC%9A%A9-7%EB%B9%84%ED%8A%B8-%EB%B6%80%ED%98%B8-%EC%B2%B4%EA%B3%84-%EB%AC%B8%EC%9E%90-%EC%9D%B8%EC%BD%94%EB%94%A9-%ED%8F%AC%ED%95%A8"><span class="nav-number">2.0.1.0.1.</span> <span class="nav-text">아스키코드란? 미국에서 표준화한 정보 교환용 7비트 부호 체계. 문자 인코딩 포함</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHAR-LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.2.</span> <span class="nav-text">CHAR_LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIT-LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.3.</span> <span class="nav-text">BIT_LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.4.</span> <span class="nav-text">LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCAT-%EB%AC%B8%EC%9E%90%EC%97%B41-%EB%AC%B8%EC%9E%90%EC%97%B42-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.5.</span> <span class="nav-text">CONCAT(문자열1, 문자열2, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCAT-WS-%EB%AC%B8%EC%9E%90%EC%97%B41-%EB%AC%B8%EC%9E%90%EC%97%B42-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.6.</span> <span class="nav-text">CONCAT_WS(문자열1, 문자열2, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ELT-%EC%9C%84%EC%B9%98-%EB%AC%B8%EC%9E%90%EC%97%B41-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.7.</span> <span class="nav-text">ELT(위치, 문자열1, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIELD-%EC%B0%BE%EB%8A%94-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%AC%B8%EC%9E%90%EC%97%B41-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.8.</span> <span class="nav-text">FIELD(찾는 문자열, 문자열1, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIND-IN-SET-%EC%B0%BE%EB%8A%94-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%AC%B8%EC%9E%90%EC%97%B4%EB%A6%AC%EC%8A%A4%ED%8A%B8"><span class="nav-number">2.0.9.</span> <span class="nav-text">FIND_IN_SET(찾는 문자열, 문자열리스트)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSTR-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%B6%80%EB%B6%84-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.10.</span> <span class="nav-text">INSTR(기준 문자열, 부분 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LOCATE-%EB%B6%80%EB%B6%84-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.11.</span> <span class="nav-text">LOCATE(부분 문자열, 기준 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9C%84%EC%B9%98-%EA%B8%B8%EC%9D%B4-%EC%82%BD%EC%9E%85%ED%95%A0-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.12.</span> <span class="nav-text">INSERT(기준 문자열 위치, 길이, 삽입할 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LEFT-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.13.</span> <span class="nav-text">LEFT(문자열, 길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RIGHT-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.14.</span> <span class="nav-text">RIGHT(문자열, 길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UCASE-%EB%AC%B8%EC%9E%90%EC%97%B4-UPPER-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.15.</span> <span class="nav-text">UCASE(문자열), UPPER(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCASE-%EB%AC%B8%EC%9E%90%EC%97%B4-LOWER-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.16.</span> <span class="nav-text">LCASE(문자열), LOWER(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LPAD-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4-%EC%B1%84%EC%9A%B8-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.17.</span> <span class="nav-text">LPAD(문자열, 길이, 채울 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPAD-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4-%EC%B1%84%EC%9A%B8-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.18.</span> <span class="nav-text">RPAD(문자열, 길이, 채울 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LTRIM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.19.</span> <span class="nav-text">LTRIM(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTRIM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.20.</span> <span class="nav-text">RTRIM(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRIM-%EB%AC%B8%EC%9E%90%EC%97%B4-TRIM-%EB%B0%A9%ED%96%A5-FROM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.21.</span> <span class="nav-text">TRIM(문자열), TRIM(방향 FROM 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REPLACE-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%8C%80%EC%83%81%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%B0%94%EA%BF%80%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.22.</span> <span class="nav-text">REPLACE(문자열, 대상문자열, 바꿀문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REVERSE-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.23.</span> <span class="nav-text">REVERSE(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPACE-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.24.</span> <span class="nav-text">SPACE(길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBSTRING-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%8B%9C%EC%9E%91%EC%9C%84%EC%B9%98-%EA%B8%B8%EC%9D%B4-SUBSTR-MID"><span class="nav-number">2.0.25.</span> <span class="nav-text">SUBSTRING(문자열, 시작위치, 길이), SUBSTR(), MID()</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%82%A0%EC%A7%9C%ED%95%A8%EC%88%98-%EB%8B%A4%EB%A3%A8%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">날짜함수 다루기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%98%84%EC%9E%AC-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84%EC%9D%84-%EA%B5%AC%ED%95%98%EB%8A%94-%ED%95%A8%EC%88%98"><span class="nav-number">1.0.1.</span> <span class="nav-text">현재 날짜와 시간을 구하는 함수</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSDATE-%EC%99%80-NOW-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">1.0.2.</span> <span class="nav-text">SYSDATE()와 NOW()의 차이점</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NOW-%EB%8A%94-%ED%95%98%EB%82%98%EC%9D%98-%EC%BF%BC%EB%A6%AC-%EB%82%B4%EC%97%90%EC%84%9C-%EA%B0%99%EC%9D%80-%EA%B0%92%EC%9D%84-%EB%A6%AC%ED%84%B4%ED%95%B4-%EC%A4%8C-%EC%A0%9C%EC%9D%BC-%EB%A8%BC%EC%A0%80-%EC%8B%A4%ED%96%89%ED%95%9C-%EC%8B%9C%EC%A0%90"><span class="nav-number">1.0.3.</span> <span class="nav-text">NOW()는 하나의 쿼리 내에서 같은 값을 리턴해 줌 (제일 먼저 실행한 시점)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SYSDATE-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%A3%BC%EC%9D%98"><span class="nav-number">1.0.4.</span> <span class="nav-text">SYSDATE() 사용 시 주의</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADDDATE-date-INTERVAL-expr-type-ADDDATE-expr-days"><span class="nav-number">1.0.5.</span> <span class="nav-text">ADDDATE(date, INTERVAL expr type), ADDDATE(expr, days)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADDTIME-expr-expr2"><span class="nav-number">1.0.6.</span> <span class="nav-text">ADDTIME(expr, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CURDATE"><span class="nav-number">1.0.7.</span> <span class="nav-text">CURDATE()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-expr"><span class="nav-number">1.0.8.</span> <span class="nav-text">DATE(expr)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-expr-expr2"><span class="nav-number">1.0.9.</span> <span class="nav-text">DATEDIFF(expr, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-ADD-date-INTERVAL-expr-type-DATE-SUB-date-INTERVAL-expr-type"><span class="nav-number">1.0.10.</span> <span class="nav-text">DATE_ADD(date, INTERVAL expr type), DATE_SUB(date, INTERVAL expr type)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type%EA%B3%BC-expr-%ED%98%95%EC%8B%9D"><span class="nav-number">1.0.11.</span> <span class="nav-text">type과 expr 형식</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATE-FORMAT-date-format"><span class="nav-number">1.0.12.</span> <span class="nav-text">DATE_FORMAT(date format)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STR-TO-DATE-str-format"><span class="nav-number">1.0.13.</span> <span class="nav-text">STR_TO_DATE(str, format)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBTIME-expr1-expr2"><span class="nav-number">1.0.14.</span> <span class="nav-text">SUBTIME(expr1, expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-expr-expr2"><span class="nav-number">1.0.15.</span> <span class="nav-text">TIMEDIFF(expr,expr2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAY-date-DAYOFMONTH-date"><span class="nav-number">1.0.16.</span> <span class="nav-text">DAY(date), DAYOFMONTH(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAYWEEK-date-DAYOFMONTH-date"><span class="nav-number">1.0.17.</span> <span class="nav-text">DAYWEEK(date), DAYOFMONTH(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXTRACT-type-FROM-date"><span class="nav-number">1.0.18.</span> <span class="nav-text">EXTRACT(type FROM date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QUARTER-date"><span class="nav-number">1.0.19.</span> <span class="nav-text">QUARTER(date)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LAST-DAY-date"><span class="nav-number">1.0.20.</span> <span class="nav-text">LAST_DAY(date)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%AC%B8%EC%9E%90%ED%95%A8%EC%88%98-%EB%8B%A4%EB%A3%A8%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text">문자함수 다루기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASCII-%EB%AC%B8%EC%9E%90-CHAR-%EC%95%84%EC%8A%A4%ED%82%A4%EC%BD%94%EB%93%9C"><span class="nav-number">2.0.1.</span> <span class="nav-text">ASCII(문자), CHAR(아스키코드)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%95%84%EC%8A%A4%ED%82%A4%EC%BD%94%EB%93%9C%EB%9E%80-%EB%AF%B8%EA%B5%AD%EC%97%90%EC%84%9C-%ED%91%9C%EC%A4%80%ED%99%94%ED%95%9C-%EC%A0%95%EB%B3%B4-%EA%B5%90%ED%99%98%EC%9A%A9-7%EB%B9%84%ED%8A%B8-%EB%B6%80%ED%98%B8-%EC%B2%B4%EA%B3%84-%EB%AC%B8%EC%9E%90-%EC%9D%B8%EC%BD%94%EB%94%A9-%ED%8F%AC%ED%95%A8"><span class="nav-number">2.0.1.0.1.</span> <span class="nav-text">아스키코드란? 미국에서 표준화한 정보 교환용 7비트 부호 체계. 문자 인코딩 포함</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHAR-LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.2.</span> <span class="nav-text">CHAR_LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIT-LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.3.</span> <span class="nav-text">BIT_LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LENGTH-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.4.</span> <span class="nav-text">LENGTH(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCAT-%EB%AC%B8%EC%9E%90%EC%97%B41-%EB%AC%B8%EC%9E%90%EC%97%B42-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.5.</span> <span class="nav-text">CONCAT(문자열1, 문자열2, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCAT-WS-%EB%AC%B8%EC%9E%90%EC%97%B41-%EB%AC%B8%EC%9E%90%EC%97%B42-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.6.</span> <span class="nav-text">CONCAT_WS(문자열1, 문자열2, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ELT-%EC%9C%84%EC%B9%98-%EB%AC%B8%EC%9E%90%EC%97%B41-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.7.</span> <span class="nav-text">ELT(위치, 문자열1, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIELD-%EC%B0%BE%EB%8A%94-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%AC%B8%EC%9E%90%EC%97%B41-%E2%80%A6-%EB%AC%B8%EC%9E%90%EC%97%B4N"><span class="nav-number">2.0.8.</span> <span class="nav-text">FIELD(찾는 문자열, 문자열1, …, 문자열N)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIND-IN-SET-%EC%B0%BE%EB%8A%94-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%AC%B8%EC%9E%90%EC%97%B4%EB%A6%AC%EC%8A%A4%ED%8A%B8"><span class="nav-number">2.0.9.</span> <span class="nav-text">FIND_IN_SET(찾는 문자열, 문자열리스트)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSTR-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%B6%80%EB%B6%84-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.10.</span> <span class="nav-text">INSTR(기준 문자열, 부분 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LOCATE-%EB%B6%80%EB%B6%84-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.11.</span> <span class="nav-text">LOCATE(부분 문자열, 기준 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT-%EA%B8%B0%EC%A4%80-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9C%84%EC%B9%98-%EA%B8%B8%EC%9D%B4-%EC%82%BD%EC%9E%85%ED%95%A0-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.12.</span> <span class="nav-text">INSERT(기준 문자열 위치, 길이, 삽입할 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LEFT-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.13.</span> <span class="nav-text">LEFT(문자열, 길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RIGHT-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.14.</span> <span class="nav-text">RIGHT(문자열, 길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UCASE-%EB%AC%B8%EC%9E%90%EC%97%B4-UPPER-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.15.</span> <span class="nav-text">UCASE(문자열), UPPER(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LCASE-%EB%AC%B8%EC%9E%90%EC%97%B4-LOWER-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.16.</span> <span class="nav-text">LCASE(문자열), LOWER(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LPAD-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4-%EC%B1%84%EC%9A%B8-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.17.</span> <span class="nav-text">LPAD(문자열, 길이, 채울 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPAD-%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B8%B8%EC%9D%B4-%EC%B1%84%EC%9A%B8-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.18.</span> <span class="nav-text">RPAD(문자열, 길이, 채울 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LTRIM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.19.</span> <span class="nav-text">LTRIM(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RTRIM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.20.</span> <span class="nav-text">RTRIM(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRIM-%EB%AC%B8%EC%9E%90%EC%97%B4-TRIM-%EB%B0%A9%ED%96%A5-FROM-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.21.</span> <span class="nav-text">TRIM(문자열), TRIM(방향 FROM 문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REPLACE-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%8C%80%EC%83%81%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%B0%94%EA%BF%80%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.22.</span> <span class="nav-text">REPLACE(문자열, 대상문자열, 바꿀문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REVERSE-%EB%AC%B8%EC%9E%90%EC%97%B4"><span class="nav-number">2.0.23.</span> <span class="nav-text">REVERSE(문자열)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPACE-%EA%B8%B8%EC%9D%B4"><span class="nav-number">2.0.24.</span> <span class="nav-text">SPACE(길이)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBSTRING-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%8B%9C%EC%9E%91%EC%9C%84%EC%B9%98-%EA%B8%B8%EC%9D%B4-SUBSTR-MID"><span class="nav-number">2.0.25.</span> <span class="nav-text">SUBSTRING(문자열, 시작위치, 길이), SUBSTR(), MID()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%88%AB%EC%9E%90%ED%95%A8%EC%88%98-%EB%8B%A4%EB%A3%A8%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">숫자함수 다루기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FORMAT-%EC%88%AB%EC%9E%90-%EC%86%8C%EC%88%98%EC%A0%90%EC%9E%90%EB%A6%AC%EC%88%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">FORMAT(숫자, 소수점자리수)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIN-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.2.</span> <span class="nav-text">BIN(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEX-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.3.</span> <span class="nav-text">HEX(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OCT-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.4.</span> <span class="nav-text">OCT(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ABS-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.5.</span> <span class="nav-text">ABS(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CEILING-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.6.</span> <span class="nav-text">CEILING(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FLOOR-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.7.</span> <span class="nav-text">FLOOR(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROUND-%EC%88%AB%EC%9E%90-ROUND-%EC%88%AB%EC%9E%90-%EB%B0%98%EC%98%AC%EB%A6%BC%EC%9E%90%EB%A6%BF%EC%88%98"><span class="nav-number">3.0.8.</span> <span class="nav-text">ROUND(숫자), ROUND(숫자, 반올림자릿수)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRUNCATE-%EC%88%AB%EC%9E%901-%EC%88%AB%EC%9E%902"><span class="nav-number">3.0.9.</span> <span class="nav-text">TRUNCATE(숫자1, 숫자2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONV-%EC%88%AB%EC%9E%90-%EC%A7%84%EB%B2%95-%EB%B0%94%EA%BF%80%EC%A7%84%EB%B2%95"><span class="nav-number">3.0.10.</span> <span class="nav-text">CONV(숫자, 진법, 바꿀진법)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POW-%EC%88%AB%EC%9E%901-%EC%88%AB%EC%9E%902-SQRT-%EC%88%AB%EC%9E%90"><span class="nav-number">3.0.11.</span> <span class="nav-text">POW(숫자1, 숫자2) SQRT(숫자)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOD-%EC%88%AB%EC%9E%901-%EC%88%AB%EC%9E%902"><span class="nav-number">3.0.12.</span> <span class="nav-text">MOD(숫자1, 숫자2)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
