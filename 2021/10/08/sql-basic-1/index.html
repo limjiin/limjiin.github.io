@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="데이터 베이스의 기초 툴, sql을  배워보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql-basic 1편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/08/sql-basic-1/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="데이터 베이스의 기초 툴, sql을  배워보자!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-08T06:28:28.989Z">
+<meta property="article:modified_time" content="2021-10-08T06:45:27.743Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/08/sql-basic-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>sql-basic 1편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/08/sql-basic-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql-basic 1편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-08 15:28:28 / Modified: 15:45:27" itemprop="dateCreated datePublished" datetime="2021-10-08T15:28:28+09:00">2021-10-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql/" itemprop="url" rel="index"><span itemprop="name">sql</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/08/sql-basic-1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/08/sql-basic-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>데이터 베이스의 기초 툴, sql을  배워보자!</p>
+<span id="more"></span>
+
+<h1 id="기획자와-마케터에게-SQL이-필요한-이유"><a href="#기획자와-마케터에게-SQL이-필요한-이유" class="headerlink" title="기획자와 마케터에게 SQL이 필요한 이유"></a>기획자와 마케터에게 SQL이 필요한 이유</h1><ul>
+<li>빠른 통신, 클라우드, IoT, 데이터 분석, 인공지능</li>
+<li>결론적으로 분석을 해야 하는 데이터의 양과 종류가 예전보다 더 많아짐</li>
+<li>데이터(프로그래머)에서 패턴(통계학자)을 찾아내어 비즈니스 기회(컨설턴트)로</li>
+<li>기업 내부의 데이터 저장/분석 환경</li>
+</ul>
+<h1 id="데이터베이스-핵심용어-따라잡기"><a href="#데이터베이스-핵심용어-따라잡기" class="headerlink" title="데이터베이스 핵심용어 따라잡기"></a>데이터베이스 핵심용어 따라잡기</h1><h3 id="데이터베이스-정의어-DDL"><a href="#데이터베이스-정의어-DDL" class="headerlink" title="데이터베이스 정의어 DDL"></a>데이터베이스 정의어 DDL</h3><ul>
+<li>스키마, 도메인, 테이블, 뷰, 인덱스를 정의하거나 변경 또는 제거할 때 사용하는 언어</li>
+<li>주로 데이터 분석을 하는 사용자/분석가 보다는 관리자(DBA)가 다루는 유형의 언어</li>
+</ul>
+<h3 id="데이터베이스-조작어-DML"><a href="#데이터베이스-조작어-DML" class="headerlink" title="데이터베이스 조작어 DML"></a>데이터베이스 조작어 DML</h3><ul>
+<li>데이터베이스 사용자가 응용 프로그램이나 질의어를 통하여 저장된 데이터를 실질적으로 관리하는데 사용되는 언어</li>
+<li>DML 주요 커맨드 유형인 SELECT, INSERT, UPDATE, DELETE 중에서도, 데이터분석가/ 기획자/ 마케터 등 데이터 조회 및 분석 업무를 하는 사용자는 주로 SELECT 문을 집중적으로 사용하게 됨 </li>
+</ul>
+<h3 id="INDEX"><a href="#INDEX" class="headerlink" title="INDEX"></a>INDEX</h3><ul>
+<li>인덱스는 일반 테이블이나 클러스터에서 쓰여지는 선택적인 객체로서, 데이터베이스 테이블 내의 원하는 레코드를 빠르게 찾아갈 수 있도록 만들어진 데이터 구조를 말함</li>
+<li>한마디로 찾고자 하는 데이터를 빨리 찾아갈 수 있도록 추가적으로 생성한 데이터임</li>
+<li>인덱스의 종류에는 다음과 같이 4가지 유형 존재<blockquote>
+<p>Primary : 중복되지 않은 유일키<br>Normal : 중복을 허용하는 인덱스<br>Unique : 중복을 허용하지 않는 유일키<br>Foreign : 다른 테이블과 관계성을 부여하는 키</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="기본키-Primary-Key-와-두번째-키-Secondary-Key-그리고-외래키-Foreign-Key"><a href="#기본키-Primary-Key-와-두번째-키-Secondary-Key-그리고-외래키-Foreign-Key" class="headerlink" title="기본키(Primary Key)와 두번째 키(Secondary Key) 그리고 외래키(Foreign Key)"></a>기본키(Primary Key)와 두번째 키(Secondary Key) 그리고 외래키(Foreign Key)</h3><ul>
+<li>Primary Key는 NOT NULL + Unique 개념, 즉 고유한 ID를 말함</li>
+<li>Secondary Key는 Unique할 필요가 없으며, 데이터를 빠르게 찾아가고자 하기 위해 지정한다</li>
+<li>Foreign Key는 하나 이상의 테이블을 연결하여 사용하는 관계형 데이터베이스에서 하나의 테이블 속성 또는 속성 집합이 다른 테이블의 기본키가 되는 것을 의미함</li>
+</ul>
+<h3 id="파티션-Partition"><a href="#파티션-Partition" class="headerlink" title="파티션(Partition)"></a>파티션(Partition)</h3><ul>
+<li>물리적으로 하나의 하드디스크를 논리적으로 두개 이상의 파티션으로 나누는 것과 유사한 개념</li>
+<li>논리적으로 나뉜 파티션은 데이터 조회 시 다른 파티션에 IO를 최대한 발생시키지 않도록 설계</li>
+<li>DBA 등 데이터베이스 관리자가 주로 신경 쓰는 영역</li>
+</ul>
+<h3 id="스키마-Schema"><a href="#스키마-Schema" class="headerlink" title="스키마(Schema)"></a>스키마(Schema)</h3><ul>
+<li>데이터베이스의 종류에 따라 스키마라는 의미가 여러 가지 의미로 사용됨</li>
+<li>기본적으로 데이터베이스 관리 시스템(DBMS)에서 데이터 구조와 그 표현법의 기술을 수용한 파일</li>
+<li>MySQL에서는 Database와 동일한 용어로 Schema 라는 용어를 사용함</li>
+<li>Oracle, DB@ 등에서는 Schema가 Database의 하위 개념으로 사용되기도 함</li>
+</ul>
+<h3 id="개체-Entity"><a href="#개체-Entity" class="headerlink" title="개체(Entity)"></a>개체(Entity)</h3><ul>
+<li>엔터티 = 테이블과 거의 유사한 개념</li>
+<li>엔터티 타입 = 테이블 속성(attribute)은 칼럼과 거의 유사한 개념</li>
+<li>스키마 = 테이블 스키마 = 테이블 구조도 = 속성들[속성1[속성명, 데이터타입, 길이]…]</li>
+</ul>
+<h3 id="ERD-Entity-Relationship-Diagram"><a href="#ERD-Entity-Relationship-Diagram" class="headerlink" title="ERD(Entity Relationship Diagram)"></a>ERD(Entity Relationship Diagram)</h3><ul>
+<li>데이터베이스 내 각 개체에 대한 관계를 그린 다이어그램</li>
+</ul>
+<h3 id="뷰-VIEW"><a href="#뷰-VIEW" class="headerlink" title="뷰(VIEW)"></a>뷰(VIEW)</h3><ul>
+<li>뷰는 여러 개의 테이블에서 원하는 모든 데이터(컬럼들)을 선택하여, 그 툴을 사용자 정의하여 나타낸 것</li>
+<li>사용하는 사람 입장에서는 마치 테이블과 유사함</li>
+<li>실제 테이블과 같이 물리적으로 데이터를 포함하지 않음, 논리적으로 하나의 테이블 처럼 보이게 함</li>
+</ul>
+<h3 id="저장-프로시저-Stored-Procedure"><a href="#저장-프로시저-Stored-Procedure" class="headerlink" title="저장 프로시저(Stored Procedure)"></a>저장 프로시저(Stored Procedure)</h3><ul>
+<li>일련의 쿼리를 마치 하나의 쿼리처럼 실행할 수 있는 쿼리의 집합</li>
+<li>자주 사용되는 일련의 쿼리 절차를 RDBMS 시스템에 저장한 것으로 영구저장모듈이라 부르기도 함</li>
+</ul>
+<h3 id="트랜잭션-Transaction"><a href="#트랜잭션-Transaction" class="headerlink" title="트랜잭션(Transaction)"></a>트랜잭션(Transaction)</h3><ul>
+<li>데이터베이스 내 한꺼번에 수행되어야 할 일련의 연산</li>
+<li>Commit, Rollback</li>
+</ul>
+<h1 id="SQL-기반의-데이터-분석"><a href="#SQL-기반의-데이터-분석" class="headerlink" title="SQL 기반의 데이터 분석"></a>SQL 기반의 데이터 분석</h1><ul>
+<li>데이터 분석 환경 및 도구(work bench)</li>
+<li>데이터 분석 환경 구성하기</li>
+<li>실습 데이터 살펴보기</li>
+<li>데이터 불러오기 </li>
+</ul>
+<h3 id="접속되어-있는-데이터베이스-목록-확인하기"><a href="#접속되어-있는-데이터베이스-목록-확인하기" class="headerlink" title="접속되어 있는 데이터베이스 목록 확인하기"></a>접속되어 있는 데이터베이스 목록 확인하기</h3><pre>
+<code>
+show databases;
+</code>
+</pre>
+
+<h3 id="s-가-들어가-있는-데이터-베이스-목록-가저오기"><a href="#s-가-들어가-있는-데이터-베이스-목록-가저오기" class="headerlink" title="s 가 들어가 있는 데이터 베이스 목록 가저오기"></a>s 가 들어가 있는 데이터 베이스 목록 가저오기</h3><pre>
+<code>
+show databases like '%s%';
+</code>
+</pre>
+
+<h3 id="맨-앞에-s-가-들어가-있는-데이터-베이스-목록-가저오기"><a href="#맨-앞에-s-가-들어가-있는-데이터-베이스-목록-가저오기" class="headerlink" title="맨 앞에 s 가 들어가 있는 데이터 베이스 목록 가저오기"></a>맨 앞에 s 가 들어가 있는 데이터 베이스 목록 가저오기</h3><pre>
+<code>
+show databases like 's%';
+</code>
+</pre>
+
+<h3 id="world-데이터에-접속하기"><a href="#world-데이터에-접속하기" class="headerlink" title="world 데이터에 접속하기"></a>world 데이터에 접속하기</h3><pre>
+<code>
+Use world;
+select database();
+</code>
+</pre>
+
+<h3 id="sakila-데이터에-접속하기"><a href="#sakila-데이터에-접속하기" class="headerlink" title="sakila 데이터에 접속하기"></a>sakila 데이터에 접속하기</h3><pre>
+<code>
+Use sakila;
+select database();
+</code>
+</pre>
+
+<h3 id="데이터-베이스의-table-확인하기"><a href="#데이터-베이스의-table-확인하기" class="headerlink" title="데이터 베이스의 table 확인하기"></a>데이터 베이스의 table 확인하기</h3><pre>
+<code>
+SHOW tables;
+</code>
+</pre>
+
+<h3 id="데이터-베이스의-table-확인하기-1"><a href="#데이터-베이스의-table-확인하기-1" class="headerlink" title="데이터 베이스의 table 확인하기"></a>데이터 베이스의 table 확인하기</h3><pre>
+<code>
+SHOW tables;
+</code>
+</pre>
+
+<h3 id="country-테이블에서-name-목록-가져오기"><a href="#country-테이블에서-name-목록-가져오기" class="headerlink" title="country 테이블에서 name 목록 가져오기"></a>country 테이블에서 name 목록 가져오기</h3><pre>
+<code>
+select name from country;
+
+select name, Continent, GNP from country;
+</code>
+</pre>
+
+<h3 id="모든-컬럼-불러오기"><a href="#모든-컬럼-불러오기" class="headerlink" title="모든 컬럼 불러오기"></a>모든 컬럼 불러오기</h3><pre>
+<code>
+select * from country;
+</code>
+</pre>
+
+<ul>
+<li>단, 소문자와 대문자를 구분하지 않음</li>
+<li>공백은 무시함</li>
+<li>단 띄어쓰기가 필요한 곳에서는 반드시 해주어야 함</li>
+<li>SQL 키워드 (AVG, SELECT, FROM, WHERE) 를 컬럼명으로 사용하면 안됨</li>
+<li>SQL 문장은 세미콜론으로 마치는 것이 좋다</li>
+</ul>
+<h1 id="데이터-정렬하기"><a href="#데이터-정렬하기" class="headerlink" title="데이터 정렬하기"></a>데이터 정렬하기</h1><h3 id="한-개의-컬럼으로-정렬하기"><a href="#한-개의-컬럼으로-정렬하기" class="headerlink" title="한 개의 컬럼으로 정렬하기"></a>한 개의 컬럼으로 정렬하기</h3><ul>
+<li>컬럼명 또는 컬럼 위치로 정렬할 수 있음</li>
+</ul>
+<pre>
+<code>
+select name, continent 
+from country 
+order by name;
+
+select name, continent
+from country
+order by continent;
+</code>
+</pre>
+
+<h3 id="여러-개의-컬럼으로-정렬하기"><a href="#여러-개의-컬럼으로-정렬하기" class="headerlink" title="여러 개의 컬럼으로 정렬하기"></a>여러 개의 컬럼으로 정렬하기</h3><ul>
+<li>컬럼명 또는 컬럼 위치로 정렬할 수 있음 단, 콤마(,)로 구분한다.</li>
+</ul>
+<pre>
+<code>
+select *
+from countrylanguage
+order by countrycode, percentage;
+
+select *
+from countrylanguage
+order by countrycode, language;
+</code>
+</pre>
+
+<h3 id="ASC-DESC를-사용하여-오름차순-내림차순-정렬-기준-변경"><a href="#ASC-DESC를-사용하여-오름차순-내림차순-정렬-기준-변경" class="headerlink" title="ASC, DESC를 사용하여 오름차순, 내림차순 정렬 기준 변경"></a>ASC, DESC를 사용하여 오름차순, 내림차순 정렬 기준 변경</h3><ul>
+<li>단 ASC는 기본값</li>
+</ul>
+<pre>
+<code>
+select countrycode, percentage 
+from countrylanguage
+order by countrycode, percentage desc;
+
+select *  
+from countrylanguage
+order by countrycode asc, language asc, percentage desc;
+</code>
+</pre>
+
+<h1 id="데이터-중복-없이-불러오기"><a href="#데이터-중복-없이-불러오기" class="headerlink" title="데이터 중복 없이 불러오기"></a>데이터 중복 없이 불러오기</h1><h3 id="DISTINCT-키워드를-사용하여-중복된-행-제거"><a href="#DISTINCT-키워드를-사용하여-중복된-행-제거" class="headerlink" title="DISTINCT 키워드를 사용하여 중복된 행 제거"></a>DISTINCT 키워드를 사용하여 중복된 행 제거</h3><ul>
+<li>한 개 칼럼의 중복된 행 제거</li>
+</ul>
+<pre>
+<code>
+select distinct 컬럼명 from 테이블명;
+
+select distinct isofficial
+from countrylanguage;
+</code>
+</pre>
+
+<h3 id="여러-개-컬럼의-중복된-행-제거"><a href="#여러-개-컬럼의-중복된-행-제거" class="headerlink" title="여러 개 컬럼의 중복된 행 제거"></a>여러 개 컬럼의 중복된 행 제거</h3><pre>
+<code>
+select distinct 컬럼명1, 컬럼명2 from 테이블명;
+</code>
+</pre>
+
+<h3 id="distinct의-반대-키워드는-ALL이다"><a href="#distinct의-반대-키워드는-ALL이다" class="headerlink" title="distinct의 반대 키워드는 ALL이다."></a>distinct의 반대 키워드는 ALL이다.</h3><ul>
+<li>기본 값이 ALL이다.</li>
+</ul>
+<pre>
+<code>
+select all 컬럼명 from 테이블명;
+</code>
+</pre>
+
+<h3 id="count-함수로-숫자-세기"><a href="#count-함수로-숫자-세기" class="headerlink" title="count 함수로 숫자 세기"></a>count 함수로 숫자 세기</h3><ul>
+<li>country 테이블 전체 레코드 개수 세기</li>
+</ul>
+<pre>
+<code>
+select count() from country;
+</code>
+</pre>
+
+<h3 id="특정-컬럼-개수-세기"><a href="#특정-컬럼-개수-세기" class="headerlink" title="특정 컬럼 개수 세기"></a>특정 컬럼 개수 세기</h3><pre>
+<code>
+select count(code) from country;
+</code>
+</pre>
+
+<h3 id="두-개의-컬럼-개수-세기"><a href="#두-개의-컬럼-개수-세기" class="headerlink" title="두 개의 컬럼 개수 세기"></a>두 개의 컬럼 개수 세기</h3><pre>
+<code>
+select count(code), count(name) from country;
+</code>
+</pre>
+
+<h3 id="두-개-이상-특정-컬럼-개수-세기"><a href="#두-개-이상-특정-컬럼-개수-세기" class="headerlink" title="두 개 이상 특정 컬럼 개수 세기"></a>두 개 이상 특정 컬럼 개수 세기</h3><pre>
+<code>
+select count(code), count(name), count(region), count(population) from country;
+</code>
+</pre>
+
+<h3 id="count-함수와-distinct-의-조합으로-중복-없이-숫자-세기"><a href="#count-함수와-distinct-의-조합으로-중복-없이-숫자-세기" class="headerlink" title="count 함수와 distinct 의 조합으로 중복 없이 숫자 세기"></a>count 함수와 distinct 의 조합으로 중복 없이 숫자 세기</h3><pre>
+<code>
+select count(distinct isofficial), count()
+from countrylanguage;
+</code>
+</pre>
+
+<h3 id="alias-별칭-설정하기"><a href="#alias-별칭-설정하기" class="headerlink" title="alias(별칭) 설정하기"></a>alias(별칭) 설정하기</h3><ul>
+<li>as 로 별칭 설정하기</li>
+</ul>
+<pre>
+<code>
+SELECT count(distinct isofficial) as cnt FROM countrylanguage;
+</code>
+</pre>
+
+<h3 id="as-생략"><a href="#as-생략" class="headerlink" title="as 생략"></a>as 생략</h3><pre>
+<code>
+SELECT count(distinct isofficial) 카운트 FROM countrylanguage;
+</code>
+</pre>
+
+<h3 id="한글-띄워쓰기-별칭-설정하기"><a href="#한글-띄워쓰기-별칭-설정하기" class="headerlink" title="한글 띄워쓰기 별칭 설정하기"></a>한글 띄워쓰기 별칭 설정하기</h3><pre>
+<code>
+SELECT count(distinct isofficial) '카 운 트' FROM countrylanguage;
+
+select count(language) as lang_cnt
+    , count(distinct isofficial) as isofficial_cnt
+from countrylanguage
+;
+
+select count(language) as lang_cnt
+    , count(distinct isofficial) as 한글
+from countrylanguage
+;
+
+select count(language) as lang_cnt
+    , count(distinct isofficial) as '한 글'
+from countrylanguage
+;
+
+select count(distinct language) as CNT
+from countrylanguage
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/27/python-crawling-2/" rel="prev" title="python-crawler 2편">
+      <i class="fa fa-chevron-left"></i> python-crawler 2편
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B8%B0%ED%9A%8D%EC%9E%90%EC%99%80-%EB%A7%88%EC%BC%80%ED%84%B0%EC%97%90%EA%B2%8C-SQL%EC%9D%B4-%ED%95%84%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0"><span class="nav-number">1.</span> <span class="nav-text">기획자와 마케터에게 SQL이 필요한 이유</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%ED%95%B5%EC%8B%AC%EC%9A%A9%EC%96%B4-%EB%94%B0%EB%9D%BC%EC%9E%A1%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text">데이터베이스 핵심용어 따라잡기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%A0%95%EC%9D%98%EC%96%B4-DDL"><span class="nav-number">2.0.1.</span> <span class="nav-text">데이터베이스 정의어 DDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%A1%B0%EC%9E%91%EC%96%B4-DML"><span class="nav-number">2.0.2.</span> <span class="nav-text">데이터베이스 조작어 DML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INDEX"><span class="nav-number">2.0.3.</span> <span class="nav-text">INDEX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EA%B8%B0%EB%B3%B8%ED%82%A4-Primary-Key-%EC%99%80-%EB%91%90%EB%B2%88%EC%A7%B8-%ED%82%A4-Secondary-Key-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EC%99%B8%EB%9E%98%ED%82%A4-Foreign-Key"><span class="nav-number">2.0.4.</span> <span class="nav-text">기본키(Primary Key)와 두번째 키(Secondary Key) 그리고 외래키(Foreign Key)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%8C%8C%ED%8B%B0%EC%85%98-Partition"><span class="nav-number">2.0.5.</span> <span class="nav-text">파티션(Partition)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%8A%A4%ED%82%A4%EB%A7%88-Schema"><span class="nav-number">2.0.6.</span> <span class="nav-text">스키마(Schema)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EA%B0%9C%EC%B2%B4-Entity"><span class="nav-number">2.0.7.</span> <span class="nav-text">개체(Entity)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERD-Entity-Relationship-Diagram"><span class="nav-number">2.0.8.</span> <span class="nav-text">ERD(Entity Relationship Diagram)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%B7%B0-VIEW"><span class="nav-number">2.0.9.</span> <span class="nav-text">뷰(VIEW)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A0%80%EC%9E%A5-%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80-Stored-Procedure"><span class="nav-number">2.0.10.</span> <span class="nav-text">저장 프로시저(Stored Procedure)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-Transaction"><span class="nav-number">2.0.11.</span> <span class="nav-text">트랜잭션(Transaction)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%EA%B8%B0%EB%B0%98%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%EC%84%9D"><span class="nav-number">3.</span> <span class="nav-text">SQL 기반의 데이터 분석</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A0%91%EC%86%8D%EB%90%98%EC%96%B4-%EC%9E%88%EB%8A%94-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%AA%A9%EB%A1%9D-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.1.</span> <span class="nav-text">접속되어 있는 데이터베이스 목록 확인하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#s-%EA%B0%80-%EB%93%A4%EC%96%B4%EA%B0%80-%EC%9E%88%EB%8A%94-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%AA%A9%EB%A1%9D-%EA%B0%80%EC%A0%80%EC%98%A4%EA%B8%B0"><span class="nav-number">3.0.2.</span> <span class="nav-text">s 가 들어가 있는 데이터 베이스 목록 가저오기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%A7%A8-%EC%95%9E%EC%97%90-s-%EA%B0%80-%EB%93%A4%EC%96%B4%EA%B0%80-%EC%9E%88%EB%8A%94-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%AA%A9%EB%A1%9D-%EA%B0%80%EC%A0%80%EC%98%A4%EA%B8%B0"><span class="nav-number">3.0.3.</span> <span class="nav-text">맨 앞에 s 가 들어가 있는 데이터 베이스 목록 가저오기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#world-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90-%EC%A0%91%EC%86%8D%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.4.</span> <span class="nav-text">world 데이터에 접속하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sakila-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90-%EC%A0%91%EC%86%8D%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.5.</span> <span class="nav-text">sakila 데이터에 접속하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%9D%98-table-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.6.</span> <span class="nav-text">데이터 베이스의 table 확인하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%9D%98-table-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0-1"><span class="nav-number">3.0.7.</span> <span class="nav-text">데이터 베이스의 table 확인하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#country-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%97%90%EC%84%9C-name-%EB%AA%A9%EB%A1%9D-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0"><span class="nav-number">3.0.8.</span> <span class="nav-text">country 테이블에서 name 목록 가져오기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%AA%A8%EB%93%A0-%EC%BB%AC%EB%9F%BC-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">3.0.9.</span> <span class="nav-text">모든 컬럼 불러오기</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0"><span class="nav-number">4.</span> <span class="nav-text">데이터 정렬하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%95%9C-%EA%B0%9C%EC%9D%98-%EC%BB%AC%EB%9F%BC%EC%9C%BC%EB%A1%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0"><span class="nav-number">4.0.1.</span> <span class="nav-text">한 개의 컬럼으로 정렬하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%97%AC%EB%9F%AC-%EA%B0%9C%EC%9D%98-%EC%BB%AC%EB%9F%BC%EC%9C%BC%EB%A1%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0"><span class="nav-number">4.0.2.</span> <span class="nav-text">여러 개의 컬럼으로 정렬하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ASC-DESC%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EC%98%A4%EB%A6%84%EC%B0%A8%EC%88%9C-%EB%82%B4%EB%A6%BC%EC%B0%A8%EC%88%9C-%EC%A0%95%EB%A0%AC-%EA%B8%B0%EC%A4%80-%EB%B3%80%EA%B2%BD"><span class="nav-number">4.0.3.</span> <span class="nav-text">ASC, DESC를 사용하여 오름차순, 내림차순 정렬 기준 변경</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A4%91%EB%B3%B5-%EC%97%86%EC%9D%B4-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">5.</span> <span class="nav-text">데이터 중복 없이 불러오기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DISTINCT-%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EC%A4%91%EB%B3%B5%EB%90%9C-%ED%96%89-%EC%A0%9C%EA%B1%B0"><span class="nav-number">5.0.1.</span> <span class="nav-text">DISTINCT 키워드를 사용하여 중복된 행 제거</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%97%AC%EB%9F%AC-%EA%B0%9C-%EC%BB%AC%EB%9F%BC%EC%9D%98-%EC%A4%91%EB%B3%B5%EB%90%9C-%ED%96%89-%EC%A0%9C%EA%B1%B0"><span class="nav-number">5.0.2.</span> <span class="nav-text">여러 개 컬럼의 중복된 행 제거</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distinct%EC%9D%98-%EB%B0%98%EB%8C%80-%ED%82%A4%EC%9B%8C%EB%93%9C%EB%8A%94-ALL%EC%9D%B4%EB%8B%A4"><span class="nav-number">5.0.3.</span> <span class="nav-text">distinct의 반대 키워드는 ALL이다.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-%ED%95%A8%EC%88%98%EB%A1%9C-%EC%88%AB%EC%9E%90-%EC%84%B8%EA%B8%B0"><span class="nav-number">5.0.4.</span> <span class="nav-text">count 함수로 숫자 세기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%8A%B9%EC%A0%95-%EC%BB%AC%EB%9F%BC-%EA%B0%9C%EC%88%98-%EC%84%B8%EA%B8%B0"><span class="nav-number">5.0.5.</span> <span class="nav-text">특정 컬럼 개수 세기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%91%90-%EA%B0%9C%EC%9D%98-%EC%BB%AC%EB%9F%BC-%EA%B0%9C%EC%88%98-%EC%84%B8%EA%B8%B0"><span class="nav-number">5.0.6.</span> <span class="nav-text">두 개의 컬럼 개수 세기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%91%90-%EA%B0%9C-%EC%9D%B4%EC%83%81-%ED%8A%B9%EC%A0%95-%EC%BB%AC%EB%9F%BC-%EA%B0%9C%EC%88%98-%EC%84%B8%EA%B8%B0"><span class="nav-number">5.0.7.</span> <span class="nav-text">두 개 이상 특정 컬럼 개수 세기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-%ED%95%A8%EC%88%98%EC%99%80-distinct-%EC%9D%98-%EC%A1%B0%ED%95%A9%EC%9C%BC%EB%A1%9C-%EC%A4%91%EB%B3%B5-%EC%97%86%EC%9D%B4-%EC%88%AB%EC%9E%90-%EC%84%B8%EA%B8%B0"><span class="nav-number">5.0.8.</span> <span class="nav-text">count 함수와 distinct 의 조합으로 중복 없이 숫자 세기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias-%EB%B3%84%EC%B9%AD-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="nav-number">5.0.9.</span> <span class="nav-text">alias(별칭) 설정하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#as-%EC%83%9D%EB%9E%B5"><span class="nav-number">5.0.10.</span> <span class="nav-text">as 생략</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%95%9C%EA%B8%80-%EB%9D%84%EC%9B%8C%EC%93%B0%EA%B8%B0-%EB%B3%84%EC%B9%AD-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="nav-number">5.0.11.</span> <span class="nav-text">한글 띄워쓰기 별칭 설정하기</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/08/sql-basic-1/";
+    this.page.identifier = "2021/10/08/sql-basic-1/";
+    this.page.title = "sql-basic 1편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
