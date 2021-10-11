@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://user-images.githubusercontent.com/89237848/136556626-c9ca32b0-03f4-4721-a27f-b1c7b5490c81.PNG">
 <meta property="article:published_time" content="2021-10-08T12:21:46.679Z">
-<meta property="article:modified_time" content="2021-10-08T12:29:31.811Z">
+<meta property="article:modified_time" content="2021-10-11T05:53:20.583Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="database">
@@ -192,10 +192,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-10-08 21:21:46 / Modified: 21:29:31" itemprop="dateCreated datePublished" datetime="2021-10-08T21:21:46+09:00">2021-10-08</time>
+              <time title="Created: 2021-10-08 21:21:46" itemprop="dateCreated datePublished" datetime="2021-10-08T21:21:46+09:00">2021-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-11 14:53:20" itemprop="dateModified" datetime="2021-10-11T14:53:20+09:00">2021-10-11</time>
+              </span>
 
           
   
@@ -413,6 +419,76 @@ having count(별첨) > 20;
 </code>
 </pre>
 
+<h3 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h3><ul>
+<li>테이블에 데이터를 입력할때 사용합니다. 테이블 이름 뒤에 오는 컬럼이름은 생략이 가능하며 대신에</li>
+<li>VALUES 뒤에 value 값이 순서대로 와야 합니다. </li>
+</ul>
+<pre>
+<code>
+INSERT INTO <table_name>(<column_name_1>, <column_name_2>, ...)
+VALUES(<value_1>, <value_2>, …)
+</code>
+</pre>
+
+<h3 id="UPDATE-SET"><a href="#UPDATE-SET" class="headerlink" title="UPDATE SET"></a>UPDATE SET</h3><ul>
+<li>업데이트시에는 항상 select-where로 변경할 데이터를 확인하고 update 해줘야 실수를 줄일수 있습니다. </li>
+<li>또한 limit도 함께 사용해주면 좋습니다.</li>
+</ul>
+<pre>
+<code>
+UPDATE <table_name>
+SET <column_name_1> = <value_1>, <column_name_2> = <value_2>,
+WHERE <condition>
+</code>
+</pre>
+
+<h3 id="FOREIGN-KEY"><a href="#FOREIGN-KEY" class="headerlink" title="FOREIGN KEY"></a>FOREIGN KEY</h3><ul>
+<li>Foreign key를 설정하면 데이터의 무결성을 지킬수 있다.</li>
+<li>UNIQUE 나 PRAMARY 제약조건이 있어야 설정이 가능하다</li>
+</ul>
+<h5 id="ON-DELETE-ON-UPDATE-설정"><a href="#ON-DELETE-ON-UPDATE-설정" class="headerlink" title="ON DELETE, ON UPDATE 설정"></a>ON DELETE, ON UPDATE 설정</h5><ul>
+<li>FOREIGN KEY로 참조되는 데이터를 수정 및 삭제할때 참조되는 데이터까지 수정이나 삭제하는 설정입니다.</li>
+</ul>
+<blockquote>
+<p>CASCADE : 참조되는 테이블에서 데이터를 삭제하거나 수정하면, 참조하는 테이블에서도 삭제와 수정<br>SET NULL : 참조되는 테이블에서 데이터를 삭제하거나 수정하면, 참조하는 테이블의 데이터는 NULL로 변경<br>NO ACTION : 참조되는 테이블에서 데이터를 삭제하거나 수정해도, 참조하는 테이블의 데이터는 변경되지 않음<br>SET DEFAULT : 참조되는 테이블에서 데이터를 삭제하거나 수정하면, 참조하는 테이블의 데이터는 필드의 기본값으로 설정<br>RESTRICT : 참조하는 테이블에 데이터가 남아 있으면, 참조되는 테이블의 데이터를 삭제하거나 수정할 수 없다.</p>
+</blockquote>
+<h3 id="변수선언-RANK-설정"><a href="#변수선언-RANK-설정" class="headerlink" title="변수선언 : RANK 설정"></a>변수선언 : RANK 설정</h3><pre>
+<code>
+- 변수선언
+SET @data = 1;
+
+- 선언된 변수 출력
+SELECT @data;
+
+- city 테이블에서
+SET @RANK = 0;
+SELECT @RANK := @RANK + 1 AS ranking, countrycode, name, population
+FROM city
+ORDER BY population DESC
+LIMIT 5;
+25
+</code>
+</pre>
+
+<h3 id="데이터-타입의-형-변환"><a href="#데이터-타입의-형-변환" class="headerlink" title="데이터 타입의 형 변환"></a>데이터 타입의 형 변환</h3><pre>
+<code>
+- 실수 데이터 타입의 결과를 정수 데이터 타입으로 변환해서 출력
+SELECT CAST(AVG(gnp) as SIGNED INTEGER)
+FROM country;
+SELECT CONVERT(AVG(gnp), SIGNED INTEGER)
+FROM country;
+</code>
+</pre>
+
+<h3 id="DATETIME으로-형변환"><a href="#DATETIME으로-형변환" class="headerlink" title="DATETIME으로 형변환"></a>DATETIME으로 형변환</h3><pre>
+<code>
+SELECT CAST("2020@01#01 12^32(별첨)21" AS DATETIME) as date;
+</code>
+</pre>
+
+
+
+
     </div>
 
     
@@ -500,7 +576,7 @@ having count(별첨) > 20;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">조건문 활용하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-CASE-WHEN-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">조건문 CASE WHEN 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IF-ELSE-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.2.</span> <span class="nav-text">IF ELSE 사용법</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%EB%A1%9C-%ED%94%BC%EB%B2%97-%EB%8F%8C%EB%A6%AC%EA%B8%B0%EC%99%80-%EC%A7%91%EA%B3%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9-%EA%B2%B0%EA%B3%BC%EC%9D%98-%ED%95%84%ED%84%B0%EB%A7%81"><span class="nav-number">2.</span> <span class="nav-text">SQL로 피벗 돌리기와 집계 함수 사용, 결과의 필터링</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-BY-%EC%A3%BC%EC%9A%94-%EA%B0%9C%EB%85%90"><span class="nav-number">2.0.1.</span> <span class="nav-text">GROUP BY 주요 개념</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EB%AA%85%EC%9C%BC%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">2.0.2.</span> <span class="nav-text">컬럼명으로 GROUP BY 하기</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EC%9C%84%EC%B9%98%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">컬럼위치로 GROUP BY 하기</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%B0%B8%EA%B3%A0-group-by%EC%99%80-distinct-%EC%9D%98-%EC%B0%A8%EC%9D%B4"><span class="nav-number">3.0.0.0.1.</span> <span class="nav-text">참고 : group by와 distinct 의 차이?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A7%91%EA%B3%84-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">집계 관련 함수</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-CONCAT-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">3.0.2.</span> <span class="nav-text">GROUP_CONCAT() 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having-%EC%A0%88%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-%EC%A7%91%EA%B3%84%EA%B2%B0%EA%B3%BC-%ED%95%84%ED%84%B0%EB%A7%81-%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.3.</span> <span class="nav-text">Having 절을 활용해서 집계결과 필터링 하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having%EA%B3%BC-Group-by%EB%A5%BC-%ED%95%A8%EA%BB%98-%EC%82%AC%EC%9A%A9%ED%95%A0-%EB%95%8C-%EC%88%9C%EC%84%9C"><span class="nav-number">3.0.4.</span> <span class="nav-text">Having과 Group by를 함께 사용할 때 순서</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">조건문 활용하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8-CASE-WHEN-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">조건문 CASE WHEN 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IF-ELSE-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">1.0.2.</span> <span class="nav-text">IF ELSE 사용법</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%EB%A1%9C-%ED%94%BC%EB%B2%97-%EB%8F%8C%EB%A6%AC%EA%B8%B0%EC%99%80-%EC%A7%91%EA%B3%84-%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9-%EA%B2%B0%EA%B3%BC%EC%9D%98-%ED%95%84%ED%84%B0%EB%A7%81"><span class="nav-number">2.</span> <span class="nav-text">SQL로 피벗 돌리기와 집계 함수 사용, 결과의 필터링</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-BY-%EC%A3%BC%EC%9A%94-%EA%B0%9C%EB%85%90"><span class="nav-number">2.0.1.</span> <span class="nav-text">GROUP BY 주요 개념</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EB%AA%85%EC%9C%BC%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">2.0.2.</span> <span class="nav-text">컬럼명으로 GROUP BY 하기</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%BB%AC%EB%9F%BC%EC%9C%84%EC%B9%98%EB%A1%9C-GROUP-BY-%ED%95%98%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">컬럼위치로 GROUP BY 하기</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%B0%B8%EA%B3%A0-group-by%EC%99%80-distinct-%EC%9D%98-%EC%B0%A8%EC%9D%B4"><span class="nav-number">3.0.0.0.1.</span> <span class="nav-text">참고 : group by와 distinct 의 차이?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A7%91%EA%B3%84-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">집계 관련 함수</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GROUP-CONCAT-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="nav-number">3.0.2.</span> <span class="nav-text">GROUP_CONCAT() 사용법</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having-%EC%A0%88%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-%EC%A7%91%EA%B3%84%EA%B2%B0%EA%B3%BC-%ED%95%84%ED%84%B0%EB%A7%81-%ED%95%98%EA%B8%B0"><span class="nav-number">3.0.3.</span> <span class="nav-text">Having 절을 활용해서 집계결과 필터링 하기</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Having%EA%B3%BC-Group-by%EB%A5%BC-%ED%95%A8%EA%BB%98-%EC%82%AC%EC%9A%A9%ED%95%A0-%EB%95%8C-%EC%88%9C%EC%84%9C"><span class="nav-number">3.0.4.</span> <span class="nav-text">Having과 Group by를 함께 사용할 때 순서</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT"><span class="nav-number">3.0.5.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UPDATE-SET"><span class="nav-number">3.0.6.</span> <span class="nav-text">UPDATE SET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FOREIGN-KEY"><span class="nav-number">3.0.7.</span> <span class="nav-text">FOREIGN KEY</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ON-DELETE-ON-UPDATE-%EC%84%A4%EC%A0%95"><span class="nav-number">3.0.7.0.1.</span> <span class="nav-text">ON DELETE, ON UPDATE 설정</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%B3%80%EC%88%98%EC%84%A0%EC%96%B8-RANK-%EC%84%A4%EC%A0%95"><span class="nav-number">3.0.8.</span> <span class="nav-text">변수선언 : RANK 설정</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85%EC%9D%98-%ED%98%95-%EB%B3%80%ED%99%98"><span class="nav-number">3.0.9.</span> <span class="nav-text">데이터 타입의 형 변환</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATETIME%EC%9C%BC%EB%A1%9C-%ED%98%95%EB%B3%80%ED%99%98"><span class="nav-number">3.0.10.</span> <span class="nav-text">DATETIME으로 형변환</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
