@@ -163,6 +163,188 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/15/sql-basic-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/15/sql-basic-6/" class="post-title-link" itemprop="url">sql-basic 6편</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-15 11:33:59 / Modified: 11:45:55" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:59+09:00">2021-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql/" itemprop="url" rel="index"><span itemprop="name">sql</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/15/sql-basic-6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/15/sql-basic-6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+
+<ol start="6">
+<li>행 합치기</li>
+</ol>
+<ul>
+<li>UNION 연산자를 이용한 행 합치기<br>두 개 이상 테이블의 SELECT 결과행을 합칠 때 UNION 연산자 활용<br>A 테이블, B 테이블을 조회할 때 사용할 수 있는 SQL 문법을 전부 사용할 수 있음<br>UNION 으로 합쳐지는 SELECT 문의 컬럼 숫자가 동일해야 함<br>합쳐지는 컬럼의 데이터 유형이 동일해야 함<br>중복이 있는 데이터는 하나만 표현 함<br>합쳐진 테이블의 컬럼명은 LEFT TABLE 의 컬럼명<br>합쳐진 데이터의 중복을 제거하지 않기 위해서는 UNION ALL 을 사용</li>
+</ul>
+<p>SELECT 컬럼명1, 컬럼명2 FROM 테이블1<br>UNION<br>SELECT 컬럼명3, 컬럼명4 FROM 테이블2<br>ORDER BY 1</p>
+<h1 id="서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴"><a href="#서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴" class="headerlink" title="서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴."></a>서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴.</h1><h1 id="쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨"><a href="#쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨" class="headerlink" title="쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨."></a>쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨.</h1><p>select count(별첨) as cnt<br>from<br>(<br>select code from country # where code = ‘ABW’ – 1<br>union – 중복을 허용하지 않음<br>select countrycode from city # where countrycode = ‘ABW’ – 4079<br>) a<br>where a.code = ‘ABW’<br>;</p>
+<h1 id="같은-열로-합치기-가능함"><a href="#같은-열로-합치기-가능함" class="headerlink" title="같은 열로 합치기 가능함"></a>같은 열로 합치기 가능함</h1><p>select *<br>from<br>(<br>select code, continent from country<br>union<br>select countrycode, name from city<br>) a<br>where code = ‘ABW’<br>;</p>
+<h1 id="정렬-쉽게-보기"><a href="#정렬-쉽게-보기" class="headerlink" title="정렬 쉽게 보기"></a>정렬 쉽게 보기</h1><p>select code from country<br>union<br>select countrycode from city<br>order by 1 desc;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/15/sql-basic-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/15/sql-basic-5/" class="post-title-link" itemprop="url">sql-basic 5편</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-15 11:33:49 / Modified: 15:40:24" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:49+09:00">2021-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql/" itemprop="url" rel="index"><span itemprop="name">sql</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/15/sql-basic-5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/15/sql-basic-5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>sql 기촌 문법 다섯 번째! 서브쿼리와 join 함수에 대한 모든 것을 알아보자!</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/15/sql-basic-5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/08/sql-basic-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -194,7 +376,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-11 14:53:20" itemprop="dateModified" datetime="2021-10-11T14:53:20+09:00">2021-10-11</time>
+                <time title="Modified: 2021-10-14 11:10:53" itemprop="dateModified" datetime="2021-10-14T11:10:53+09:00">2021-10-14</time>
               </span>
 
           
@@ -272,10 +454,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-10-08 16:00:14 / Modified: 21:30:46" itemprop="dateCreated datePublished" datetime="2021-10-08T16:00:14+09:00">2021-10-08</time>
+              <time title="Created: 2021-10-08 16:00:14" itemprop="dateCreated datePublished" datetime="2021-10-08T16:00:14+09:00">2021-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-14 11:11:24" itemprop="dateModified" datetime="2021-10-14T11:11:24+09:00">2021-10-14</time>
+              </span>
 
           
   
@@ -441,10 +629,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-10-08 15:28:28 / Modified: 16:19:47" itemprop="dateCreated datePublished" datetime="2021-10-08T15:28:28+09:00">2021-10-08</time>
+              <time title="Created: 2021-10-08 15:28:28" itemprop="dateCreated datePublished" datetime="2021-10-08T15:28:28+09:00">2021-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-15 11:40:13" itemprop="dateModified" datetime="2021-10-15T11:40:13+09:00">2021-10-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -871,202 +1065,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/15/python-seaborn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="limjiin">
-      <meta itemprop="description" content="All stories about git, sql, python">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="야무진의 기술 블로그">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/15/python-seaborn/" class="post-title-link" itemprop="url">python-seaborn</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-15 11:26:09" itemprop="dateCreated datePublished" datetime="2021-09-15T11:26:09+09:00">2021-09-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-16 16:45:34" itemprop="dateModified" datetime="2021-09-16T16:45:34+09:00">2021-09-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/09/15/python-seaborn/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/15/python-seaborn/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python 기초개념, 패키지인 numpy, pandas 등을 익혔다면,<br>이제 데이터 시각화를 통해 데이터를 한 눈에 들어오게 만들어보자!</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/15/python-seaborn/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/09/14/python-algorithm-quiz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="limjiin">
-      <meta itemprop="description" content="All stories about git, sql, python">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="야무진의 기술 블로그">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/14/python-algorithm-quiz/" class="post-title-link" itemprop="url">python-algorithm-quiz</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-14 20:48:02" itemprop="dateCreated datePublished" datetime="2021-09-14T20:48:02+09:00">2021-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-16 17:13:52" itemprop="dateModified" datetime="2021-09-16T17:13:52+09:00">2021-09-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2021/09/14/python-algorithm-quiz/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/09/14/python-algorithm-quiz/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>파이썬을 익히는 데 가장 중요한 것은 바로 실전 연습!<br>알고리즘 문제 4가지를 풀어보자.</p>
-<ol>
-<li>퍼즐 스트라이크(숫자야구)</li>
-<li>ATM 기기 </li>
-<li>로또 번호 생성기</li>
-<li>컴퓨터와 스무고개 </li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/14/python-algorithm-quiz/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1136,7 +1134,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

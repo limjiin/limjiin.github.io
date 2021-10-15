@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="All stories about git, sql, python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://limjiin.github.io/about/index.html">
+  <meta name="description" content="행 합치기   UNION 연산자를 이용한 행 합치기두 개 이상 테이블의 SELECT 결과행을 합칠 때 UNION 연산자 활용A 테이블, B 테이블을 조회할 때 사용할 수 있는 SQL 문법을 전부 사용할 수 있음UNION 으로 합쳐지는 SELECT 문의 컬럼 숫자가 동일해야 함합쳐지는 컬럼의 데이터 유형이 동일해야 함중복이 있는 데이터는 하나만 표현 함">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql-basic 6편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/15/sql-basic-6/index.html">
 <meta property="og:site_name" content="야무진의 기술 블로그">
-<meta property="og:description" content="All stories about git, sql, python">
+<meta property="og:description" content="행 합치기   UNION 연산자를 이용한 행 합치기두 개 이상 테이블의 SELECT 결과행을 합칠 때 UNION 연산자 활용A 테이블, B 테이블을 조회할 때 사용할 수 있는 SQL 문법을 전부 사용할 수 있음UNION 으로 합쳐지는 SELECT 문의 컬럼 숫자가 동일해야 함합쳐지는 컬럼의 데이터 유형이 동일해야 함중복이 있는 데이터는 하나만 표현 함">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-06T11:13:11.000Z">
-<meta property="article:modified_time" content="2021-09-06T11:13:11.676Z">
+<meta property="article:published_time" content="2021-10-15T02:33:59.656Z">
+<meta property="article:modified_time" content="2021-10-15T02:45:55.757Z">
 <meta property="article:author" content="limjiin">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="database">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://limjiin.github.io/about/">
+<link rel="canonical" href="https://limjiin.github.io/2021/10/15/sql-basic-6/">
 
 
 <script id="page-configurations">
@@ -40,13 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>about | 야무진의 기술 블로그
-</title>
+  <title>sql-basic 6편 | 야무진의 기술 블로그</title>
   
 
 
@@ -159,43 +160,118 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="en">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/15/sql-basic-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql-basic 6편
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">about
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-<div class="post-meta">
+              <time title="Created: 2021-10-15 11:33:59 / Modified: 11:45:55" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:59+09:00">2021-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql/" itemprop="url" rel="index"><span itemprop="name">sql</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/15/sql-basic-6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/15/sql-basic-6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
   
 
-</div>
+        </div>
+      </header>
 
-</header>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
-          
-      </div>
-      
-      
-      
+        <span id="more"></span>
+
+<ol start="6">
+<li>행 합치기</li>
+</ol>
+<ul>
+<li>UNION 연산자를 이용한 행 합치기<br>두 개 이상 테이블의 SELECT 결과행을 합칠 때 UNION 연산자 활용<br>A 테이블, B 테이블을 조회할 때 사용할 수 있는 SQL 문법을 전부 사용할 수 있음<br>UNION 으로 합쳐지는 SELECT 문의 컬럼 숫자가 동일해야 함<br>합쳐지는 컬럼의 데이터 유형이 동일해야 함<br>중복이 있는 데이터는 하나만 표현 함<br>합쳐진 테이블의 컬럼명은 LEFT TABLE 의 컬럼명<br>합쳐진 데이터의 중복을 제거하지 않기 위해서는 UNION ALL 을 사용</li>
+</ul>
+<p>SELECT 컬럼명1, 컬럼명2 FROM 테이블1<br>UNION<br>SELECT 컬럼명3, 컬럼명4 FROM 테이블2<br>ORDER BY 1</p>
+<h1 id="서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴"><a href="#서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴" class="headerlink" title="서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴."></a>서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴.</h1><h1 id="쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨"><a href="#쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨" class="headerlink" title="쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨."></a>쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨.</h1><p>select count(별첨) as cnt<br>from<br>(<br>select code from country # where code = ‘ABW’ – 1<br>union – 중복을 허용하지 않음<br>select countrycode from city # where countrycode = ‘ABW’ – 4079<br>) a<br>where a.code = ‘ABW’<br>;</p>
+<h1 id="같은-열로-합치기-가능함"><a href="#같은-열로-합치기-가능함" class="headerlink" title="같은 열로 합치기 가능함"></a>같은 열로 합치기 가능함</h1><p>select *<br>from<br>(<br>select code, continent from country<br>union<br>select countrycode, name from city<br>) a<br>where code = ‘ABW’<br>;</p>
+<h1 id="정렬-쉽게-보기"><a href="#정렬-쉽게-보기" class="headerlink" title="정렬 쉽게 보기"></a>정렬 쉽게 보기</h1><p>select code from country<br>union<br>select countrycode from city<br>order by 1 desc;</p>
+
     </div>
-    
 
     
     
     
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/15/sql-basic-5/" rel="prev" title="sql-basic 5편">
+      <i class="fa fa-chevron-left"></i> sql-basic 5편
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
 
 
           </div>
@@ -253,6 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%84%9C%EB%B8%8C%EC%BF%BC%EB%A6%AC-%EC%95%88%EC%97%90%EB%8A%94-%EA%B0%99%EC%9D%80-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EB%84%A3%EC%96%B4%EC%A4%98%EC%95%BC-%EC%A4%91%EB%B3%B5%EC%9D%B4-%EC%A0%9C%EA%B1%B0%EB%90%98%EC%96%B4-%EB%82%98%EC%98%B4"><span class="nav-number">1.</span> <span class="nav-text">서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%BF%BC%EB%A6%AC-%EB%B0%96%EC%97%90%EC%84%9C-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EC%A3%BC%EB%A9%B4-%EC%84%9C%EB%B9%84-%EC%BF%BC%EB%A6%AC%EC%97%90-%EB%94%B0%EB%A1%9C-%EC%A1%B0%EA%B1%B4%EC%A0%88%EC%9D%84-%EC%A3%BC%EC%A7%80-%EC%95%8A%EC%95%84%EB%8F%84-%EB%90%A8"><span class="nav-number">2.</span> <span class="nav-text">쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B0%99%EC%9D%80-%EC%97%B4%EB%A1%9C-%ED%95%A9%EC%B9%98%EA%B8%B0-%EA%B0%80%EB%8A%A5%ED%95%A8"><span class="nav-number">3.</span> <span class="nav-text">같은 열로 합치기 가능함</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A0%95%EB%A0%AC-%EC%89%BD%EA%B2%8C-%EB%B3%B4%EA%B8%B0"><span class="nav-number">4.</span> <span class="nav-text">정렬 쉽게 보기</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -392,9 +469,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://limjiin.github.io/about/index.html";
-    this.page.identifier = "about/index.html";
-    this.page.title = "about";
+    this.page.url = "https://limjiin.github.io/2021/10/15/sql-basic-6/";
+    this.page.identifier = "2021/10/15/sql-basic-6/";
+    this.page.title = "sql-basic 6편";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="sql 기촌 문법 다섯 번째! 서브쿼리와 join 함수에 대한 모든 것을 알아보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql-basic 5편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/15/sql-basic-5/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="sql 기촌 문법 다섯 번째! 서브쿼리와 join 함수에 대한 모든 것을 알아보자!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-15T02:33:49.309Z">
+<meta property="article:modified_time" content="2021-10-15T06:40:24.405Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/15/sql-basic-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>sql-basic 5편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/15/sql-basic-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql-basic 5편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-15 11:33:49 / Modified: 15:40:24" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:49+09:00">2021-10-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql/" itemprop="url" rel="index"><span itemprop="name">sql</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/15/sql-basic-5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/15/sql-basic-5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>sql 기촌 문법 다섯 번째! 서브쿼리와 join 함수에 대한 모든 것을 알아보자!</p>
+<span id="more"></span>
+
+<h2 id="서브쿼리-개념-잡기"><a href="#서브쿼리-개념-잡기" class="headerlink" title="서브쿼리 개념 잡기"></a>서브쿼리 개념 잡기</h2><ul>
+<li>서브쿼리란? SQL 문장 안에 포함되는 또 다른 SQL 문장을 의미</li>
+<li>FROM절의 서브쿼리 : 조건에 맞는 대상을 선택한 후 요약(필터링)할 때 사용</li>
+</ul>
+<pre>
+<code>
+    SELECT 컬럼명1, 컬럼명2
+    FROM
+    (
+        SELECT *
+        FROM 테이블명
+    ) 별칭
+    WHERE 조건절
+</pre>
+</code>
+
+<h4 id="셋팅"><a href="#셋팅" class="headerlink" title="셋팅"></a>셋팅</h4><pre>
+<code>
+show databases;
+
+use world;
+
+select * from country;
+</code>
+</pre>
+
+<h4 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select a.continent, avg(a.gnp) as avg_gnp
+from
+    (
+        select continent, name, gnp
+        from country
+        where continent = 'Asia'
+        order by gnp desc
+        limit 5
+    ) a
+group by continent
+;
+</code>
+</pre>
+
+<ul>
+<li>WHERE 절의 서브쿼리 : 특정 테이블에서 추출된 모든 데이터가 조건절에 사용됨</li>
+</ul>
+<pre>
+<code>
+SELECT name FROM country WHERE name LIKE '%Korea%
+
+= SELECT name FROM country WHERE name IN (‘South Korea’, ‘North Korea’)
+
+= SELECT name FROM country WHERE name IN ( SELECT name FROM country WHERE name LIKE '%Korea%')
+</code>
+</pre>
+
+<h4 id="문제-1"><a href="#문제-1" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select continent, name
+from country
+where code in
+(
+    select countrycode
+    from countrylanguage
+    group by countrycode
+    having count(*) >= 12
+)
+;
+</code>
+</pre>
+
+<h2 id="테이블-합치기-개념-이해"><a href="#테이블-합치기-개념-이해" class="headerlink" title="테이블 합치기 개념 이해"></a>테이블 합치기 개념 이해</h2><ul>
+<li><p>SQL JOIN</p>
+<blockquote>
+<p>두 개 이상의 테이블 들을 연결 또는 결합하여 데이터를 출력하는 것을 JOIN 이라고 함<br>관계형 데이터베이스의 가장 큰 장점이 JOIN 임<br>FROM 절에 여러 개의 테이블이 나열되더라도, 실제 처리 시 두개의 테이블 만 조인됨<br>예를 들어 A, B, C, D 4개의 테이블을 조인하고자 할 경우 쿼리 옵티마이저는 ( ( (A JOIN D) JOIN C) JOIN B)와 같이 순차적으로 조인을 처리하게 됨</p>
+</blockquote>
+</li>
+<li><p>JOIN 의 방법과 방식</p>
+<blockquote>
+<p>조인의 방법 : Equi Join (등가 조인, 내부조인) , Non-Equi Join , Self Join , Outer Join<br>조인의 방식 : Nested Loop Join, Sort Merge Join, Hash Join</p>
+</blockquote>
+</li>
+<li><p>컬럼 합치기 = SQL의 VLOOKUP 기능과 유사함</p>
+</li>
+<li><p>로우 합치기 : 같은 의미의 컬럼 정보를 가지고 있는 서로 다른 테이블을 하나의 테이블로 합치는 경우</p>
+</li>
+<li><p>내부 조인 사용 방법</p>
+<blockquote>
+<p>내부 조인은 테이블 간의 교집합을 구하는 방식</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="WHERE-조건을-이용한-JOIN"><a href="#WHERE-조건을-이용한-JOIN" class="headerlink" title="WHERE 조건을 이용한 JOIN"></a>WHERE 조건을 이용한 JOIN</h4><pre>
+<code>
+SELECT PLAYER.PLAYER_NAME
+, PLAYER.BACK_NO
+, PLAYER.TEAM_ID
+, TEAM.TEAM_NAME
+, TEAM.REGION_NAME
+FROM PLAYER, TEAM
+WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID;
+</code>
+</pre>
+
+<h4 id="INNER-JOIN-을-이용한-JOIN"><a href="#INNER-JOIN-을-이용한-JOIN" class="headerlink" title="INNER JOIN 을 이용한 JOIN"></a>INNER JOIN 을 이용한 JOIN</h4><pre>
+<code>
+SELECT PLAYER.PLAYER_NAME
+, PLAYER.BACK_NO
+, PLAYER.TEAM_ID
+, TEAM.TEAM_NAME
+, TEAM.REGION_NAME
+FROM PLAYER
+INNER JOIN TEAM
+ON PLAYER.TEAM_ID = TEAM.TEAM_ID;
+
+별칭을 사용하여 조인할 수 있다.
+
+</code>
+</pre>
+
+<h4 id="WHERE-조건을-이용한-JOIN-1"><a href="#WHERE-조건을-이용한-JOIN-1" class="headerlink" title="WHERE 조건을 이용한 JOIN"></a>WHERE 조건을 이용한 JOIN</h4><pre>
+<code>
+SELECT A.PLAYER_NAME
+, A.BACK_NO
+, A.TEAM_ID
+, B.TEAM_NAME
+, B.REGION_NAME
+FROM PLAYER A, TEAM B
+WHERE A.TEAM_ID = B.TEAM_ID ;
+</code>
+</pre>
+
+<h4 id="ON-절을-이용한-JOIN"><a href="#ON-절을-이용한-JOIN" class="headerlink" title="ON 절을 이용한 JOIN"></a>ON 절을 이용한 JOIN</h4><pre>
+<code>
+SELECT A.PLAYER_NAME
+, A.BACK_NO
+, A.TEAM_ID
+, B.TEAM_NAME
+, B.REGION_NAME
+FROM PLAYER A
+INNER JOIN TEAM B
+ON A.TEAM_ID = B.TEAM_ID
+
+필터 조건 및 정렬을 함께 사용한 조인 예제
+</code>
+</pre>
+
+<h4 id="WHERE-조건-JOIN"><a href="#WHERE-조건-JOIN" class="headerlink" title="WHERE 조건 JOIN"></a>WHERE 조건 JOIN</h4><pre>
+<code>
+SELECT A.PLAYER_NAME
+, A.BACK_NO
+, A.TEAM_ID
+, B.TEAM_NAME
+, B.REGION_NAME
+FROM PLAYER A, TEAM B
+WHERE A.TEAM_ID = B.TEAM_ID
+AND A.POSITION = 'GK'
+ORDER BY A.BACK_NO ;
+</code>
+</pre>
+
+<h4 id="ON-절을-사용한-JOIN"><a href="#ON-절을-사용한-JOIN" class="headerlink" title="ON 절을 사용한 JOIN"></a>ON 절을 사용한 JOIN</h4><pre>
+<code>
+SELECT A.PLAYER_NAME
+, A.BACK_NO
+, A.TEAM_ID
+, B.TEAM_NAME
+, B.REGION_NAME
+FROM PLAYER A
+INNER JOIN TEAM B
+ON A.TEAM_ID = B.TEAM_ID
+WHERE A.POSITION = 'GK'
+ORDER BY A.BACK_NO ;
+</code>
+</pre>
+
+<h2 id="EQUI-JOIN-과-NON-EQUI-JOIN의-이해"><a href="#EQUI-JOIN-과-NON-EQUI-JOIN의-이해" class="headerlink" title="EQUI-JOIN 과 NON EQUI-JOIN의 이해"></a>EQUI-JOIN 과 NON EQUI-JOIN의 이해</h2><ul>
+<li>Equal 조인이라고 하기도 하며, 조인 중에서도 가장 일반적으로 사용되는 Equality Condition(=) 에 의한 조인</li>
+<li>Equi-JOIN 의 성능을 높이기 위해서는, 조인의 조건 컬럼에 대해 인덱스 기능을 사용하는 것이 좋다.</li>
+</ul>
+<h4 id="WHERE-절에-JOIN-조건을-넣는-방식"><a href="#WHERE-절에-JOIN-조건을-넣는-방식" class="headerlink" title="WHERE 절에 JOIN 조건을 넣는 방식"></a>WHERE 절에 JOIN 조건을 넣는 방식</h4><pre>
+<code>
+SELECT 테이블1.칼럼명, 테이블2.칼럼명, ...
+FROM 테이블1, 테이블2
+WHERE 테이블1.칼럼명1 = 테이블2.칼럼명2;
+</code>
+</pre>
+
+<h4 id="ON-절에-JOIN-조건을-넣는-방식-ANSI-표준"><a href="#ON-절에-JOIN-조건을-넣는-방식-ANSI-표준" class="headerlink" title="ON 절에 JOIN 조건을 넣는 방식 (ANSI 표준)"></a>ON 절에 JOIN 조건을 넣는 방식 (ANSI 표준)</h4><pre>
+<code>
+SELECT 테이블1.칼럼명, 테이블2.칼럼명, ...
+FROM 테이블1
+INNER JOIN 테이블2
+ON 테이블1.칼럼명1 = 테이블2.칼럼명2
+</code>
+</pre>
+
+<h4 id="문제-2"><a href="#문제-2" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select countrylanguage.(별첨), country.name
+from countrylanguage, country
+where  countrylanguage.countrycode = country.code
+;
+</code>
+</pre>
+
+<h4 id="문제2"><a href="#문제2" class="headerlink" title="문제2"></a>문제2</h4><pre>
+<code>
+select a.(별첨), b.name
+from countrylanguage a
+inner join country b
+on a.countrycode = b.code
+;
+</code>
+</pre>
+
+<ul>
+<li>NON-EQUI-JOIN 이란?<blockquote>
+<p>Equal(=) 연산자가 아닌 다른 (BETWEEN, &gt;=, &lt;=, &gt;, &lt; 등) 연산자를 사용하여 조인을 수행한다.<br>BETWEEN AND, IS NULL, IS NOT NULL, IN, NOT IN<br>성능이 좋지 않으며, 거의 사용하지 않는 유형</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="JOIN의-유형"><a href="#JOIN의-유형" class="headerlink" title="JOIN의 유형"></a>JOIN의 유형</h2><ul>
+<li>자주 쓰는 조인의 유형<blockquote>
+<p>(INNER) JOIN<br>LEFT (OUTER) JOIN<br>RIGHT (OUTER) JOIN<br>FULL (OUTER) JOIN</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="INNER-JOIN-INNER-생략가능-JOIN-구문의-조건이-A-와-B-테이블-양쪽-테이블에-일치하는-결과-쉽게-말해-교집합을-구함"><a href="#INNER-JOIN-INNER-생략가능-JOIN-구문의-조건이-A-와-B-테이블-양쪽-테이블에-일치하는-결과-쉽게-말해-교집합을-구함" class="headerlink" title="INNER JOIN(INNER 생략가능) : JOIN 구문의 조건이 A 와 B 테이블 양쪽 테이블에 일치하는 결과, 쉽게 말해 교집합을 구함"></a>INNER JOIN(INNER 생략가능) : JOIN 구문의 조건이 A 와 B 테이블 양쪽 테이블에 일치하는 결과, 쉽게 말해 교집합을 구함</h4><pre>
+<code>
+select * from table a
+inner join table b
+on table a.name = table b.name
+</code>
+</pre>
+
+<ul>
+<li>LEFT OUTER JOIN(OUTER 생략가능)<blockquote>
+<p>왼쪽 테이블을 기준으로 오른쪽 테이블의 JOIN 조건에 일치하는 데이터를 출력</p>
+</blockquote>
+</li>
+</ul>
+<pre>
+<code>
+select * from table a
+left outer join table b
+on table a.name = table b.name
+
+조건절을 통해 A테이블에만 존재하는 데이터를 조회할 수 있음(차집합)
+
+select * from table a
+left outer join table b
+on table a.name = table b.name
+where table b.id is null
+
+</code>
+</pre>
+
+<ul>
+<li>FULL OUTER JOIN<blockquote>
+<p>테이블 A 와 B 의 합집합을 구하는 JOIN</p>
+</blockquote>
+</li>
+</ul>
+<pre>
+<code>
+select * from table a
+full outer join table b
+on table a.name = table b.name
+
+조건절을 활용하여 각각의 테이블에만 존재하는 데이터를 조회할 수 있음
+
+select * from table a
+full outer join table b
+on table a.name = table b.name
+where table a.id is null
+or table b.id is null
+</code>
+</pre>
+
+<h2 id="JOIN-실습을-위한-테이블-생성하기"><a href="#JOIN-실습을-위한-테이블-생성하기" class="headerlink" title="JOIN 실습을 위한 테이블 생성하기"></a>JOIN 실습을 위한 테이블 생성하기</h2><pre>
+<code>
+# 데이터 베이스 생성하기
+CREATE DATABASE fastcampus;
+
+USE fastcampus;
+
+# 기존 student 테이블이 있다면 삭제하기
+DROP TABLE IF EXISTS `student`;
+
+# student 테이블 스키마 생성하기
+CREATE TABLE `student` (
+`id` tinyint(4) NOT NULL,
+`name` char(8) NOT NULL,
+`sex` enum('남자','여자') NOT NULL,
+`location_id` tinyint(4) NOT NULL,
+`birthday` datetime NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# location 테이블이 있다면 삭제하기
+DROP TABLE IF EXISTS `location`;
+
+# location 테이블 스키마 생성하기
+CREATE TABLE `location` (
+`id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT ,
+`name` varchar(20) NOT NULL ,
+`distance` tinyint UNSIGNED NOT NULL ,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# student 테이블 샘플 데이터 삽입
+INSERT INTO `student` VALUES (1, '이숙경', '여자', 1, '1982-11-16 00:00:00');
+INSERT INTO `student` VALUES (2, '박재숙', '남자', 2, '1985-10-26 00:00:00');
+INSERT INTO `student` VALUES (3, '백태호', '남자', 3, '1989-2-10 00:00:00');
+INSERT INTO `student` VALUES (4, '김경훈', '남자', 4, '1979-11-4 00:00:00');
+INSERT INTO `student` VALUES (6, '김경진', '여자', 5, '1985-1-1 00:00:00');
+INSERT INTO `student` VALUES (7, '박경호', '남자', 6, '1981-2-3 00:00:00');
+INSERT INTO `student` VALUES (8, '김정인', '남자', 5, '1990-10-1 00:00:00');
+
+# location 테이블 샘플 데이터 삽입
+INSERT INTO `location` VALUES (1, '서울', 10);
+INSERT INTO `location` VALUES (2, '청주', 200);
+INSERT INTO `location` VALUES (3, '경주', 255);
+INSERT INTO `location` VALUES (4, '제천', 190);
+INSERT INTO `location` VALUES (5, '대전', 200);
+INSERT INTO `location` VALUES (6, '제주', 255);
+INSERT INTO `location` VALUES (7, '영동', 255);
+INSERT INTO `location` VALUES (8, '광주', 255);
+
+# 테이블 확인하기
+select * from location;
+select * from student;
+</code>
+</pre>
+
+<h2 id="JOIN-작성-방법-응용-및-실습"><a href="#JOIN-작성-방법-응용-및-실습" class="headerlink" title="JOIN 작성 방법 응용 및 실습"></a>JOIN 작성 방법 응용 및 실습</h2><ul>
+<li>서브쿼리를 활용한 JOIN 작성 방식 : 서브쿼리 작성 방식을 활용하여 조인 쿼리를 작성하면, 쿼리가 길어지는 단점이 있지만 쿼리의 가독성과 재사용성이 높아짐(초심자에게 특히 권장</li>
+</ul>
+<pre>
+<code>
+SELECT P.PLAYER_NAME 선수명
+, P.POSITION 포지션
+, T.REGION_NAME 연고지
+, T.TEAM_NAME 팀명
+, S.STADIUM_NAME 구장명
+FROM PLAYER P
+INNER JOIN TEAM T
+ON P.TEAM_ID = T.TEAM_ID
+INNER JOIN STADIUM S
+ON T.STADIUM_ID = S.STADIUM_ID
+ORDER BY 선수명;
+
+SELECT P.PLAYER_NAME 선수명
+, P.POSITION 포지션
+, T.REGION_NAME 연고지
+, T.TEAM_NAME 팀명
+, S.STADIUM_NAME 구장명
+FROM
+(
+SELECT * FROM PLAYER
+) P
+INNER JOIN
+(
+SELECT *
+FROM TEAM
+) T
+ON P.TEAM_ID = T.TEAM_ID
+INNER JOIN
+(
+SELECT *
+FROM STADIUM
+) S
+ON T.STADIUM_ID = S. STADIUM_ID
+ORDER BY 선수명;
+</code>
+</pre>
+
+<h4 id="문제-3"><a href="#문제-3" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select s.location_id, s.name, l.id, l.distance
+from student as s
+inner join location as l
+on s.location_id = l.id;
+</code>
+</pre>
+
+<h4 id="문제-4"><a href="#문제-4" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select a.*, b.*
+from
+(
+    select *
+    from student
+) as a
+inner join
+# left outer join : inner join과 똑같은 값으로 나옴
+# right outer join : null 값이 나옴
+(
+    select *
+    from location
+) as b
+on a.location_id = b.id
+;
+</code>
+</pre>
+
+<h4 id="문제-5"><a href="#문제-5" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+delete from location where name = '제주';
+
+select * from location;
+</code>
+</pre>
+
+<ul>
+<li>safe update mode 에러 발생 시 해결 방법<br><a target="_blank" rel="noopener" href="https://www.popit.kr/mysql-workbench-%EC%97%90%EC%84%9C-error-code-1175-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EB%B2%95/">https://www.popit.kr/mysql-workbench-%EC%97%90%EC%84%9C-error-code-1175-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EB%B2%95/ </a></li>
+</ul>
+<h4 id="문제-6"><a href="#문제-6" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select a.continent, a.name 
+        , b.cnt as city_cnt
+from
+(
+select code, continent, name
+from country
+where continent = 'Asia'
+) as a
+join
+(
+select countrycode, count(별첨) as cnt
+from city
+group by countrycode
+having cnt > 50
+) as b
+on a.code = b.countrycode
+order by cnt desc
+;
+</code>
+</pre>
+
+<h4 id="문제-7"><a href="#문제-7" class="headerlink" title="문제"></a>문제</h4><pre>
+<code>
+select b.name as name, b.population, a.name as Name, c.lang
+from
+(
+select code, name
+from country
+) as a
+join
+(
+select countrycode, name, population
+from city
+order by population desc
+limit 5
+) as b
+on a.code = b.countrycode
+join 
+(
+select countrycode, group_concat(language order by percentage desc) as lang
+from countrylanguage
+group by countrycode
+) as c
+on a.code = c.countrycode
+;
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/08/sql-basic-4/" rel="prev" title="sql-basic 4편">
+      <i class="fa fa-chevron-left"></i> sql-basic 4편
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/15/sql-basic-6/" rel="next" title="sql-basic 6편">
+      sql-basic 6편 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%84%9C%EB%B8%8C%EC%BF%BC%EB%A6%AC-%EA%B0%9C%EB%85%90-%EC%9E%A1%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">서브쿼리 개념 잡기</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%85%8B%ED%8C%85"><span class="nav-number">1.0.1.</span> <span class="nav-text">셋팅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C"><span class="nav-number">1.0.2.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">문제</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%95%A9%EC%B9%98%EA%B8%B0-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4"><span class="nav-number">2.</span> <span class="nav-text">테이블 합치기 개념 이해</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WHERE-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-JOIN"><span class="nav-number">2.0.1.</span> <span class="nav-text">WHERE 조건을 이용한 JOIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INNER-JOIN-%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-JOIN"><span class="nav-number">2.0.2.</span> <span class="nav-text">INNER JOIN 을 이용한 JOIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WHERE-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-JOIN-1"><span class="nav-number">2.0.3.</span> <span class="nav-text">WHERE 조건을 이용한 JOIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ON-%EC%A0%88%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-JOIN"><span class="nav-number">2.0.4.</span> <span class="nav-text">ON 절을 이용한 JOIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WHERE-%EC%A1%B0%EA%B1%B4-JOIN"><span class="nav-number">2.0.5.</span> <span class="nav-text">WHERE 조건 JOIN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ON-%EC%A0%88%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-JOIN"><span class="nav-number">2.0.6.</span> <span class="nav-text">ON 절을 사용한 JOIN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EQUI-JOIN-%EA%B3%BC-NON-EQUI-JOIN%EC%9D%98-%EC%9D%B4%ED%95%B4"><span class="nav-number">3.</span> <span class="nav-text">EQUI-JOIN 과 NON EQUI-JOIN의 이해</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WHERE-%EC%A0%88%EC%97%90-JOIN-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EB%84%A3%EB%8A%94-%EB%B0%A9%EC%8B%9D"><span class="nav-number">3.0.1.</span> <span class="nav-text">WHERE 절에 JOIN 조건을 넣는 방식</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ON-%EC%A0%88%EC%97%90-JOIN-%EC%A1%B0%EA%B1%B4%EC%9D%84-%EB%84%A3%EB%8A%94-%EB%B0%A9%EC%8B%9D-ANSI-%ED%91%9C%EC%A4%80"><span class="nav-number">3.0.2.</span> <span class="nav-text">ON 절에 JOIN 조건을 넣는 방식 (ANSI 표준)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-2"><span class="nav-number">3.0.3.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C2"><span class="nav-number">3.0.4.</span> <span class="nav-text">문제2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JOIN%EC%9D%98-%EC%9C%A0%ED%98%95"><span class="nav-number">4.</span> <span class="nav-text">JOIN의 유형</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#INNER-JOIN-INNER-%EC%83%9D%EB%9E%B5%EA%B0%80%EB%8A%A5-JOIN-%EA%B5%AC%EB%AC%B8%EC%9D%98-%EC%A1%B0%EA%B1%B4%EC%9D%B4-A-%EC%99%80-B-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%96%91%EC%AA%BD-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%97%90-%EC%9D%BC%EC%B9%98%ED%95%98%EB%8A%94-%EA%B2%B0%EA%B3%BC-%EC%89%BD%EA%B2%8C-%EB%A7%90%ED%95%B4-%EA%B5%90%EC%A7%91%ED%95%A9%EC%9D%84-%EA%B5%AC%ED%95%A8"><span class="nav-number">4.0.1.</span> <span class="nav-text">INNER JOIN(INNER 생략가능) : JOIN 구문의 조건이 A 와 B 테이블 양쪽 테이블에 일치하는 결과, 쉽게 말해 교집합을 구함</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JOIN-%EC%8B%A4%EC%8A%B5%EC%9D%84-%EC%9C%84%ED%95%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0"><span class="nav-number">5.</span> <span class="nav-text">JOIN 실습을 위한 테이블 생성하기</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JOIN-%EC%9E%91%EC%84%B1-%EB%B0%A9%EB%B2%95-%EC%9D%91%EC%9A%A9-%EB%B0%8F-%EC%8B%A4%EC%8A%B5"><span class="nav-number">6.</span> <span class="nav-text">JOIN 작성 방법 응용 및 실습</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-3"><span class="nav-number">6.0.1.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-4"><span class="nav-number">6.0.2.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-5"><span class="nav-number">6.0.3.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-6"><span class="nav-number">6.0.4.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C-7"><span class="nav-number">6.0.5.</span> <span class="nav-text">문제</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/15/sql-basic-5/";
+    this.page.identifier = "2021/10/15/sql-basic-5/";
+    this.page.title = "sql-basic 5편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
