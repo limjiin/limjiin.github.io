@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-10-15 11:33:59 / Modified: 11:45:55" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:59+09:00">2021-10-15</time>
+              <time title="Created: 2021-10-15 11:33:59 / Modified: 15:45:52" itemprop="dateCreated datePublished" datetime="2021-10-15T11:33:59+09:00">2021-10-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,19 +225,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <span id="more"></span>
-
-<ol start="6">
-<li>행 합치기</li>
-</ol>
-<ul>
-<li>UNION 연산자를 이용한 행 합치기<br>두 개 이상 테이블의 SELECT 결과행을 합칠 때 UNION 연산자 활용<br>A 테이블, B 테이블을 조회할 때 사용할 수 있는 SQL 문법을 전부 사용할 수 있음<br>UNION 으로 합쳐지는 SELECT 문의 컬럼 숫자가 동일해야 함<br>합쳐지는 컬럼의 데이터 유형이 동일해야 함<br>중복이 있는 데이터는 하나만 표현 함<br>합쳐진 테이블의 컬럼명은 LEFT TABLE 의 컬럼명<br>합쳐진 데이터의 중복을 제거하지 않기 위해서는 UNION ALL 을 사용</li>
-</ul>
-<p>SELECT 컬럼명1, 컬럼명2 FROM 테이블1<br>UNION<br>SELECT 컬럼명3, 컬럼명4 FROM 테이블2<br>ORDER BY 1</p>
-<h1 id="서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴"><a href="#서브쿼리-안에는-같은-조건을-넣어줘야-중복이-제거되어-나옴" class="headerlink" title="서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴."></a>서브쿼리 안에는 같은 조건을 넣어줘야 중복이 제거되어 나옴.</h1><h1 id="쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨"><a href="#쿼리-밖에서-조건을-주면-서비-쿼리에-따로-조건절을-주지-않아도-됨" class="headerlink" title="쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨."></a>쿼리 밖에서 조건을 주면 서비 쿼리에 따로 조건절을 주지 않아도 됨.</h1><p>select count(별첨) as cnt<br>from<br>(<br>select code from country # where code = ‘ABW’ – 1<br>union – 중복을 허용하지 않음<br>select countrycode from city # where countrycode = ‘ABW’ – 4079<br>) a<br>where a.code = ‘ABW’<br>;</p>
-<h1 id="같은-열로-합치기-가능함"><a href="#같은-열로-합치기-가능함" class="headerlink" title="같은 열로 합치기 가능함"></a>같은 열로 합치기 가능함</h1><p>select *<br>from<br>(<br>select code, continent from country<br>union<br>select countrycode, name from city<br>) a<br>where code = ‘ABW’<br>;</p>
-<h1 id="정렬-쉽게-보기"><a href="#정렬-쉽게-보기" class="headerlink" title="정렬 쉽게 보기"></a>정렬 쉽게 보기</h1><p>select code from country<br>union<br>select countrycode from city<br>order by 1 desc;</p>
-
+          <p>sql 기초 문법 마지막편! 행합치기(union)에 대해 알아보자!!!<br>공부하느라 고생했습니다, 나 자신!</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/15/sql-basic-6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
