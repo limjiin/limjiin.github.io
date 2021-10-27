@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="저번 시간에 배운 개념보다 더 복잡하고 어려운 내용이 등장한다….! 회귀 분석을 중심으로 집중하고 공부해보쟈!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="머신러닝  2편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/27/machine-learning-2/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="저번 시간에 배운 개념보다 더 복잡하고 어려운 내용이 등장한다….! 회귀 분석을 중심으로 집중하고 공부해보쟈!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-27T08:47:48.209Z">
+<meta property="article:modified_time" content="2021-10-27T09:15:38.664Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="machine">
+<meta property="article:tag" content="learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/27/machine-learning-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>머신러닝  2편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/27/machine-learning-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          머신러닝  2편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-27 17:47:48 / Modified: 18:15:38" itemprop="dateCreated datePublished" datetime="2021-10-27T17:47:48+09:00">2021-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/27/machine-learning-2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/27/machine-learning-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>저번 시간에 배운 개념보다 더 복잡하고 어려운 내용이 등장한다….! 회귀 분석을 중심으로 집중하고 공부해보쟈!</p>
+<span id="more"></span>
+
+<h3 id="Part-02-회귀분석"><a href="#Part-02-회귀분석" class="headerlink" title="Part.02 회귀분석"></a>Part.02 회귀분석</h3><ol>
+<li> 변수선택법</li>
+</ol>
+<ul>
+<li><p>모델 선택(변수 선택)</p>
+<blockquote>
+<p>변수가 여러 개 일 때 최적의 변수 조합을 찾아내는 기법<br>변수의 수가 p개일 때 변수의 총 조합은 2p으로 변수 수가 증가함에 따라 변수 조합의 수는 기하급수적으로 증가<br>총 변수들의 조합 중 최적의 조합을 찾기 위한 차선의 방법<br>(optimal은 아님. optimal한 조합을 찾는 방법은 모든 경우의 수 조합을 다 해보는 것)</p>
+</blockquote>
+<ul>
+<li>Feedforward Selection 방법 : 변수를 추가해가며 성능지표를 비교해가는 방법 </li>
+<li>Backward Elimination 방법 : 변수를 제거해가며 성능지표를 비교해가는 방법</li>
+<li>Stepwise 방법(Feedforward Selection  + Backward Elimination)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>가장 유의한 변수를 추가하거나 유의하지 않는 변수를 제거해나가는 방법</p>
+<ul>
+<li><p>전진선택법을 사용할 때 한 변수가 선택되면 이미 선택된 변수 중 중요하지 않은 변수가 있을 수 있음</p>
+</li>
+<li><p>전진선택법의 각 단계에서 이미 선택된 변수들의 중요도를 다시 검사하여 중요하지 않은 변수를 제거하는 방법</p>
+</li>
+<li><p>일반적으로 가장 널리 쓰이는 방법</p>
+</li>
+</ul>
+<ol>
+<li>변수 입력/제거를 위한 p-value 임계치 설정</li>
+<li>Forward selection 을 통한 변수 선정</li>
+<li>선택된 변수 중 유의미한 변수를 남기고 제거, 2~3반복</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>교호작용(Interaction term)</li>
+</ol>
+<ul>
+<li><p>변수 간의 시너지 효과 : X1과 X2는 Y에 영향을 끼치지 않지만, X1과 X2가 결합됨으로써 Y에 중요한 영향을 끼칠 수 있음</p>
+</li>
+<li><p>X1, X2, 그리고 X1과 X2의 교호작용에 대해 회귀 모델 방정식</p>
+</li>
+<li><p>교호작용은 일반적으로 도메인지식에 근거하여 추가하여야함</p>
+</li>
+<li><p>명목형 변수(Dummy variable)</p>
+<blockquote>
+<p>성별, 대학, 지역 등 명목형 변수의 경우 전처리가 필요함</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li>회귀분석의 진단</li>
+</ol>
+<ul>
+<li><p>적절한 변수를 통해 어느정도 성능지표가 잘 나오는 모델을 만들었다.</p>
+</li>
+<li><p>과연 이 회귀모델이 잘 만들어진 모델인 것인가에 대한 진단이 필요</p>
+</li>
+<li><p>회귀분석에서는 아래 잔차에 대한 세가지 가정이 존재 : 정규성, 독립성, 등분산성</p>
+</li>
+<li><p>세 가지 가정을 만족할 시 잘 만들어진 회귀모델이라 판단</p>
+</li>
+<li><p>일반적으로 Residuals 산점도, Normal Q-Q Plot, Residual vs fitted plot으로 진단</p>
+</li>
+<li><p>잔차가 가정에 위배된 경우</p>
+<blockquote>
+<p>Y에 대해 log 또는 root를 씌워 줌<br>이상치 제거<br>다항회귀분석(Polynomial regression)</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>다항회귀 분석</li>
+</ol>
+<ul>
+<li><p>다항회귀분석이 필요한 경우 : X와 Y가 비선형 관계일 때 사용함</p>
+<blockquote>
+<p>독립변수와 종속변수 간의 비선형관계를 가질 경우 : 독립변수와 종속변수의 Plot을 통해 확인 가능<br>다중 회귀의 가정이 위배된 경우 : Residual Plot을 통해 확인 가능</p>
+</blockquote>
+</li>
+<li><p>다항회귀 적합</p>
+<blockquote>
+<p>회귀 계수를 추정하는 방법은 선형회귀분석과 동일하게 잔차제곱합을 최소화시키도록 회귀계수 추정<br>기존의 변수에 2차항을 추가한 모델 vs 2차항만을 사용한 모델<br>X1과 Y의 관계가 2차식과 같은 비선형이라면, 2차항만 고려하는 것이 일반적<br>다항회귀 시 고려할 것 : 항이 추가 될수록 overfitting이 일어날 가능성이 크기 때문에 고차항을 추가시에는 신중해야 함</p>
+</blockquote>
+</li>
+<li><p>고차항을 넣으면 과적합 발생</p>
+</li>
+</ul>
+<h3 id="다중선형회귀분석-실습2-다중회귀-모델-해석-및-다중공선성진단-실습"><a href="#다중선형회귀분석-실습2-다중회귀-모델-해석-및-다중공선성진단-실습" class="headerlink" title="다중선형회귀분석 실습2 - 다중회귀 모델 해석 및 다중공선성진단 실습"></a>다중선형회귀분석 실습2 - 다중회귀 모델 해석 및 다중공선성진단 실습</h3><pre>
+<code>
+import os
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+
+'''
+타겟 데이터
+1978 보스턴 주택 가격
+506개 타운의 주택 가격 중앙값 (단위 1,000 달러)
+
+특징 데이터
+CRIM: 범죄율
+INDUS: 비소매상업지역 면적 비율
+NOX: 일산화질소 농도
+RM: 주택당 방 수
+LSTAT: 인구 중 하위 계층 비율
+B: 인구 중 흑인 비율
+PTRATIO: 학생/교사 비율
+ZN: 25,000 평방피트를 초과 거주지역 비율
+CHAS: 찰스강의 경계에 위치한 경우는 1, 아니면 0
+AGE: 1940년 이전에 건축된 주택의 비율
+RAD: 방사형 고속도로까지의 거리
+DIS: 직업센터의 거리
+TAX: 재산세율
+'''
+</code>
+</pre>
+
+<h5 id="crim-rm-lstat을-통한-다중-선형-회귀분석"><a href="#crim-rm-lstat을-통한-다중-선형-회귀분석" class="headerlink" title="crim, rm, lstat을 통한 다중 선형 회귀분석"></a>crim, rm, lstat을 통한 다중 선형 회귀분석</h5><pre>
+<code>
+x_data=boston[['CRIM','RM','LSTAT']] ##변수 여러개
+target = boston[['Target']]
+x_data.head()
+
+x_data1 = sm.add_constant(x_data, has_constant='add')
+
+multi_model = sm.OLS(target,x_data1)
+fitted_multi_model=multi_model.fit()
+
+fitted_multi_model.summary()
+</code>
+</pre>
+
+<h5 id="crim-rm-lstat-b-tax-age-zn-nox-indus-변수를-통한-다중선형회귀분석"><a href="#crim-rm-lstat-b-tax-age-zn-nox-indus-변수를-통한-다중선형회귀분석" class="headerlink" title="crim, rm, lstat, b, tax, age, zn, nox, indus 변수를 통한 다중선형회귀분석"></a>crim, rm, lstat, b, tax, age, zn, nox, indus 변수를 통한 다중선형회귀분석</h5><pre>
+<code>
+# bostan data에서 원하는 변수만 뽑아오기 
+x_data2 = boston[['CRIM', 'RM', 'LSTAT', 'B', 'TAX', 'AGE', 'ZN', 'NOX', 'INDUS']]
+x_data2.head()
+
+# 상수항추기
+x_data2_ = sm.add_constant(x_data2, has_constant='add')
+
+# 회귀모델 적합
+multi_model2 = sm.OLS(target, x_data2_)
+fitted_multi_model2 = multi_model2.fit()
+
+# 결과 출력
+fitted_multi_model2.summary()
+
+# 세변수만 추가한 모델의 회귀 계수 
+fitted_multi_model.params
+
+# full모델의 회귀계수
+fitted_multi_model2.params
+
+# base모델과 full모델의 잔차비교 
+import matplotlib.pyplot as plt
+fitted_multi_model.resid.plot(label="full")
+fitted_multi_model2.resid.plot(label="full_add")
+plt.legend()
+</code>
+</pre>
+
+<h5 id="상관계수-산점도를-통해-다중공선성-확인"><a href="#상관계수-산점도를-통해-다중공선성-확인" class="headerlink" title="상관계수/산점도를 통해 다중공선성 확인"></a>상관계수/산점도를 통해 다중공선성 확인</h5><pre>
+<code>
+# 상관행렬 : x 변수들끼리 선형 관계가 있을 때 다중공선성이 있다 : 예측력 하락, 회귀계수가 이상하게 뽑힘
+x_data2.corr()
+
+# 상관행렬 시각화 해서 보기
+import seaborn as sns;
+cmap = sns.light_palette("darkgray", as_cmap=True)
+sns.heatmap(x_data2.corr(), annot=True, cmap=cmap)
+plt.show()
+
+# 변수별 산점도 시각화
+sns.pairplot(x_data2)
+plt.show()
+</code>
+</pre>
+
+<h5 id="VIF를-통한-다중공선성-확인"><a href="#VIF를-통한-다중공선성-확인" class="headerlink" title="VIF를 통한 다중공선성 확인"></a>VIF를 통한 다중공선성 확인</h5><pre>
+<code>
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+vif = pd.DataFrame()
+vif["VIF Factor"] = [variance_inflation_factor(x_data2.values, i) for i in range(x_data2.shape[1])]
+vif["features"] = x_data2.columns
+vif
+# 10 이상이면 다중공선성이 있다
+
+# nox 변수 제거후(X_data3) VIF 확인 : 수치가 낮아짐
+
+vif = pd.DataFrame()
+x_data3= x_data2.drop('NOX',axis=1)
+vif["VIF Factor"] = [variance_inflation_factor(x_data3.values, i) for i in range(x_data3.shape[1])]
+vif["features"] = x_data3.columns
+vif
+
+# RM 변수 제거후(x_data4) VIF 확인
+
+vif = pd.DataFrame()
+x_data4= x_data3.drop('RM',axis=1)
+vif["VIF Factor"] = [variance_inflation_factor(x_data4.values, i) for i in range(x_data4.shape[1])]
+vif["features"] = x_data4.columns
+vif
+
+# nox 변수 제거한 데이터(x_data3) 상수항 추가 후 회귀 모델 적합
+# nox, rm 변수 제거한 데이터(x_data4) 상수항 추가 후 회귀 모델 적합
+x_data3_ = sm.add_constant(x_data3, has_constant = 'add')
+x_data4_ = sm.add_constant(x_data4, has_constant = 'add')
+
+model_vif = sm.OLS(target, x_data3_)
+fitted_model_vif = model_vif.fit()
+
+model_vif2 = sm.OLS(target, x_data4_)
+fitted_model_vif2 = model_vif2.fit()
+
+# 회귀모델 결과 비교
+fitted_model_vif.summary()
+
+fitted_model_vif2.summary()
+</code>
+</pre>
+
+<h5 id="학습-검증데이터-분할"><a href="#학습-검증데이터-분할" class="headerlink" title="학습 / 검증데이터 분할"></a>학습 / 검증데이터 분할</h5><pre>
+<code>
+from sklearn.model_selection import train_test_split
+X = x_data2_
+y = target
+train_x, test_x, train_y, test_y = train_test_split(X, y, train_size=0.7, test_size=0.3,random_state = 1)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+# train_x에 상수항 추가후 회귀모델 적합
+train_x.head()
+fit_1 = sm.OLS(train_y, train_x)
+fit_1 = fit_1.fit()
+
+# 검증데이터에 대한 예측값과 true값 비교
+plt.plot(np.array(fit_1.predict(test_x)),label="pred")
+plt.plot(np.array(test_y),label="true")
+plt.legend()
+plt.show()
+
+# x_data3와 x_data4 학습 검증데이터 분할
+X = x_data3_
+y = target
+train_x2, test_x2, train_y2, test_y2 = train_test_split(X, y, train_size=0.7, test_size=0.3,random_state = 1)
+
+X = x_data4_
+y = target
+train_x3, test_x3, train_y3, test_y3 = train_test_split(X, y, train_size=0.7, test_size=0.3,random_state = 1)
+
+# x_data3/x_data4 회귀 모델 적합(fit2,fit3)
+fit_2 = sm.OLS(train_y2, train_x2)
+fit_2 = fit_2.fit()
+
+fit_3 = sm.OLS(train_y3, train_x3)
+fit_3 = fit_3.fit()
+
+# true값과 예측값 비교 
+plt.plot(np.array(fit_2.predict(test_x2)),label="pred")
+plt.plot(np.array(fit_3.predict(test_x3)),label="pred")
+plt.plot(np.array(test_y2),label="true")
+plt.legend()
+plt.show()
+
+# full모델 추가해서 비교 
+plt.plot(np.array(fit_1.predict(test_x)),label="pred")
+plt.plot(np.array(fit_2.predict(test_x2)),label="pred_vif")
+plt.plot(np.array(fit_2.predict(test_x2)),label="pred_vif2")
+plt.plot(np.array(test_y2),label="true")
+plt.legend()
+plt.show()
+
+plt.plot(np.array(test_y2['Target']-fit_1.predict(test_x)),label="pred_full")
+plt.plot(np.array(test_y2['Target']-fit_2.predict(test_x2)),label="pred_vif")
+plt.plot(np.array(test_y2['Target']-fit_3.predict(test_x3)),label="pred_vif2")
+plt.legend()
+plt.show()
+</code>
+</pre>
+
+<h5 id="MSE를-통한-검증데이터에-대한-성능비교"><a href="#MSE를-통한-검증데이터에-대한-성능비교" class="headerlink" title="MSE를 통한 검증데이터에 대한 성능비교"></a>MSE를 통한 검증데이터에 대한 성능비교</h5><pre>
+<code>
+from sklearn.metrics import mean_squared_error
+
+mean_squared_error(y_true = test_y['Target'], y_pred = fit_1.predict(test_x))
+
+mean_squared_error(y_true = test_y['Target'], y_pred = fit_2.predict(test_x2))
+
+mean_squared_error(y_true = test_y['Target'], y_pred = fit_3.predict(test_x3))
+</code>
+</pre>
+
+<ol start="5">
+<li>로지스틱 회귀분석</li>
+</ol>
+<ul>
+<li><p>로지스틱 회귀란</p>
+<blockquote>
+<p>로지스틱 회귀는 출력 변수를 직접 예측하는 것이 아니라, 두 개의 카테고리를 가지는 binary 형태의 출력 변수(성공, 실패, 또는 예, 아니오)를 예측할 때 사용하는 회귀분석 방법임<br>로지스틱 회귀에서는 k개의 입력 변수를 사용하여 성공 실패를 예측하기 위해 성공 확률 p(X)를 모델링 함<br>방정식의 왼쪽의 범위는 [0, 1]이지만, 오른쪽 범위는 [-inf, +inf]이므로 다른 형태로 모델링 해야 함</p>
+</blockquote>
+</li>
+<li><p>로지스틱 함수(Logistic Function)</p>
+<blockquote>
+<p>왼쪽 항에 자연 로그를 취해줌으로써 in(p(X))는 [-inf, +inf]가 됨. 하지만 이를 만족하기 위해서는 p(X)가 [0, +inf]의 범위이어야 함<br>하지만 확률 p(X)의 maximum 값은 1이므로 in(p(X))가 +inf 값을 가질 수 없음. 따라서 왼쪽의 식을 다음과 같이 대체함<br>X는 입력변수, Y는 출력변수가 1이 될 확률일 때 </p>
+</blockquote>
+</li>
+<li><p>로지스틱 회귀계수 추정</p>
+<blockquote>
+<p>단순(다중) 선형회귀의 최소제곱법을 사용하는 것이 아닌 최대우도법(maximum likelihood)를 사용<br>likelihood function을 최대화하는 Bo,B1를 추정<br>베르누이 확률분포(0 또는 1의 값을 가지는 확률변수의 확률 분포)를 이용하여 추정</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="로지스틱-회귀분석-실습-로지스틱-회귀모델-적합-및-해석"><a href="#로지스틱-회귀분석-실습-로지스틱-회귀모델-적합-및-해석" class="headerlink" title="로지스틱 회귀분석 실습 - 로지스틱 회귀모델 적합 및 해석"></a>로지스틱 회귀분석 실습 - 로지스틱 회귀모델 적합 및 해석</h3><pre>
+<code>
+# 분석에 필요한 패키지 불러오기
+import os
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import itertools
+import time
+</code>
+</pre>
+
+<h5 id="로지스틱-회귀분석"><a href="#로지스틱-회귀분석" class="headerlink" title="로지스틱 회귀분석"></a>로지스틱 회귀분석</h5><pre>
+<code>
+# Personal Loan 데이터 불러오기
+
+'''
+Experience 경력
+Income 수입
+Famliy 가족단위
+CCAvg 월 카드사용량 
+Education 교육수준 (1: undergrad; 2, Graduate; 3; Advance )
+Mortgage 가계대출
+Securities account 유가증권계좌유무
+CD account 양도예금증서 계좌 유무
+Online 온라인계좌유무
+CreidtCard 신용카드유무 
+
+'''
+
+# 의미없는 변수 제거 ID, zip code 제외
+ploan_processed = ploan.dropna().drop(['ID', 'ZIP Code'], axis=1, inplace=False)
+
+# 상수항 추가
+ploan_processed = sm.add_constant(ploan_processed, has_constant = 'add')
+ploan_processed.head()
+</code>
+</pre>
+
+<h5 id="설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터"><a href="#설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터" class="headerlink" title="설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터"></a>설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터</h5><pre>
+<code>
+# 대출여부: 1 or 0
+feature_columns = ploan_processed.columns.difference(['Personal Loan'])
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan']
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+</code>
+</pre>
+
+<h5 id="로지스틱회귀모형-모델링-y-f-x"><a href="#로지스틱회귀모형-모델링-y-f-x" class="headerlink" title="로지스틱회귀모형 모델링 y = f(x)"></a>로지스틱회귀모형 모델링 y = f(x)</h5><pre>
+<code>
+# 로지스틱 모형 적합 
+
+model = sm.Logit(train_y, train_x)
+results = model.fit(method='newton')
+
+results.summary()
+
+#회귀계수 출력
+results.params
+
+## 나이가 한살 많을수록록 대출할 확률이 1.024 높다.
+## 수입이 1단위 높을소룩 대출할 확률이 1.05배 높다 
+## 가족 구성원수가 1많을수록 대출할 확률이 2.13배 높다
+## 경력이 1단위 높을수록 대출할 확률이 0.99배 높다(귀무가설 채택)
+# Experience,  Mortgage는 제외할 필요성이 있어보임
+np.exp(results.params)
+
+## y_hat 예측
+pred_y = results.predict(test_x)
+pred_y
+
+def cut_off(y,threshold):
+    Y = y.copy() # copy함수를 사용하여 이전의 y값이 변화지 않게 함
+    Y[Y>threshold]=1
+    Y[Y<=threshold]=0
+    return(Y.astype(int))
+
+pred_Y = cut_off(pred_y,0.5)
+pred_Y
+
+# confusion matrix
+cfmat = confusion_matrix(test_y, pred_Y)
+print(cfmat)
+
+## confusion matrix accuracy계산하기
+(cfmat[0,0] + cfmat[1,1]) / len(pred_Y)
+
+def acc(cfmt):
+    acc = (cfmat[0,0] + cfmat[1,1]) / (cfmat[0,0] + cfmat[0,1] + cfmat[1,0] + cfmat[0,1])
+    return(acc)
+
+acc(cfmat)
+</code>
+</pre>
+
+<h5 id="임계값-cut-off-에-따른-성능지표-비교"><a href="#임계값-cut-off-에-따른-성능지표-비교" class="headerlink" title="임계값(cut-off)에 따른 성능지표 비교"></a>임계값(cut-off)에 따른 성능지표 비교</h5><pre>
+<code>
+threshold = np.arange(0,1,0.1)
+table = pd.DataFrame(columns=['ACC'])
+for i in threshold:
+    pred_Y = cut_off(pred_y,i)
+    cfmat = confusion_matrix(test_y, pred_Y)
+    table.loc[i] = acc(cfmat)
+table.index.name='threshold'
+table.columns.name='performance'
+table
+
+# sklearn ROC 패키지 제공
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y, pos_label=1)
+
+# Print ROC curve
+plt.plot(fpr,tpr)
+
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+</code>
+</pre>
+
+<h5 id="Experience-Mortage-변수-제거"><a href="#Experience-Mortage-변수-제거" class="headerlink" title="Experience, Mortage 변수 제거"></a>Experience, Mortage 변수 제거</h5><pre>
+<code>
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan","Experience",  "Mortgage"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x2, test_x2, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+## 로지스틱 모델 적합
+model = sm.Logit(train_y, train_x2)
+result2 = model.fit(method = 'newton')
+
+#이전 모델과 비교
+results.summary()
+result2.summary()
+
+## 예측
+pred_y = result2.predict(test_x2)
+
+# threshold 0.5
+pred_y2 = cut_off(pred_y, 0.5)
+
+# confusion matrix
+cfmat = confusion_matrix(test_y, pred_y2)
+print(acc(cfmat))
+
+##  accuracy계산
+threshold = np.arange(0,1,0.1)
+pred_y = result2.predict(test_x2)
+table = pd.DataFrame(columns=['ACC'])
+for i in threshold:
+    pred_y2 = cut_off(pred_y,i)
+    cfmat = confusion_matrix(test_y, pred_y2)
+    table.loc[i] = acc(cfmat)
+table.index.name='threshold'
+table.columns.name='performance'
+table
+
+# sklearn ROC 패키지 제공
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y, pos_label=1)
+
+# Print ROC curve
+plt.plot(fpr,tpr)
+
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+</code>
+</pre>
+
+<h5 id="변수선택법"><a href="#변수선택법" class="headerlink" title="변수선택법"></a>변수선택법</h5><pre>
+<code>
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+def processSubset(X,y, feature_set):
+            model = sm.Logit(y,X[list(feature_set)])
+            regr = model.fit()
+            AIC = regr.aic
+            return &#123;"model":regr, "AIC":AIC&#125;
+
+'''
+전진선택법
+'''
+def forward(X, y, predictors):
+    # 데이터 변수들이 미리정의된 predictors에 있는지 없는지 확인 및 분류
+    remaining_predictors = [p for p in X.columns.difference(['const']) if p not in predictors]
+    tic = time.time()
+    results = []
+    for p in remaining_predictors:
+        results.append(processSubset(X=X, y= y, feature_set=predictors+[p]+['const']))
+    # 데이터프레임으로 변환
+    models = pd.DataFrame(results)
+
+    # AIC가 가장 낮은 것을 선택
+    best_model = models.loc[models['AIC'].argmin()] # index
+    toc = time.time()
+    print("Processed ", models.shape[0], "models on", len(predictors)+1, "predictors in", (toc-tic))
+    print('Selected predictors:',best_model['model'].model.exog_names,' AIC:',best_model[0] )
+    return best_model
+
+def forward_model(X,y):
+    Fmodels = pd.DataFrame(columns=["AIC", "model"])
+    tic = time.time()
+    # 미리 정의된 데이터 변수
+    predictors = []
+    # 변수 1~10개 : 0~9 -> 1~10
+    for i in range(1, len(X.columns.difference(['const'])) + 1):
+        Forward_result = forward(X=X,y=y,predictors=predictors)
+        if i > 1:
+            if Forward_result['AIC'] > Fmodel_before:
+                break
+        Fmodels.loc[i] = Forward_result
+        predictors = Fmodels.loc[i]["model"].model.exog_names
+        Fmodel_before = Fmodels.loc[i]["AIC"]
+        predictors = [ k for k in predictors if k != 'const']
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+
+    return(Fmodels['model'][len(Fmodels['model'])])
+
+
+'''
+후진소거법
+'''
+def backward(X,y,predictors):
+    tic = time.time()
+    results = []
+
+    # 데이터 변수들이 미리정의된 predictors 조합 확인
+    for combo in itertools.combinations(predictors, len(predictors) - 1):
+        results.append(processSubset(X=X, y= y,feature_set=list(combo)+['const']))
+    models = pd.DataFrame(results)
+
+    # 가장 낮은 AIC를 가진 모델을 선택
+    best_model = models.loc[models['AIC'].argmin()]
+    toc = time.time()
+    print("Processed ", models.shape[0], "models on", len(predictors) - 1, "predictors in",
+          (toc - tic))
+    print('Selected predictors:',best_model['model'].model.exog_names,' AIC:',best_model[0] )
+    return best_model
+
+
+def backward_model(X, y):
+    Bmodels = pd.DataFrame(columns=["AIC", "model"], index = range(1,len(X.columns)))
+    tic = time.time()
+    predictors = X.columns.difference(['const'])
+    Bmodel_before = processSubset(X,y,predictors)['AIC']
+    while (len(predictors) > 1):
+        Backward_result = backward(X=train_x, y= train_y, predictors = predictors)
+        if Backward_result['AIC'] > Bmodel_before:
+            break
+        Bmodels.loc[len(predictors) - 1] = Backward_result
+        predictors = Bmodels.loc[len(predictors) - 1]["model"].model.exog_names
+        Bmodel_before = Backward_result['AIC']
+        predictors = [ k for k in predictors if k != 'const']
+
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+    return (Bmodels['model'].dropna().iloc[0])
+
+
+'''
+단계적 선택법
+'''
+def Stepwise_model(X,y):
+    Stepmodels = pd.DataFrame(columns=["AIC", "model"])
+    tic = time.time()
+    predictors = []
+    Smodel_before = processSubset(X,y,predictors+['const'])['AIC']
+    # 변수 1~10개 : 0~9 -> 1~10
+    for i in range(1, len(X.columns.difference(['const'])) + 1):
+        Forward_result = forward(X=X, y=y, predictors=predictors) # constant added
+        print('forward')
+        Stepmodels.loc[i] = Forward_result
+        predictors = Stepmodels.loc[i]["model"].model.exog_names
+        predictors = [ k for k in predictors if k != 'const']
+        Backward_result = backward(X=X, y=y, predictors=predictors)
+        if Backward_result['AIC']< Forward_result['AIC']:
+            Stepmodels.loc[i] = Backward_result
+            predictors = Stepmodels.loc[i]["model"].model.exog_names
+            Smodel_before = Stepmodels.loc[i]["AIC"]
+            predictors = [ k for k in predictors if k != 'const']
+            print('backward')
+        if Stepmodels.loc[i]['AIC']> Smodel_before:
+            break
+        else:
+            Smodel_before = Stepmodels.loc[i]["AIC"]
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+    return (Stepmodels['model'][len(Stepmodels['model'])])
+</code>
+</pre>
+
+<h5 id="회귀계수"><a href="#회귀계수" class="headerlink" title="회귀계수"></a>회귀계수</h5><pre>
+<code>
+Forward_best_model = forward_model(X=train_x, y= train_y)
+
+Backward_best_model = backward_model(X=train_x,y=train_y)
+
+Stepwise_best_model = Stepwise_model(X=train_x,y=train_y)
+
+pred_y_full = result2.predict(test_x2) # full model
+pred_y_forward = Forward_best_model.predict(test_x[Forward_best_model.model.exog_names])
+pred_y_backward = Backward_best_model.predict(test_x[Backward_best_model.model.exog_names])
+pred_y_stepwise = Stepwise_best_model.predict(test_x[Stepwise_best_model.model.exog_names])
+
+pred_Y_full= cut_off(pred_y_full,0.5)
+pred_Y_forward = cut_off(pred_y_forward,0.5)
+pred_Y_backward = cut_off(pred_y_backward,0.5)
+pred_Y_stepwise = cut_off(pred_y_stepwise,0.5)
+
+cfmat_full = confusion_matrix(test_y, pred_Y_full)
+cfmat_forward = confusion_matrix(test_y, pred_Y_forward)
+cfmat_backward = confusion_matrix(test_y, pred_Y_backward)
+cfmat_stepwise = confusion_matrix(test_y, pred_Y_stepwise)
+
+print(acc(cfmat_full))
+print(acc(cfmat_forward))
+print(acc(cfmat_backward))
+print(acc(cfmat_stepwise))
+
+print(len(results.model.exog_names))
+print(len(Forward_best_model.model.exog_names))
+</code>
+</pre>
+
+<h5 id="시각화"><a href="#시각화" class="headerlink" title="시각화"></a>시각화</h5><pre>
+<code>
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_full, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_forward, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_backward, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_stepwise, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+</code>
+</pre>
+
+<ol start="6">
+<li>회귀계수 축소법</li>
+</ol>
+<ul>
+<li><p>분석용 데이터의 이상적 조건</p>
+<blockquote>
+<p>독립변수 X 사이에 상관성이 작아야 이상적<br>반면에 독립변수 X와 종속변수 Y의 상관성은 커야 함<br>두 성질을 만족하는 소수의 독립변수 집합<br>많은 양질의 데이터(결측치와 노이즈가 없는 깨끗한 데이터)</p>
+</blockquote>
+</li>
+<li><p>변수선택(Variable Selection)</p>
+<blockquote>
+<p>독립변수 X 간에는 상관성이 적고(Minimal Redundancy), X와 종속변수 Y 간에는 상관성이 큰 (Maximal Relevance) 독립변수만을 추출(예 : 사람의 키를 예측하는데 있어서 다리길이와 팔길이는 중복성이 존재)</p>
+</blockquote>
+</li>
+<li><p>좋은 변수는?</p>
+<blockquote>
+<p>Y의 변동성을 잘 설명하면서 X들끼리는 상관관계가 없는 변수들이 좋은 변수이다.</p>
+</blockquote>
+</li>
+<li><p>회귀 계수를 축소하는 이유</p>
+<blockquote>
+<p>영향력이 없는 입력 변수의 계수를 0에 가깝게 가져간다면, 모형에 포함되는 입력 변수의 수를 줄일 수 있음<br>입력 변수의 수를 줄이면 크게 세 가지 장점이 있음</p>
+</blockquote>
+<ul>
+<li>잡음을 제거해서 모형의 정확도를 개선</li>
+<li>모형의 연산 속도가 빨라짐</li>
+<li>다중공선성 문제를 완화시켜 모형의 해석 능력을 향상 : 많은 모형에서 입력 변수들끼리 독립임을 가정하지만, 입력 변수들끼리 상관관계를 가지는 경우가 대부분<blockquote>
+<p>입력 변수가 나이, 잔고액, 생년인 경우 나이와 생년은 같은 의미를 갖기 때문에 둘 중 하나를 제거해야 함</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>계수 축소법의 종류</p>
+<blockquote>
+<p>Ridge 회귀, Lasso 회귀, Elastic-Net 회귀<br>계수 축소법은 기본적으로 다중선형회귀와 유사<br>다중선형회귀(SSE)에서 잔차를 최소화했다면, 계수축소법(SSE + 회귀계수 축소)에서는 잔차와 회귀계수를 최소화</p>
+</blockquote>
+</li>
+</ul>
+<ol start="7">
+<li>회귀계수 축소법 : Ridge 회귀, Lasso 회귀, Elastic-Net 회귀</li>
+</ol>
+<ul>
+<li><p>Ridge 회귀</p>
+<blockquote>
+<p>다중공선성은 X들 간의 강한 선형 관계가 있을 때 발성 -&gt; X’X의 역행렬을 구할 수 가 없음 -&gt; Ridge는 X’X의 역행렬을 구할 수 있도록 강제로 작은 값을 diagonal term에 추가한 것!<br>베타의 자승 최소화</p>
+</blockquote>
+</li>
+<li><p>Lasso 회귀</p>
+<blockquote>
+<p>베터의 절대값 최소화<br>람다(lambda) 값의 설정 : 람다 값을 변화시켜가며 MSE가 최소일 때의 람다를 탐색</p>
+</blockquote>
+</li>
+<li><p>Ridge 회귀 vs Lasso 회귀</p>
+<blockquote>
+<p>Ridge 회귀는 계수를 축소하되 0에 가까운 수로 축소(0이 아님), 반면 Lasso 회귀는 계수를 완전히 0으로 축소함<br>Ridge 회귀 : 입력 변수들이 전반적으로 비슷한 수준으로 출력 변수에 영향을 미치는 경우에 사용<br>Lasso 회귀 : 출력 변수에 미치는 입력 변수의 영향력 편차가 큰 경우에 사용</p>
+</blockquote>
+</li>
+<li><p>Elastic-Net 회귀</p>
+<blockquote>
+<p>Ridge 회귀와  Lasso 회귀의 하이브리드(정규화) 회귀 모델<br>geometry illustration</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="회귀계수-축소법-실습-Lasso-Ridge-적합-및-로지스틱회귀와-비교"><a href="#회귀계수-축소법-실습-Lasso-Ridge-적합-및-로지스틱회귀와-비교" class="headerlink" title="회귀계수 축소법 실습 - Lasso, Ridge 적합 및 로지스틱회귀와 비교"></a>회귀계수 축소법 실습 - Lasso, Ridge 적합 및 로지스틱회귀와 비교</h3><pre>
+<code>
+# 분석에 필요한 패키지 불러오기
+import os
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import itertools
+import time
+
+ploan = pd.read_csv("./Personal Loan.csv")
+ploan
+'''
+Experience 경력
+Income 수입
+Famliy 가족단위
+CCAvg 월 카드사용량
+Education 교육수준 (1: undergrad; 2, Graduate; 3; Advance )
+Mortgage 가계대출
+Securities account 유가증권계좌유무
+CD account 양도예금증서 계좌 유무
+Online 온라인계좌유무
+CreidtCard 신용카드유무
+
+'''
+
+# 의미없는 변수 제거
+ploan_processed = ploan.dropna().drop(['ID','ZIP Code'], axis=1, inplace=False)
+
+ploan_processed = sm.add_constant(ploan_processed, has_constant='add')
+ploan_processed
+</code>
+</pre>
+
+<h5 id="설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터-1"><a href="#설명변수-X-타켓변수-Y-분리-및-학습데이터와-평가데이터-1" class="headerlink" title="설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터"></a>설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터</h5><pre>
+<code>
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+</code>
+</pre>
+
+<h5 id="로지스틱회귀모형-모델링-y-f-x-1"><a href="#로지스틱회귀모형-모델링-y-f-x-1" class="headerlink" title="로지스틱회귀모형 모델링 y = f(x)"></a>로지스틱회귀모형 모델링 y = f(x)</h5><pre>
+<code>
+model = sm.Logit(train_y, train_x)
+results = model.fit(method='newton')
+
+results.summary()
+
+# performance measure
+print("model AIC: ","&#123;:.5f&#125;".format(results.aic))
+
+results.params
+
+## 나이가 한살 많을수록록 대출할 확률이 1.024 높다.
+## 수입이 1단위 높을소룩 대출할 확률이 1.05배 높다
+## 가족 구성원수가 1많을수록 대출할 확률이 2.13배 높다
+## 경력이 1단위 높을수록 대출할 확률이 0.99배 높다(귀무가설 채택)
+# Experience,  Mortgage는 제외할 필요성이 있어보임
+np.exp(results.params)
+
+pred_y = results.predict(test_x)
+pred_y
+
+def cut_off(y,threshold):
+    Y = y.copy() # copy함수를 사용하여 이전의 y값이 변화지 않게 함
+    Y[Y>threshold]=1
+    Y[Y<=threshold]=0
+    return(Y.astype(int))
+
+pred_Y = cut_off(pred_y,0.5)
+pred_Y
+
+cfmat = confusion_matrix(test_y,pred_Y)
+print(cfmat)
+
+(cfmat[0,0]+cfmat[1,1])/np.sum(cfmat) ## accuracy
+
+def acc(cfmat) :
+    acc=(cfmat[0,0]+cfmat[1,1])/np.sum(cfmat) ## accuracy
+    return(acc)
+</code>
+</pre>
+
+<h5 id="임계값-cut-off-에-따른-성능지표-비교-1"><a href="#임계값-cut-off-에-따른-성능지표-비교-1" class="headerlink" title="임계값(cut-off)에 따른 성능지표 비교"></a>임계값(cut-off)에 따른 성능지표 비교</h5><pre>
+<code>
+threshold = np.arange(0,1,0.1)
+table = pd.DataFrame(columns=['ACC'])
+for i in threshold:
+    pred_Y = cut_off(pred_y,i)
+    cfmat = confusion_matrix(test_y, pred_Y)
+    table.loc[i] =acc(cfmat)
+table.index.name='threshold'
+table.columns.name='performance'
+table
+
+# sklearn ROC 패키지 제공
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y, pos_label=1)
+
+# Print ROC curve
+plt.plot(fpr,tpr)
+
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan","Experience",  "Mortgage"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x2, test_x2, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+model = sm.Logit(train_y, train_x2)
+results2 = model.fit(method='newton')
+
+results2.summary()
+
+results.summary()
+
+pred_y = results2.predict(test_x2)
+
+pred_Y = cut_off(pred_y,0.5)
+pred_Y
+
+cfmat2 = confusion_matrix(test_y, pred_Y)
+
+(cfmat2[0,0]+cfmat2[1,1])/len(pred_Y) ## accuracy
+
+threshold = np.arange(0,1,0.1)
+table = pd.DataFrame(columns=['ACC'])
+for i in threshold:
+    pred_Y = cut_off(pred_y,i)
+    cfmat = confusion_matrix(test_y, pred_Y)
+    table.loc[i] = (cfmat[0,0]+cfmat[1,1])/len(pred_Y)
+table.index.name='threshold'
+table.columns.name='performance'
+table
+
+# sklearn ROC 패키지 제공
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y, pos_label=1)
+
+# Print ROC curve
+plt.plot(fpr,tpr)
+
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+def processSubset(X,y, feature_set):
+            model = sm.Logit(y,X[list(feature_set)])
+            regr = model.fit()
+            AIC = regr.aic
+            return &#123;"model":regr, "AIC":AIC&#125;
+        
+'''
+전진선택법
+'''
+def forward(X, y, predictors):
+    # 데이터 변수들이 미리정의된 predictors에 있는지 없는지 확인 및 분류
+    remaining_predictors = [p for p in X.columns.difference(['const']) if p not in predictors]
+    tic = time.time()
+    results = []
+    for p in remaining_predictors:
+        results.append(processSubset(X=X, y= y, feature_set=predictors+[p]+['const']))
+    # 데이터프레임으로 변환
+    models = pd.DataFrame(results)
+
+    # AIC가 가장 낮은 것을 선택
+    best_model = models.loc[models['AIC'].argmin()] # index
+    toc = time.time()
+    print("Processed ", models.shape[0], "models on", len(predictors)+1, "predictors in", (toc-tic))
+    print('Selected predictors:',best_model['model'].model.exog_names,' AIC:',best_model[0] )
+    return best_model
+
+def forward_model(X,y):
+    Fmodels = pd.DataFrame(columns=["AIC", "model"])
+    tic = time.time()
+    # 미리 정의된 데이터 변수
+    predictors = []
+    # 변수 1~10개 : 0~9 -> 1~10
+    for i in range(1, len(X.columns.difference(['const'])) + 1):
+        Forward_result = forward(X=X,y=y,predictors=predictors)
+        if i > 1:
+            if Forward_result['AIC'] > Fmodel_before:
+                break
+        Fmodels.loc[i] = Forward_result
+        predictors = Fmodels.loc[i]["model"].model.exog_names
+        Fmodel_before = Fmodels.loc[i]["AIC"]
+        predictors = [ k for k in predictors if k != 'const']
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+
+    return(Fmodels['model'][len(Fmodels['model'])])
+
+
+'''
+후진소거법
+'''
+def backward(X,y,predictors):
+    tic = time.time()
+    results = []
+    
+    # 데이터 변수들이 미리정의된 predictors 조합 확인
+    for combo in itertools.combinations(predictors, len(predictors) - 1):
+        results.append(processSubset(X=X, y= y,feature_set=list(combo)+['const']))
+    models = pd.DataFrame(results)
+    
+    # 가장 낮은 AIC를 가진 모델을 선택
+    best_model = models.loc[models['AIC'].argmin()]
+    toc = time.time()
+    print("Processed ", models.shape[0], "models on", len(predictors) - 1, "predictors in",
+          (toc - tic))
+    print('Selected predictors:',best_model['model'].model.exog_names,' AIC:',best_model[0] )
+    return best_model
+
+
+def backward_model(X, y):
+    Bmodels = pd.DataFrame(columns=["AIC", "model"], index = range(1,len(X.columns)))
+    tic = time.time()
+    predictors = X.columns.difference(['const'])
+    Bmodel_before = processSubset(X,y,predictors)['AIC']
+    while (len(predictors) > 1):
+        Backward_result = backward(X=train_x, y= train_y, predictors = predictors)
+        if Backward_result['AIC'] > Bmodel_before:
+            break
+        Bmodels.loc[len(predictors) - 1] = Backward_result
+        predictors = Bmodels.loc[len(predictors) - 1]["model"].model.exog_names
+        Bmodel_before = Backward_result['AIC']
+        predictors = [ k for k in predictors if k != 'const']
+
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+    return (Bmodels['model'].dropna().iloc[0])
+
+
+'''
+단계적 선택법
+'''
+def Stepwise_model(X,y):
+    Stepmodels = pd.DataFrame(columns=["AIC", "model"])
+    tic = time.time()
+    predictors = []
+    Smodel_before = processSubset(X,y,predictors+['const'])['AIC']
+    # 변수 1~10개 : 0~9 -> 1~10
+    for i in range(1, len(X.columns.difference(['const'])) + 1):
+        Forward_result = forward(X=X, y=y, predictors=predictors) # constant added
+        print('forward')
+        Stepmodels.loc[i] = Forward_result
+        predictors = Stepmodels.loc[i]["model"].model.exog_names
+        predictors = [ k for k in predictors if k != 'const']
+        Backward_result = backward(X=X, y=y, predictors=predictors)
+        if Backward_result['AIC']< Forward_result['AIC']:
+            Stepmodels.loc[i] = Backward_result
+            predictors = Stepmodels.loc[i]["model"].model.exog_names
+            Smodel_before = Stepmodels.loc[i]["AIC"]
+            predictors = [ k for k in predictors if k != 'const']
+            print('backward')
+        if Stepmodels.loc[i]['AIC']> Smodel_before:
+            break
+        else:
+            Smodel_before = Stepmodels.loc[i]["AIC"]
+    toc = time.time()
+    print("Total elapsed time:", (toc - tic), "seconds.")
+    return (Stepmodels['model'][len(Stepmodels['model'])])
+</code>
+</pre>
+
+<h5 id="회귀계수-1"><a href="#회귀계수-1" class="headerlink" title="회귀계수"></a>회귀계수</h5><pre>
+<code>
+Forward_best_model = forward_model(X=train_x, y= train_y)
+
+Backward_best_model = backward_model(X=train_x,y=train_y)
+
+Stepwise_best_model = Stepwise_model(X=train_x,y=train_y)
+
+pred_y_full = results2.predict(test_x2) # full model
+pred_y_forward = Forward_best_model.predict(test_x[Forward_best_model.model.exog_names])
+pred_y_backward = Backward_best_model.predict(test_x[Backward_best_model.model.exog_names])
+pred_y_stepwise = Stepwise_best_model.predict(test_x[Stepwise_best_model.model.exog_names])
+
+pred_Y_full= cut_off(pred_y_full,0.5)
+pred_Y_forward = cut_off(pred_y_forward,0.5)
+pred_Y_backward = cut_off(pred_y_backward,0.5)
+pred_Y_stepwise = cut_off(pred_y_stepwise,0.5)
+
+cfmat_full = confusion_matrix(test_y, pred_Y_full)
+cfmat_forward = confusion_matrix(test_y, pred_Y_forward)
+cfmat_backward = confusion_matrix(test_y, pred_Y_backward)
+cfmat_stepwise = confusion_matrix(test_y, pred_Y_stepwise)
+
+print(acc(cfmat_full))
+print(acc(cfmat_forward))
+print(acc(cfmat_backward))
+print(acc(cfmat_stepwise))
+</code>
+</pre>
+
+<h5 id="시각화-1"><a href="#시각화-1" class="headerlink" title="시각화"></a>시각화</h5><pre>
+<code>
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_full, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_forward, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_backward, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_stepwise, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+</code>
+</pre>
+
+<h5 id="Lasso-amp-RIdge-회귀-계수"><a href="#Lasso-amp-RIdge-회귀-계수" class="headerlink" title="Lasso &amp; RIdge 회귀 계수"></a>Lasso &amp; RIdge 회귀 계수</h5><pre>
+<code>
+from sklearn.linear_model import Ridge, Lasso, ElasticNet
+
+ploan_processed = ploan.dropna().drop(['ID','ZIP Code'], axis=1, inplace=False)
+
+feature_columns = list(ploan_processed.columns.difference(["Personal Loan"]))
+X = ploan_processed[feature_columns]
+y = ploan_processed['Personal Loan'] # 대출여부: 1 or 0
+
+train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y,train_size=0.7,test_size=0.3,random_state=42)
+print(train_x.shape, test_x.shape, train_y.shape, test_y.shape)
+
+## lasso 적합
+ll = Lasso(alpha=0.01)
+ll.fit(train_x, train_y)
+
+## 회귀 계수 출력
+ll.coef_
+
+results.summary()
+
+## 예측, confusionmatrix, acc계산
+pred_y_lasso = ll.predict(test_x)
+pred_Y_lasso = cut_off(pred_y_lasso, 0.5)
+cfmat = confusion_matrix(test_y, pred_Y_lasso)
+print(acc(cfmat))
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_lasso, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+## ridge 적합
+rr = Ridge(alpha=0.11)
+rr.fit(train_x, train_y)
+
+## ridge result
+rr.coef_
+
+## lasso result
+ll.coef_
+
+## ridge y예측, confusion matrix, acc계산
+pred_y_ridge = rr.predict(test_x)
+pred_Y_ridge = cut_off(pred_y_lasso, 0.5)
+cfmat = confusion_matrix(test_y, pred_Y_ridge)
+print(acc(cfmat))
+
+fpr, tpr, thresholds = metrics.roc_curve(test_y, pred_y_ridge, pos_label=1)
+# Print ROC curve
+plt.plot(fpr,tpr)
+# Print AUC
+auc = np.trapz(tpr,fpr)
+print('AUC:', auc)
+
+# lambda 값에 따른 회귀 계수 / accuracy 계산
+alpha = np.logspace(-3, 1, 5)
+
+## labmda값 0.001 ~ 10까지 범위 설정
+alpha
+
+data = []
+acc_table=[]
+for i, a in enumerate(alpha):
+    lasso = Lasso(alpha=a).fit(train_x, train_y)
+    data.append(pd.Series(np.hstack([lasso.intercept_, lasso.coef_])))
+    pred_y = lasso.predict(test_x) # full model
+    pred_y= cut_off(pred_y,0.5)
+    cfmat = confusion_matrix(test_y, pred_y)
+    acc_table.append((acc(cfmat)))
+
+
+df_lasso = pd.DataFrame(data, index=alpha).T
+df_lasso
+
+acc_table_lasso = pd.DataFrame(acc_table, index=alpha).T
+acc_table_lasso
+
+data = []
+acc_table=[]
+for i, a in enumerate(alpha):
+    ridge = Ridge(alpha=a).fit(train_x, train_y)
+    data.append(pd.Series(np.hstack([ridge.intercept_, ridge.coef_])))
+    pred_y = ridge.predict(test_x) # full model
+    pred_y= cut_off(pred_y,0.5)
+    cfmat = confusion_matrix(test_y, pred_y)
+    acc_table.append((acc(cfmat)))
+
+    
+df_ridge = pd.DataFrame(data, index=alpha).T
+acc_table_ridge = pd.DataFrame(acc_table, index=alpha).T
+df_ridge
+acc_table_ridge
+</code>
+</pre>
+
+<h5 id="labmda값의-변화에-따른-회귀계수-축소-시각화"><a href="#labmda값의-변화에-따른-회귀계수-축소-시각화" class="headerlink" title="labmda값의 변화에 따른 회귀계수 축소 시각화"></a>labmda값의 변화에 따른 회귀계수 축소 시각화</h5><pre>
+<code>
+import matplotlib.pyplot as plt
+ax1 = plt.subplot(121)
+plt.semilogx(df_ridge.T)
+plt.xticks(alpha)
+plt.title("Ridge")
+
+ax2 = plt.subplot(122)
+plt.semilogx(df_lasso.T)
+plt.xticks(alpha)
+plt.title("Lasso")
+
+plt.show()
+</code>
+</pre>
+
+<ol start="8">
+<li>Feature selection 정리</li>
+</ol>
+<ul>
+<li><p>다중 선형 회귀 모델 검정</p>
+<blockquote>
+<p>귀무가설 : 기각하기 너무 쉬운 가설<br>대립가설</p>
+</blockquote>
+</li>
+<li><p>다중공선성 : 잘못된 변수 해석, 예측 정확도 하락</p>
+</li>
+<li><p>CNN vs NN : CNN의 해주는 역할은 이미지의 feature를 잘 뽑기 위한 것 뿐이지만, CNN이 훨씬 좋음</p>
+<blockquote>
+<p>Convolution을 통해 뽑은 feature<br>이미지 pixel feature</p>
+</blockquote>
+</li>
+<li><p>최근의 모델(boosting)들은 중요 변수를 추출해주는 알고리즘이 내장되어 있음</p>
+<blockquote>
+<p>모든 변수 10,000개 보다 중요 변수 100개가 더 좋음<br>모든 변수 10,000개 -&gt; 모델 -&gt; 중요 변수 추출(100개) -&gt; 모델 재학습(성능 하락 가능성)</p>
+</blockquote>
+</li>
+<li><p>모델의 알고리즘이 관여치 않은 상태에서 가장 중요한 변수를 넣는 것이 매우 중요</p>
+</li>
+<li><p>모델 선택(변수 선택)</p>
+<blockquote>
+<p>변수가 여러 개일 때 최적의 변수 조합을 찾아내는 기법<br>변수의 수가 p개일 때 변수의 총 조합은 2p으로 변수 수가 증가함에 따라 변수 조합의 수는 기하급수적으로 증가<br>총 변수들의 조합 중 최적의 조합을 찾기 위한 차선의 방법<br>(&gt; optimal은 아님. optimal한 조합을 찾는 방법은 모든 경우의 수 조합을 다 해보는 것)</p>
+</blockquote>
+<ul>
+<li>Feedforward Selection 방법 : 변수를 추가해가며 성능지표를 비교해가는 방법 - 중요 변수가 있을 때 유용</li>
+<li>Backward Elimination 방법 : 변수를 제거해가며 성능지표를 비교해가는 방법 - 변수의 수가 적을 떄 유용</li>
+<li>Stepwise 방법(Feedforward Selection  + Backward Elimination) - 중요 변수가 있을 때 유용</li>
+</ul>
+</li>
+<li><p>계수 축소법의 종류</p>
+<blockquote>
+<p>Ridge 회귀 : 역행렬을 구할 수 있도록, 회귀계수가 0에 가까워지지만 0이 되지는 않는다. - 성능 최적화<br>Lasso 회귀 : 식을 한 번에 구할 수 있는 없지만, 0으로 만들 수 있어서 변수를 몇 개 선택할 수 있다.<br>Elastic-Net 회귀 : 하이브리드 모델, lambda 1과 lambda 2로 조절할 수 있음 - 성능 최적화</p>
+</blockquote>
+</li>
+</ul>
+<ol start="9">
+<li>PCA - 차원 축소법</li>
+</ol>
+<ul>
+<li><p>차원의 저주</p>
+<blockquote>
+<p>각 변수의  50% 영역에 해당하는 자료를 가지고 있다고 할 때, 전체 자료의 얼마만큼을 확보할 수 있는가?<br>관측치의 수는 한정되어 있음</p>
+</blockquote>
+<ul>
+<li>차원이 커질 수록 한정된 자료는 커진 차원의 패턴을 잘 설명하지 못한다.</li>
+<li>차원이 증가함에 따라 model complexity가 기하급수적으로 높아짐</li>
+</ul>
+</li>
+<li><p>차원 축소의 필요성</p>
+<blockquote>
+<p>가까이에 있는 변수가 가지는 값을 예측 값으로 하는 모델이 있다고 하자<br>(k-Nearest Neighborhood)</p>
+</blockquote>
+<ul>
+<li>쓸데 없는 변수가 추가되는 것은 모델의 성능에 매우 악영향을 끼침</li>
+<li>상관계수가 매우 큰 서로 다른 독립 변수</li>
+<li>예측하고자 하는 변수와 관련이 없는 변수</li>
+</ul>
+</li>
+<li><p>차원 축소법</p>
+<ul>
+<li>상관계수가 높은 변수 중 일부를 분석에서 제외?</li>
+</ul>
+<ul>
+<li>정보의 손실 발생</li>
+<li>상관계수가 0.8이라고 하면,  0.2에 해당하는 정보는 버려지게 됨</li>
+</ul>
+</li>
+<li><p>차원을 줄이면서 정보의 손실을 최소화하는 방법</p>
+<ul>
+<li>Principal component을 활용</li>
+</ul>
+</li>
+<li><p>이외의 방법</p>
+<ul>
+<li>변수 선택법</li>
+<li>penalty 기반 regression</li>
+<li>convolutional neural network</li>
+<li>drop out &amp; bagging</li>
+</ul>
+</li>
+</ul>
+<ol start="10">
+<li>PCA - 공분산 행렬의 이해</li>
+</ol>
+<ul>
+<li><p>공분산 행렬의 개념</p>
+</li>
+<li><p>공분산 행렬의 정의 : X1, X2가 음의 상관관계를 가지므로, 둘의 공분산은 음수일 것.</p>
+<blockquote>
+<p>공분산 형태 파악<br>점과 내적연산을 할 경우, 점의 위치를 이동시켜 해당 공분산 구조와 비슷한 형태를 가지게 된다.</p>
+</blockquote>
+</li>
+</ul>
+<ol start="11">
+<li>PCA - Principal Components의 이해</li>
+</ol>
+<ul>
+<li><p>Principal Components의 개념</p>
+<ul>
+<li>차원을 줄이면서 정보의 손실을 최소화 하는 방법</li>
+</ul>
+<ul>
+<li>더 적은 개수로 데이터를 충분히 잘 설명할 수 있는 새로운 축을 찾아냄</li>
+</ul>
+<ul>
+<li>Principal Components를 얻어내는 것</li>
+</ul>
+<ul>
+<li>공분산이 데이터의 형태를 변형시키는 방향의 축과 그것에 직교하는 축을 찾아내는 과정</li>
+<li>2차원의 경우 공분산이 나타내는 타원의 장축과 단축</li>
+</ul>
+<ul>
+<li>Principal Components = PC = PC score</li>
+</ul>
+<ul>
+<li>찾아낸 새로운 축에서의 좌표값을 의미</li>
+<li>새로운 축에 내린 정사영</li>
+</ul>
+</li>
+</ul>
+<ol start="11">
+<li>PCA 수학적 개념이해 - 행렬연산, 행렬식, 특성방정식</li>
+</ol>
+<ul>
+<li><p>Matrix</p>
+<blockquote>
+<p>행렬식 |A|, det(A) 구하기<br>2 by 2 matrix<br>행렬식의 기하학적 의미</p>
+</blockquote>
+</li>
+<li><p>행렬식의 활용</p>
+<blockquote>
+<p>A의 역행렬이 존재할 경우,<br>C = AB<br>B = A-1 x C</p>
+</blockquote>
+</li>
+<li><p>아래와 같이 계산할 수 있다</p>
+<blockquote>
+<p>AB = 0<br>A-1 x B = A-1 x 0<br>B = 0</p>
+</blockquote>
+</li>
+<li><p>행렬식과 역행렬의 존재성 관계</p>
+<blockquote>
+<p>행렬식 |A| = 0인 경우, 역행렬은 존재하지 않는다<br>행렬식은 역행렬 존재성에 대한 판별식 역할을 한다</p>
+</blockquote>
+</li>
+</ul>
+<ol start="12">
+<li> PCA 수학적 개념이해 - Eigen vector, eigen value</li>
+</ol>
+<ul>
+<li>Eigen vector, eigen value<blockquote>
+<p>기하학적으로는 임의의 점에 대해 A라는 transformation을 행할 때 고유 벡터는 방향이 바뀌지 않는다는 의미. 고유값은 그 변화되는 스케일의 정도.</p>
+</blockquote>
+</li>
+</ul>
+<ol start="13">
+<li>PCA 수학적 개념이해 - Singular value decomposition</li>
+</ol>
+<ul>
+<li><p>Singular value decomposition (SVD)</p>
+</li>
+<li><p>SVD를 통하여, 임의의 matrix의 공분산 구조 행렬의 Eigen vector, eigen value를 얻을 수 있다.</p>
+</li>
+</ul>
+<ol start="13">
+<li>PCA - PCA 수행과정 및 수학적 개념 적용</li>
+</ol>
+<ul>
+<li>PCA 수행 과정<blockquote>
+<p>Mean centering<br>SVD 수행<br>SVD 결과를 활용하여 공분산의 eigen vector, eigen value 구하기<br>PC score 구하기<br>PC score를 활용하여 분석 진행</p>
+</blockquote>
+</li>
+</ul>
+<ol start="14">
+<li>PCA - PCA의 심화적 이해</li>
+</ol>
+<ul>
+<li>PCA 수행 과정<blockquote>
+<p>PC score의 기하학적 해석<br>PCA 활용 - 각 PC의 의미 파악</p>
+</blockquote>
+</li>
+</ul>
+<ol start="15">
+<li>PCA - Kernel PCA</li>
+</ol>
+<ul>
+<li><p>Kernel PCA</p>
+</li>
+<li><p>관측치 사이의 패턴이 존재하는 것으로 보이나, 변수간의 선형관계가 아닐 때</p>
+<blockquote>
+<p>관측치 사이의 패턴을 수치화하고, 이것의 PC를 구해냄<br>K는 관측치 사이의 유사도 개념<br>비슷한 관측치일수록 큰 값<br>서로 이질적인 관측치일수록 작은 값</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Principal-compoenet-analysis-실습"><a href="#Principal-compoenet-analysis-실습" class="headerlink" title="Principal compoenet analysis 실습"></a>Principal compoenet analysis 실습</h3><ul>
+<li>대부분의 머신러닝을 모듈에 포함하고, 이에 대한 예제와 정보가 담겨있는 웹사이트 </li>
+<li>참고: <a target="_blank" rel="noopener" href="https://scikit-learn.org/">https://scikit-learn.org</a></li>
+</ul>
+<h5 id="1-데이터-전처리-및-데이터-파악"><a href="#1-데이터-전처리-및-데이터-파악" class="headerlink" title="1. 데이터 전처리 및 데이터 파악"></a>1. 데이터 전처리 및 데이터 파악</h5><ul>
+<li>scikit-lean 패키지에서 데이터와 PCA 로드.</li>
+</ul>
+<pre>
+<code>
+from sklearn import datasets
+from sklearn.decomposition import PCA
+</code>
+</pre>
+
+<ul>
+<li>자료 처리에 도움을 줄 pandas, numpy와 시각화를 위한 pyplot, seaborn 로드.</li>
+</ul>
+<pre>
+<code>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+</code>
+</pre>
+
+<ul>
+<li>iris 데이터를 불러오고, 구조를 살핌.</li>
+</ul>
+<pre>
+<code>
+iris = datasets.load_iris()
+dir(iris)
+</code>
+</pre>
+
+<ul>
+<li>설명의 편의를 위하여, 독립변수 중 처음 2개만을 사용.</li>
+</ul>
+<pre>
+<code>
+X = iris.data[:, [0,2]]
+y = iris.target
+
+print(X.shape)
+feature_names = [iris.feature_names[0], iris.feature_names[2]]
+df_X = pd.DataFrame(X)
+df_X.head()
+
+print(y.shape)
+df_Y = pd.DataFrame(y)
+df_Y.head()
+</code>
+</pre>
+
+<ul>
+<li>결측치 여부를 파악.</li>
+</ul>
+<pre>
+<code>
+print(df_X.isnull().sum())
+print(df_Y.isnull().sum())
+# 결측치 없음
+
+print(set(y))
+iris.target_names
+</code>
+</pre>
+
+<ul>
+<li>종속 변수 (출력변수, 반응변수)의 분포를 살핌.</li>
+</ul>
+<pre>
+<code>
+df_Y[0].value_counts().plot(kind='bar')
+plt.show()
+</code>
+</pre>
+
+<ul>
+<li>독립 변수 (속성, 입력변수, 설명변수)의 분포를 살핌.</li>
+</ul>
+<pre>
+<code>
+for i in range(df_X.shape[1]):
+    sns.distplot(df_X[i])
+    plt.title(feature_names[i])
+    plt.show()
+</code>
+</pre>
+
+<h5 id="2-PCA-함수-활용-및-아웃풋-의미파악"><a href="#2-PCA-함수-활용-및-아웃풋-의미파악" class="headerlink" title="2. PCA 함수 활용 및 아웃풋 의미파악"></a>2. PCA 함수 활용 및 아웃풋 의미파악</h5><ul>
+<li>PCA 함수를 활용하여 PC를 얻어냄. 아래의 경우 PC 2개를 뽑아냄.</li>
+</ul>
+<pre>
+<code>
+pca = PCA(n_components=2)
+pca.fit(X)
+</code>
+</pre>
+
+<ul>
+<li>아래와 같이 PC score를 얻어냄. 아래의 PC score를 이용하여, 회귀분석에 활용할 수 있음.</li>
+</ul>
+<pre>
+<code>
+pca.explained_variance_
+
+PCscore = pca.transform(X)
+PCscore[0:5]
+
+eigens_v = pca.components_.transpose()
+print(eigens_v)
+
+mX=np.matrix(X)
+for i in range(X.shape[1]):
+    mX[:,i]=mX[:,i]-np.mean(X[:,i])
+dfmX=pd.DataFrame(mX)
+
+(mX * eigens_v)[0:5]
+# = PCA
+
+plt.scatter(PCscore[:,0],PCscore[:,1])
+plt.show()
+
+plt.scatter(dfmX[0],dfmX[1])
+origin = [0], [0] # origin point
+plt.quiver(별첨origin, eigens_v[0,:], eigens_v[1,:], color=['r','b'], scale=3)
+plt.show()
+</code>
+</pre>
+
+<h5 id="3-PC를-활용한-회귀분석"><a href="#3-PC를-활용한-회귀분석" class="headerlink" title="3. PC를 활용한 회귀분석"></a>3. PC를 활용한 회귀분석</h5><ul>
+<li>이번에는 모든 독립변수를 활용하여 PC를 뽑아냄.</li>
+</ul>
+<pre>
+<code>
+X2 = iris.data
+pca2 = PCA(n_components=4)
+pca2.fit(X2)
+
+pca2.explained_variance_
+
+PCs=pca2.transform(X2)[:,0:2]
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+</code>
+</pre>
+
+<ul>
+<li>모델의 복잡성으로 인하여 기존 자료를 이용한 분석은 수렴하지 않는 모습.</li>
+</ul>
+<pre>
+<code>
+clf = LogisticRegression(solver='sag', multi_class='multinomial').fit(X2, y)
+</code>
+</pre>
+
+<ul>
+<li>PC 2개 만을 뽑아내여 분석한 경우 모델이 수렴.</li>
+</ul>
+<pre>
+<code>
+clf2 = LogisticRegression(solver='sag', multi_class='multinomial').fit(PCs, y)
+
+clf2.predict(PCs)
+
+confusion_matrix(y, clf2.predict(PCs))
+</code>
+</pre>
+
+<ul>
+<li>임의로 변수 2개 만을 뽑아내여 분석한 경우 모델의 퍼포먼스가 하락함.</li>
+</ul>
+<pre>
+<code>
+clf = LogisticRegression(solver='sag', max_iter=1000, random_state=0,
+                             multi_class="multinomial").fit(X2[:,0:2], y)
+
+confusion_matrix(y, clf.predict(X2[:,0:2]))
+</code>
+</pre>
+
+<ul>
+<li>위와 같이, 차원축소를 통하여 모델의 복잡성을 줄이는 동시에 최대한 많은 정보를 활용하여 분석할 수 있음.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine/" rel="tag"># machine</a>
+              <a href="/tags/learning/" rel="tag"># learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/25/machine-learning-1/" rel="prev" title="머신러닝  1편">
+      <i class="fa fa-chevron-left"></i> 머신러닝  1편
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/27/machine-learning-3/" rel="next" title="머신러닝  3편">
+      머신러닝  3편 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-02-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D"><span class="nav-number">1.</span> <span class="nav-text">Part.02 회귀분석</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%8B%A4%EC%A4%91%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D-%EC%8B%A4%EC%8A%B52-%EB%8B%A4%EC%A4%91%ED%9A%8C%EA%B7%80-%EB%AA%A8%EB%8D%B8-%ED%95%B4%EC%84%9D-%EB%B0%8F-%EB%8B%A4%EC%A4%91%EA%B3%B5%EC%84%A0%EC%84%B1%EC%A7%84%EB%8B%A8-%EC%8B%A4%EC%8A%B5"><span class="nav-number">2.</span> <span class="nav-text">다중선형회귀분석 실습2 - 다중회귀 모델 해석 및 다중공선성진단 실습</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#crim-rm-lstat%EC%9D%84-%ED%86%B5%ED%95%9C-%EB%8B%A4%EC%A4%91-%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D"><span class="nav-number">2.0.1.</span> <span class="nav-text">crim, rm, lstat을 통한 다중 선형 회귀분석</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#crim-rm-lstat-b-tax-age-zn-nox-indus-%EB%B3%80%EC%88%98%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%8B%A4%EC%A4%91%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D"><span class="nav-number">2.0.2.</span> <span class="nav-text">crim, rm, lstat, b, tax, age, zn, nox, indus 변수를 통한 다중선형회귀분석</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98-%EC%82%B0%EC%A0%90%EB%8F%84%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%8B%A4%EC%A4%91%EA%B3%B5%EC%84%A0%EC%84%B1-%ED%99%95%EC%9D%B8"><span class="nav-number">2.0.3.</span> <span class="nav-text">상관계수&#x2F;산점도를 통해 다중공선성 확인</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VIF%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%8B%A4%EC%A4%91%EA%B3%B5%EC%84%A0%EC%84%B1-%ED%99%95%EC%9D%B8"><span class="nav-number">2.0.4.</span> <span class="nav-text">VIF를 통한 다중공선성 확인</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%ED%95%99%EC%8A%B5-%EA%B2%80%EC%A6%9D%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%ED%95%A0"><span class="nav-number">2.0.5.</span> <span class="nav-text">학습 &#x2F; 검증데이터 분할</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MSE%EB%A5%BC-%ED%86%B5%ED%95%9C-%EA%B2%80%EC%A6%9D%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90-%EB%8C%80%ED%95%9C-%EC%84%B1%EB%8A%A5%EB%B9%84%EA%B5%90"><span class="nav-number">2.0.6.</span> <span class="nav-text">MSE를 통한 검증데이터에 대한 성능비교</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D-%EC%8B%A4%EC%8A%B5-%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80%EB%AA%A8%EB%8D%B8-%EC%A0%81%ED%95%A9-%EB%B0%8F-%ED%95%B4%EC%84%9D"><span class="nav-number">3.</span> <span class="nav-text">로지스틱 회귀분석 실습 - 로지스틱 회귀모델 적합 및 해석</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D"><span class="nav-number">3.0.1.</span> <span class="nav-text">로지스틱 회귀분석</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%84%A4%EB%AA%85%EB%B3%80%EC%88%98-X-%ED%83%80%EC%BC%93%EB%B3%80%EC%88%98-Y-%EB%B6%84%EB%A6%AC-%EB%B0%8F-%ED%95%99%EC%8A%B5%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%99%80-%ED%8F%89%EA%B0%80%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="nav-number">3.0.2.</span> <span class="nav-text">설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95-%EB%AA%A8%EB%8D%B8%EB%A7%81-y-f-x"><span class="nav-number">3.0.3.</span> <span class="nav-text">로지스틱회귀모형 모델링 y &#x3D; f(x)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%9E%84%EA%B3%84%EA%B0%92-cut-off-%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%84%B1%EB%8A%A5%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90"><span class="nav-number">3.0.4.</span> <span class="nav-text">임계값(cut-off)에 따른 성능지표 비교</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Experience-Mortage-%EB%B3%80%EC%88%98-%EC%A0%9C%EA%B1%B0"><span class="nav-number">3.0.5.</span> <span class="nav-text">Experience, Mortage 변수 제거</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%B3%80%EC%88%98%EC%84%A0%ED%83%9D%EB%B2%95"><span class="nav-number">3.0.6.</span> <span class="nav-text">변수선택법</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98"><span class="nav-number">3.0.7.</span> <span class="nav-text">회귀계수</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%8B%9C%EA%B0%81%ED%99%94"><span class="nav-number">3.0.8.</span> <span class="nav-text">시각화</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-%EC%B6%95%EC%86%8C%EB%B2%95-%EC%8B%A4%EC%8A%B5-Lasso-Ridge-%EC%A0%81%ED%95%A9-%EB%B0%8F-%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1%ED%9A%8C%EA%B7%80%EC%99%80-%EB%B9%84%EA%B5%90"><span class="nav-number">4.</span> <span class="nav-text">회귀계수 축소법 실습 - Lasso, Ridge 적합 및 로지스틱회귀와 비교</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%84%A4%EB%AA%85%EB%B3%80%EC%88%98-X-%ED%83%80%EC%BC%93%EB%B3%80%EC%88%98-Y-%EB%B6%84%EB%A6%AC-%EB%B0%8F-%ED%95%99%EC%8A%B5%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%99%80-%ED%8F%89%EA%B0%80%EB%8D%B0%EC%9D%B4%ED%84%B0-1"><span class="nav-number">4.0.1.</span> <span class="nav-text">설명변수(X), 타켓변수(Y) 분리 및 학습데이터와 평가데이터</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1%ED%9A%8C%EA%B7%80%EB%AA%A8%ED%98%95-%EB%AA%A8%EB%8D%B8%EB%A7%81-y-f-x-1"><span class="nav-number">4.0.2.</span> <span class="nav-text">로지스틱회귀모형 모델링 y &#x3D; f(x)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%9E%84%EA%B3%84%EA%B0%92-cut-off-%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%84%B1%EB%8A%A5%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90-1"><span class="nav-number">4.0.3.</span> <span class="nav-text">임계값(cut-off)에 따른 성능지표 비교</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-1"><span class="nav-number">4.0.4.</span> <span class="nav-text">회귀계수</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%8B%9C%EA%B0%81%ED%99%94-1"><span class="nav-number">4.0.5.</span> <span class="nav-text">시각화</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Lasso-amp-RIdge-%ED%9A%8C%EA%B7%80-%EA%B3%84%EC%88%98"><span class="nav-number">4.0.6.</span> <span class="nav-text">Lasso &amp; RIdge 회귀 계수</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#labmda%EA%B0%92%EC%9D%98-%EB%B3%80%ED%99%94%EC%97%90-%EB%94%B0%EB%A5%B8-%ED%9A%8C%EA%B7%80%EA%B3%84%EC%88%98-%EC%B6%95%EC%86%8C-%EC%8B%9C%EA%B0%81%ED%99%94"><span class="nav-number">4.0.7.</span> <span class="nav-text">labmda값의 변화에 따른 회귀계수 축소 시각화</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Principal-compoenet-analysis-%EC%8B%A4%EC%8A%B5"><span class="nav-number">5.</span> <span class="nav-text">Principal compoenet analysis 실습</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%B2%98%EB%A6%AC-%EB%B0%8F-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%8C%8C%EC%95%85"><span class="nav-number">5.0.1.</span> <span class="nav-text">1. 데이터 전처리 및 데이터 파악</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-PCA-%ED%95%A8%EC%88%98-%ED%99%9C%EC%9A%A9-%EB%B0%8F-%EC%95%84%EC%9B%83%ED%92%8B-%EC%9D%98%EB%AF%B8%ED%8C%8C%EC%95%85"><span class="nav-number">5.0.2.</span> <span class="nav-text">2. PCA 함수 활용 및 아웃풋 의미파악</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-PC%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D"><span class="nav-number">5.0.3.</span> <span class="nav-text">3. PC를 활용한 회귀분석</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/27/machine-learning-2/";
+    this.page.identifier = "2021/10/27/machine-learning-2/";
+    this.page.title = "머신러닝  2편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
