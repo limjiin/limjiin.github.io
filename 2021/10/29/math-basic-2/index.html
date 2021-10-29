@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="기초 선형 대수학 마지막편! 개념과 함께 코드도 함께 공부해보재!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터 분석을 위한 기초 수학 2편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/29/math-basic-2/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="기초 선형 대수학 마지막편! 개념과 함께 코드도 함께 공부해보재!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-29T08:35:19.375Z">
+<meta property="article:modified_time" content="2021-10-29T08:42:49.372Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="math">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/29/math-basic-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>데이터 분석을 위한 기초 수학 2편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/29/math-basic-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          데이터 분석을 위한 기초 수학 2편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-29 17:35:19 / Modified: 17:42:49" itemprop="dateCreated datePublished" datetime="2021-10-29T17:35:19+09:00">2021-10-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/29/math-basic-2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/29/math-basic-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>기초 선형 대수학 마지막편! 개념과 함께 코드도 함께 공부해보재!</p>
+<span id="more"></span>
+
+<ol>
+<li>통계 (statistics)</li>
+</ol>
+<ul>
+<li><p>데이터(측정값)에 대해 잘 모른다 =&gt; 데이터에 대해 정보를 얻기 위해 사용하는 개념</p>
+</li>
+<li><p>왜 ?</p>
+<blockquote>
+<p>데이터의 의미를 잘 모르는 경우(예: 도메인 지식을 많이 필요로 하는 경우)<br>양이 많은 경우(예 : 국영수 점수 경향 파악을 하려는데 학생이 60만명인 경우)<br>측정 자체의 오류(예 : 설문조사를 할 때 사람들이 막 적는 경우, sensing 자체 오류)</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>기술통계 (descriptive statistics)</li>
+</ol>
+<ul>
+<li><p>수집한 데이터를 분석하여 대상들의 속성을 파악하는 통계 방법 (또는 수치값들)</p>
+</li>
+<li><p>중심경향값 : 전체 자료를 대표할 수 있는 수치들 (예:  평균, 최빈값)</p>
+<blockquote>
+<p>평균 : 전체 자료가 가지는 수치들의 총합을 전체 자료 수로 나눈 수치<br>중앙값 : 최대값과 최소값의 한가운데 수치<br>최빈값 : 가장 많은 빈도를 가진 수치<br>사분위수 : Xn/4, Xn/2, X3/4n</p>
+</blockquote>
+</li>
+<li><p>분산도 : 전체 자료가 얼마나 퍼져 있는지를 알 수 있는 수치들 (예: 분산)</p>
+<blockquote>
+<p>분산 : 각 자료가 평균으로 부터 떨어진 정도를 제곱한 수치들의 평균<br>표준편차 : 분산의 제곱근</p>
+</blockquote>
+</li>
+<li><p>상관계수 : 두 변수 간의 관계의 크기 (예: 피어슨 상관계수)</p>
+<blockquote>
+<p>공분산 : 두 변수가 함께 각자의 평균으로부터 멀어지는 정도. 한 변수가 자신의 평균으로부터 멀어질 때, 다른 변수가 자신의 평균으로부터 멀어지는 정도를 의미<br>상관계수 : 두 변수 간의 관계로, 하나의 변수가 변화함에 따라 다른 변수가 변화하는 정도를 의미 [-1, 1] (예 : 부동산 가격 ~지하철역과의 거리)</p>
+</blockquote>
+<ul>
+<li>양의 상관계수(0.3 ↑) : 양의 상관관계를 가진다</li>
+<li>음의 상관계수(-0.3 ↓) : 음의 상관관계를 가진다.</li>
+<li>단, 상관계수가 있다고 해서 인과관계를 가지는 것은 아니다.</li>
+<li>예) 아이스크림 판매량과 상어의 물린 사람 수</li>
+<li>반면, 상관계수가 0.01이지만 관계 또 영향이 있는 경우도 있다.</li>
+</ul>
+</li>
+<li><p>회귀계수 : 독립변수(x)가 종속변수(y)에 미치는 영향의 크기 (예 : 선형회귀)</p>
+<blockquote>
+<p>오차(error)를 최소화하는 방향으로 직선이 생성됨<br>예1) Y = aX + b + e(오차) : y는 알지만, x는 모르는 값 : a(기울기)랑 b(y절편)가 상수일 때</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>데이터(x, y)<br>예2) x -&gt; f -&gt; y 로 예측하는 것. f : 머신러닝, 모델링, unseen data에 대한 예측 -&gt; linear model -&gt; linear regeression<br>예3) y^(모델링한 결과) = y(실제 정답) + e(error)</p>
+</blockquote>
+<ul>
+<li>왜 통계를 하는가? <blockquote>
+<p>1억개의 데이터를 외울 수는 없지만, 찾고는 싶으니까<br>DB에 데이터 저장<br>모르니까<br>머신러닝, 모델링</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li>추리통계 (Inferential Statistics)</li>
+</ol>
+<ul>
+<li>수집한 데이터를 확인하고 데이터의 표본이 되는 값을 찾아서, 기술통계를 이용하여 모집단의 속성들을 유추하는 통계 기법<blockquote>
+<p>표본 집단(표본 집단의 통계량) : training -(추정, N = 30 이상)&gt; 모집단(모집단의 통계량) : test data<br>설문조사 : 일부의 사람 1. 얼마나 데이터를 모아야 하는가? -&gt; 분석결과 : 전체 집단(모집단) 2. 분석결과를 얼마나 믿을 수 있는가?<br>표본 집단의 조건 (1) unbiased : 특정 데이터 볼 수 있음 (2) 모집단과 같은 특성 : 비슷한 통계량을 가지고 있어야 함</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>코드로 풀어보는 기초 통계</li>
+</ol>
+<h5 id="statsmodel과-pandas로-풀어보는-기초통계-실습"><a href="#statsmodel과-pandas로-풀어보는-기초통계-실습" class="headerlink" title="statsmodel과 pandas로 풀어보는 기초통계 실습"></a>statsmodel과 pandas로 풀어보는 기초통계 실습</h5><h5 id="라이브러리-불러오기"><a href="#라이브러리-불러오기" class="headerlink" title="라이브러리 불러오기"></a>라이브러리 불러오기</h5><pre>
+<code>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import warnings
+import platform
+from matplotlib import font_manager, rc
+</code>
+</pre>
+
+<h5 id="운영체제별-글꼴-세팅"><a href="#운영체제별-글꼴-세팅" class="headerlink" title="운영체제별 글꼴 세팅"></a>운영체제별 글꼴 세팅</h5><pre>
+<code>
+path = "c:/Windows/Fonts/malgun.ttf"
+if platform.system() == 'Darwin':
+    font_name = 'AppleGothic'
+    rc('font', family='AppleGothic')
+elif platform.system() == 'Windows':
+    font_name = font_manager.FontProperties(fname=path).get_name()
+    rc('font', family=font_name)
+else:
+    font_name = font_manager.FontProperties(fname="/usr/share/fonts/nanumfont/NanumGothic.ttf")
+    rc('font', family="NanumGothic")
+
+warnings.simplefilter(action='ignore')
+
+## 파일 불러오기
+train = pd.read_csv('./energy/train.csv', encoding='cp949')
+test = pd.read_csv('./energy/test.csv', encoding='cp949')
+submission = pd.read_csv('./energy/sample_submission.csv', encoding='cp949')
+</code>
+</pre>
+
+<h5 id="Q-주어진-데이터의-column들-중-가장-넓은-분포를-가진-column은-무엇인가요"><a href="#Q-주어진-데이터의-column들-중-가장-넓은-분포를-가진-column은-무엇인가요" class="headerlink" title="Q. 주어진 데이터의 column들 중 가장 넓은 분포를 가진 column은 무엇인가요?"></a>Q. 주어진 데이터의 column들 중 가장 넓은 분포를 가진 column은 무엇인가요?</h5><pre>
+<code>
+round(train.describe(), 1)
+# 전력사용량 : min-max, 표준편차가 가장 심함
+
+# feature scaling -> 정확한 비교를 위해서 모든 데이터의 수치 범위(scale)를 0과 1 사이로 맞춰줍니다.
+# x' = (x - x_min) / (x_max - x_min) (min-max scaling)
+
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+scaled_data = scaler.fit_transform(train.drop(columns='date_time', axis=1))
+scaled_data
+
+temp = pd.DataFrame(data = scaled_data, columns = L, index=train.index)
+temp
+
+L = train.columns.to_list()
+L.remove('date_time')
+
+round(temp.describe(), 1)
+</code>
+</pre>
+
+<h5 id="Feature-EDA"><a href="#Feature-EDA" class="headerlink" title="Feature EDA"></a>Feature EDA</h5><pre>
+<code>
+import seaborn as sns
+
+plt.figure(figsize=(14, 6))
+sns.countplot(data=train, x='num')
+plt.show()
+</code>
+</pre>
+
+<h5 id="Numeric-Feature-EDA"><a href="#Numeric-Feature-EDA" class="headerlink" title="Numeric Feature EDA"></a>Numeric Feature EDA</h5><ul>
+<li>전력사용량, 기온, 풍속, 습도, 강수량, 일조량</li>
+</ul>
+<h5 id="Hist-plot"><a href="#Hist-plot" class="headerlink" title="Hist plot"></a>Hist plot</h5><pre>
+<code>
+plt.figure(figsize=(16, 8))
+sns.histplot(data=train, x='풍속(m/s)', bins=30)
+plt.show();
+
+plt.figure(figsize=(16, 8))
+sns.histplot(data=train, x='기온(°C)', bins=30)
+plt.show();
+
+plt.figure(figsize=(16, 8))
+sns.histplot(data=train, x='습도(%)', bins=30)
+plt.show();
+
+plt.figure(figsize=(16,8))
+sns.histplot(data=train, x="강수량(mm)", bins=30)
+plt.show();
+
+plt.figure(figsize=(16,8))
+sns.histplot(data=train, x="전력사용량(kWh)", bins=30)
+plt.show();
+
+plt.figure(figsize=(16,8))
+sns.histplot(data=train, x="일조(hr)", bins=30)
+plt.show();
+</code>
+</pre>
+
+<h5 id="Box-plot"><a href="#Box-plot" class="headerlink" title="Box plot"></a>Box plot</h5><pre>
+<code>
+plt.figure(figsize=(16,8))
+sns.boxplot(data=train)
+plt.show();
+
+plt.figure(figsize=(16,8))
+sns.boxplot(data=temp)
+plt.show();
+</code>
+</pre>
+
+<h5 id="Heatmap"><a href="#Heatmap" class="headerlink" title="Heatmap"></a>Heatmap</h5><pre>
+<code>
+corr = train.corr()
+
+plt.figure(figsize=(16,8))
+sns.heatmap(corr, square=True, annot=True, fmt=".4f", cmap='spring')
+plt.show()
+
+# 1번 건물에 대해 heatmap을 찍어보세요
+building1 = train.loc[train.num == 1, :]
+corr1 = building1.corr()
+
+plt.figure(figsize=(16,8))
+sns.heatmap(data=corr1, annot=True, fmt='.4f', square=True)
+plt.show()
+</code>
+</pre>
+
+<h5 id="추가-실습"><a href="#추가-실습" class="headerlink" title="추가 실습"></a>추가 실습</h5><pre>
+<code>
+# 1) feature engineering
+train.drop(columns='date_time', axis=1, inplace=True) # 시계열 분석을 안할거라서
+train_ohe = pd.get_dummies(data=train, columns=['num'])
+
+# 정규화 : drop_duplocate
+building_info = train[['num', '비전기냉방설비운영', '태양광보유']].drop_duplicates()
+building_info
+
+# 건물 정보 결측치 처리
+test.drop(columns=['비전기냉방설비운영', '태양광보유'], inplace=True)
+test = pd.merge(test, building_info, on='num')
+
+# 2) Test data 결측치 처리
+# 보간법(interpolate)을 이용해서 numeric feature를 결측치 처리
+test.interpolate(method='linear')
+
+# 3) Test data feature engineering
+test.drop(columns='date_time', inplace=True)
+test_ohe = pd.get_dummies(data=test, columns=['num'])
+test_ohe
+
+test_ohe = test_ohe.interpolate(method='linear')
+
+# X(features) ------------f--------------> y(target)
+# f : linear regression
+# scikit-learn을 이용해서 linear regression
+from sklearn.linear_model import LinearRegression
+
+X = train_ohe.drop(columns='전력사용량(kWh)') # independent variable
+y = train_ohe['전력사용량(kWh)'] # dependent variables
+print(X.shape, y.shape)
+
+model = LinearRegression()
+model.fit(X, y)
+
+model.intercept_ # b == 회귀계수
+
+model.coef_ # W == 회귀계수
+
+pred = model.predict(test_ohe) # 예측한 전력사용량
+
+submission['answer'] = pred
+submission
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/math/" rel="tag"># math</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/27/machine-learning-3/" rel="prev" title="머신러닝  3편">
+      <i class="fa fa-chevron-left"></i> 머신러닝  3편
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/29/machine-learning-4/" rel="next" title="머신러닝  4편">
+      머신러닝  4편 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#statsmodel%EA%B3%BC-pandas%EB%A1%9C-%ED%92%80%EC%96%B4%EB%B3%B4%EB%8A%94-%EA%B8%B0%EC%B4%88%ED%86%B5%EA%B3%84-%EC%8B%A4%EC%8A%B5"><span class="nav-number">1.</span> <span class="nav-text">statsmodel과 pandas로 풀어보는 기초통계 실습</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text">라이브러리 불러오기</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%B3%84-%EA%B8%80%EA%BC%B4-%EC%84%B8%ED%8C%85"><span class="nav-number">3.</span> <span class="nav-text">운영체제별 글꼴 세팅</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Q-%EC%A3%BC%EC%96%B4%EC%A7%84-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%9D%98-column%EB%93%A4-%EC%A4%91-%EA%B0%80%EC%9E%A5-%EB%84%93%EC%9D%80-%EB%B6%84%ED%8F%AC%EB%A5%BC-%EA%B0%80%EC%A7%84-column%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%EC%9A%94"><span class="nav-number">4.</span> <span class="nav-text">Q. 주어진 데이터의 column들 중 가장 넓은 분포를 가진 column은 무엇인가요?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feature-EDA"><span class="nav-number">5.</span> <span class="nav-text">Feature EDA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Numeric-Feature-EDA"><span class="nav-number">6.</span> <span class="nav-text">Numeric Feature EDA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hist-plot"><span class="nav-number">7.</span> <span class="nav-text">Hist plot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Box-plot"><span class="nav-number">8.</span> <span class="nav-text">Box plot</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Heatmap"><span class="nav-number">9.</span> <span class="nav-text">Heatmap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%B6%94%EA%B0%80-%EC%8B%A4%EC%8A%B5"><span class="nav-number">10.</span> <span class="nav-text">추가 실습</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/29/math-basic-2/";
+    this.page.identifier = "2021/10/29/math-basic-2/";
+    this.page.title = "데이터 분석을 위한 기초 수학 2편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

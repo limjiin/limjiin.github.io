@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="기본적인 머신 러닝 모형에 대해 마저 배워보자!의사결정나무, 인조신경망 모형, LDA, SVM 등이 나올 예정!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="머신러닝  4편">
+<meta property="og:url" content="https://limjiin.github.io/2021/10/29/machine-learning-4/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="기본적인 머신 러닝 모형에 대해 마저 배워보자!의사결정나무, 인조신경망 모형, LDA, SVM 등이 나올 예정!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-29T09:04:47.052Z">
+<meta property="article:modified_time" content="2021-10-29T09:25:52.316Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="machine">
+<meta property="article:tag" content="learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/10/29/machine-learning-4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>머신러닝  4편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/10/29/machine-learning-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          머신러닝  4편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-29 18:04:47 / Modified: 18:25:52" itemprop="dateCreated datePublished" datetime="2021-10-29T18:04:47+09:00">2021-10-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/10/29/machine-learning-4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/29/machine-learning-4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>기본적인 머신 러닝 모형에 대해 마저 배워보자!<br>의사결정나무, 인조신경망 모형, LDA, SVM 등이 나올 예정! </p>
+<span id="more"></span>
+
+<h3 id="Part-03-기본적인-머신-러닝-모형"><a href="#Part-03-기본적인-머신-러닝-모형" class="headerlink" title="Part.03 기본적인 머신 러닝 모형"></a>Part.03 기본적인 머신 러닝 모형</h3><ol>
+<li>LDA (Linear Discriminant Analysis)</li>
+</ol>
+<ul>
+<li><p>가정</p>
+<blockquote>
+<p>각 숫자 집단은 정규 분포 형태의 확률분포를 가진다<br>각 숫자 집단은 비슷한 형태의 공분산 구조를 가진다.</p>
+</blockquote>
+</li>
+<li><p>LDA 결과 얻게 되는 decision boundary 특징</p>
+<ul>
+<li>boundary에 직교하는 축 : 자료들을 이 축에 정사영 시킨 분포의 형태를 고려</li>
+<li>평균의 차이를 극대화 하려면? 두 평균 vector의 차이 벡터를 이용</li>
+<li>정사영 시킨 두 분표의 특징이 아래 둘을 동시에 달성하고자 함</li>
+</ul>
+<ul>
+<li>평균의 차이는 최대화</li>
+<li>두 분포의 각각 분산은 최소화</li>
+</ul>
+</li>
+<li><p>결국 분산 대비 평균의 차이를 극대화 하는 boundary를 찾고자 하는 것</p>
+</li>
+</ul>
+<ol start="2">
+<li>LDA 수학적 개념 이해 : 다변량 정규분포</li>
+</ol>
+<ul>
+<li><p>이변량 정규분포</p>
+<blockquote>
+<p>정규분포<br>이변량 정규분포<br>다변량 정규분포</p>
+</blockquote>
+</li>
+<li><p>로그 다변량 정규분포</p>
+<ul>
+<li>다변량 정규분포의 LDA에의 적용</li>
+</ul>
+<ul>
+<li>K번째 범주 자료의 분포함수</li>
+<li>K번째 범주가 나타날 사전 확률을 고려하면</li>
+</ul>
+<ul>
+<li>K번째, 1번째 범주에서 현재 자료가 나왔을 확률</li>
+</ul>
+</li>
+<li><p>마무리</p>
+<blockquote>
+<p>LDA decision boundary : 평면과 이를 가로지르는 점선<br>공분산이 같다는 구조 아래 LDA가 0 ~ 1 사이에서 K인지 L인지 알 수 있다.<br>X의 이니 형이 들어가고 이것이 초평면 형태</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li>LDA 모델 정의 및 추정</li>
+</ol>
+<ul>
+<li><p>LDA 모델 정의</p>
+<ul>
+<li>LDA decision boundary</li>
+</ul>
+<ul>
+<li>분산 대비 평균의 차이를 극대화 하는 boundary</li>
+</ul>
+<ul>
+<li>가정</li>
+</ul>
+<ul>
+<li>각 숫자 집단의 정규분포 형태의 확률 분포를 가진다</li>
+<li>각 숫자 집단은 비슷한 형태의 공분산 구조를 가진다</li>
+</ul>
+<ul>
+<li>확률분포 관점</li>
+</ul>
+<ul>
+<li>Y가 K개의 범주를 가질 때 </li>
+<li>Y = K 일 때, 공분산 구조를 가지는 p개의 정규분포 변수의 분포</li>
+</ul>
+<ul>
+<li>K와 관계 없는 공통 공분산 구조를 가짐으로 인해서 x에 대한 1차식(linear)으로 정리된다</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>LDA 수학적 개념 이해 : 사영 (Projection)</li>
+</ol>
+<ul>
+<li><p>사영 (Projection)</p>
+<ul>
+<li>목표 : 분산은 최소화하면서 평균을 최대화 하는 사영을 찾는 것</li>
+</ul>
+<ul>
+<li>사영된 곳에서 평균의 차이와 분산을 표현해야 함</li>
+</ul>
+<ul>
+<li>총정리</li>
+</ul>
+<ul>
+<li>아이디어, 분산을 최소화 평균의 차이를 최대화하는 축에 수직인 boundary를 찾고자 함</li>
+<li>투영을 통해 찾아낸 새로운 축 a = eigen vector</li>
+<li>확률 모델로 찾아낸 decision boundary</li>
+</ul>
+</li>
+<li><p>장점</p>
+<blockquote>
+<p>나이브 베이즈 모델과 달리, 설명변수 간의 공분산 구조를 반영<br>가정이 위반되더라도 비교적 robust</p>
+</blockquote>
+</li>
+<li><p>단점</p>
+<blockquote>
+<p>가장 작은 그룹의 샘플 수가 설명 변수의 개수보다 많아야 함<br>정규분포 가정에 크게 벗어나는 경우 잘 설명하지 못함<br>y 범주 사이에 공분산 구조가 다른 경우를 반영하지 못함</p>
+</blockquote>
+</li>
+</ul>
+<ol start="5">
+<li>LDA 심화적 이해</li>
+</ol>
+<ul>
+<li><p>QDA 정의 및 이해</p>
+<ul>
+<li>K와 관계 없는 공통 공분산 구조에 대한 가정을 버린 것이 QDA</li>
+</ul>
+<ul>
+<li>y의 범주별로 서로 다른 공분산 구조를 가진 경우에 활용 가능</li>
+</ul>
+<ul>
+<li>장점</li>
+</ul>
+<ul>
+<li>y범주별 공분산 구조를 다르게 할 수 있음</li>
+</ul>
+<ul>
+<li>단점</li>
+</ul>
+<ul>
+<li>셜명변수의 개수가 많을 경우, 추정해야 하는 모수가 많아짐</li>
+<li>샘플이 많이 필요</li>
+</ul>
+</li>
+</ul>
+<p>5-1. LDA (Linear Discriminant Analysis) 실습</p>
+<h5 id="1-Linear-Discriminant-Analysis"><a href="#1-Linear-Discriminant-Analysis" class="headerlink" title="1. Linear Discriminant Analysis"></a>1. Linear Discriminant Analysis</h5><ul>
+<li>LDA 를 위한 함수 불러오기</li>
+</ul>
+<pre>
+<code>
+import numpy as np
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+y = np.array([1, 1, 1, 2, 2, 2])
+</code>
+</pre>
+
+<ul>
+<li>LDA 모델 구축</li>
+</ul>
+<pre>
+<code>
+clf = LinearDiscriminantAnalysis()
+clf.fit(X, y)
+
+print(clf.predict([[-0.8, -1]]))
+</code>
+</pre>
+
+<h5 id="2-Quadratic-Discriminant-Analysis"><a href="#2-Quadratic-Discriminant-Analysis" class="headerlink" title="2. Quadratic Discriminant Analysis"></a>2. Quadratic Discriminant Analysis</h5><ul>
+<li>QDA를 위한 함수 불러오기</li>
+</ul>
+<pre>
+<code>
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+</code>
+</pre>
+
+<ul>
+<li>QDA 모델 구축</li>
+</ul>
+<pre>
+<code>
+clf2 = QuadraticDiscriminantAnalysis()
+clf2.fit(X, y)
+
+print(clf2.predict([[-0.8, -1]]))
+</code>
+</pre>
+
+<ul>
+<li>LDA, QDA 비교</li>
+</ul>
+<pre>
+<code>
+from sklearn.metrics import confusion_matrix
+y_pred=clf.predict(X)
+confusion_matrix(y,y_pred)
+
+y_pred2=clf2.predict(X)
+confusion_matrix(y,y_pred2)
+</code>
+</pre>
+
+<h5 id="3-LDA-QDA의-시각적-비교"><a href="#3-LDA-QDA의-시각적-비교" class="headerlink" title="3. LDA, QDA의 시각적 비교"></a>3. LDA, QDA의 시각적 비교</h5><pre>
+<code>
+from sklearn.datasets import make_moons, make_circles, make_classification
+from matplotlib.colors import ListedColormap
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+h=0.2
+names = ["LDA", "QDA"]
+classifiers = [
+    LinearDiscriminantAnalysis(),
+    QuadraticDiscriminantAnalysis()]
+
+X, y = make_classification(n_features=2, n_redundant=0, n_informative=2,
+                           random_state=1, n_clusters_per_class=1)
+rng = np.random.RandomState(2)
+X += 2 * rng.uniform(size=X.shape)
+linearly_separable = (X, y)
+
+datasets = [make_moons(noise=0.3, random_state=0),
+            make_circles(noise=0.2, factor=0.5, random_state=1),
+            linearly_separable
+            ]
+
+figure = plt.figure(figsize=(27, 9))
+i = 1
+
+# iterate over datasets
+for ds in datasets:
+    # preprocess dataset, split into training and test part
+    X, y = ds
+    X = StandardScaler().fit_transform(X)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.4)
+
+    x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
+    y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+
+    # just plot the dataset first
+    cm = plt.cm.RdBu
+    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+    ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
+    # Plot the training points
+    ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright)
+    # and testing points
+    ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6)
+    ax.set_xlim(xx.min(), xx.max())
+    ax.set_ylim(yy.min(), yy.max())
+    ax.set_xticks(())
+    ax.set_yticks(())
+    i += 1
+
+    # iterate over classifiers
+    for name, clf in zip(names, classifiers):
+        ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
+        clf.fit(X_train, y_train)
+        score = clf.score(X_test, y_test)
+
+        # Plot the decision boundary. For that, we will assign a color to each
+        # point in the mesh [x_min, m_max]x[y_min, y_max].
+        if hasattr(clf, "decision_function"):
+            Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
+        else:
+            Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+
+        # Put the result into a color plot
+        Z = Z.reshape(xx.shape)
+        ax.contourf(xx, yy, Z, cmap=cm, alpha=.8)
+
+        # Plot also the training points
+        ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright)
+        # and testing points
+        ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright,
+                   alpha=0.6)
+
+        ax.set_xlim(xx.min(), xx.max())
+        ax.set_ylim(yy.min(), yy.max())
+        ax.set_xticks(())
+        ax.set_yticks(())
+        ax.set_title(name)
+        ax.text(xx.max() - .3, yy.min() + .3, ('%.2f' % score).lstrip('0'),
+                size=15, horizontalalignment='right')
+        i += 1
+
+figure.subplots_adjust(left=.02, right=.98)
+plt.show()
+</code>
+</pre>
+
+<ol start="6">
+<li>SVM (Support Vector Machine)</li>
+</ol>
+<ul>
+<li><p>배경</p>
+<ul>
+<li>데이터의 분포가정이 힘들 때, 아래의 데이터를 잘 나누려면?</li>
+</ul>
+<ul>
+<li>Boundary에 집중</li>
+</ul>
+<ul>
+<li>문제점</li>
+</ul>
+<ul>
+<li>정확히 구분되지 않는 경우가 존재한다면?</li>
+<li>적당한 error를 허용하고, 이를 최소화하도록 boundary를 결정</li>
+</ul>
+<ul>
+<li>종속 변수 데이터 형태에 따라 나뉨</li>
+</ul>
+<ul>
+<li>범주형 변수 : Support Vector classifier</li>
+<li>연속형 변수 : Support Vector regression</li>
+</ul>
+<ul>
+<li>SVM, SVR의 핵심</li>
+</ul>
+<ul>
+<li>Model cost에 영향을 끼칠 점과 끼치지 않을 점을 margin을 통해 구분</li>
+<li>SVM : 마진 안에 포함되거나, 반대 방향으로 분류된 점 들</li>
+<li>SVR : 마진 바깥에 위치한 점들</li>
+</ul>
+<ul>
+<li><p>decision boundary/ rule</p>
+</li>
+<li><p>Lagrange multiplier : 라그랑주 승수</p>
+</li>
+</ul>
+<ul>
+<li>최적화 문제(최소화 또는 최대화하는 값)를 풀 때, 최대화하는 동시에 한정하고 싶은 경우</li>
+</ul>
+</li>
+<li><p>장점 vs LDA</p>
+<blockquote>
+<p>데이터의 분포 가정이 힘든 경우, covariance 구조를 고려하는 것은 비효율적<br>Boundary 근처의 관측치만을 고려할 수 있음<br>예측의 정확도가 높음</p>
+</blockquote>
+</li>
+<li><p>단점</p>
+<blockquote>
+<p>C를 결정해야 함<br>모형 구축에 시간이 오래 걸림</p>
+</blockquote>
+</li>
+<li><p>One-Class  SVM (Support Vector Machine)</p>
+<blockquote>
+<p>종속변수 정보가 없는 자료를 요약하는 데 SVM 사용<br>자료를 모두 포함하는 원을 활용</p>
+</blockquote>
+</li>
+</ul>
+<p>6-1. SVM (Support vector machine) 실습</p>
+<h5 id="1-데이터-불러오기-및-SVM-적합"><a href="#1-데이터-불러오기-및-SVM-적합" class="headerlink" title="1. 데이터 불러오기, 및 SVM 적합"></a>1. 데이터 불러오기, 및 SVM 적합</h5><ul>
+<li>함수 불러오기</li>
+</ul>
+<pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import svm, datasets
+</code>
+</pre>
+
+<ul>
+<li>모델 적합</li>
+</ul>
+<pre>
+<code>
+iris = datasets.load_iris()
+X = iris.data[:, :2]
+y = iris.target
+
+C = 1
+clf = svm.SVC(kernel = 'linear', C=C)
+clf.fit(X, y)
+
+from sklearn.metrics import confusion_matrix
+
+y_pred = clf.predict(X)
+confusion_matrix(y, y_pred)
+</code>
+</pre>
+
+<h5 id="2-kernel-SVM-적합-및-비교"><a href="#2-kernel-SVM-적합-및-비교" class="headerlink" title="2. kernel SVM 적합 및 비교"></a>2. kernel SVM 적합 및 비교</h5><ul>
+<li>LinearSVC</li>
+</ul>
+<pre>
+<code>
+clf = svm.LinearSVC(C=C, max_iter=10000)
+clf.fit(X,y)
+y_pred = clf.predict(X)
+confusion_matrix(y, y_pred)
+</code>
+</pre>
+
+<ul>
+<li>radial basis function</li>
+</ul>
+<pre>
+<code>
+clf = svm.SVC(kernel = 'rbf', gamma = 0.7, max_iter=10000)
+clf.fit(X,y)
+y_pred = clf.predict(X)
+confusion_matrix(y, y_pred)
+</code>
+</pre>
+
+<ul>
+<li>polynomial kernel</li>
+</ul>
+<pre>
+<code>
+clf = svm.SVC(kernel = 'poly', degree=3, C=C, gamma='auto')
+clf.fit(X,y)
+y_pred = clf.predict(X)
+confusion_matrix(y, y_pred)
+</code>
+</pre>
+
+<h5 id="시각적-비교"><a href="#시각적-비교" class="headerlink" title="시각적 비교"></a>시각적 비교</h5><ul>
+<li>함수 정의</li>
+</ul>
+<pre>
+<code>
+def make_meshgrid(x, y, h=.02):
+    x_min, x_max = x.min() - 1, x.max() + 1
+    y_min, y_max = y.min() - 1, y.max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    return xx, yy
+
+
+def plot_contours(ax, clf, xx, yy, params):
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    out = ax.contourf(xx, yy, Z, params)
+    return out
+</code>
+</pre>
+
+<ul>
+<li>데이터 불러오기</li>
+</ul>
+<pre>
+<code>
+iris = datasets.load_iris()
+
+X = iris.data[:, :2]
+y = iris.target
+</code>
+</pre>
+
+<ul>
+<li>모델정의 및 피팅</li>
+</ul>
+<pre>
+<code>
+C = 1.0 #Regularization parameter
+models = (svm.SVC(kernel='linear', C=C),
+          svm.LinearSVC(C=C, max_iter=10000),
+          svm.SVC(kernel='rbf', gamma=0.7, C=C),
+          svm.SVC(kernel='poly', degree=3, gamma='auto', C=C))
+models = (clf.fit(X, y) for clf in models)
+
+titles = ('SVC with linear kernel',
+          'LinearSVC (linear kernel)',
+          'SVC with RBF kernel',
+          'SVC with polynomial (degree 3) kernel')
+
+fig, sub = plt.subplots(2, 2)
+plt.subplots_adjust(wspace=0.4, hspace=0.4)
+
+X0, X1 = X[:, 0], X[:, 1]
+xx, yy = make_meshgrid(X0, X1)
+
+for clf, title, ax in zip(models, titles, sub.flatten()):
+    plot_contours(ax, clf, xx, yy,
+                  cmap=plt.cm.coolwarm, alpha=0.8)
+    ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+    ax.set_xlim(xx.min(), xx.max())
+    ax.set_ylim(yy.min(), yy.max())
+    ax.set_xlabel('Sepal length')
+    ax.set_ylabel('Sepal width')
+    ax.set_xticks(())
+    ax.set_yticks(())
+    ax.set_title(title)
+
+plt.show()
+</code>
+</pre>
+
+<ol start="7">
+<li>의사결정나무 배경</li>
+</ol>
+<ul>
+<li><p>변수들로 기준을 만들고 이것을 통하여 샘플을 분류하고 분류된 집단의 성질을 통하여 추정하는 모형</p>
+</li>
+<li><p>장점 : 해석력이 높음, 직관적, 범용성</p>
+</li>
+<li><p>단점 : 높은 변동성, 샘플에 민감할 수 있음</p>
+</li>
+<li><p>의사결정나무 용어</p>
+<blockquote>
+<p>Node - 분류의 기준이 되는 변수가 위치 이를 기준으로 샘플을 나눔<br>Parent Node - 하위 노드<br>Root Node - 상위 노드가 없는 가장 위의 노드<br>Leaf node (Tip) - 하위 노드가 없는 가장 아래 노트<br>Internal node - Leaf node가 아닌 노드<br>Edge - 샘플을 분류하는 조건이 위치하는 곳<br>Deepth - Root node에서 특정 노드까지 도달하기 위해 거쳐야 하는 Edge의 수</p>
+</blockquote>
+</li>
+<li><p>반응 변수에 따라</p>
+<blockquote>
+<p>범주형 변수 : 분류 트리<br>연속형 변수 : 회귀 트리</p>
+</blockquote>
+</li>
+</ul>
+<ol start="8">
+<li>의사결정나무 수학적 개념 이해</li>
+</ol>
+<ul>
+<li><p>엔트로피 (Entropy)</p>
+<blockquote>
+<p>직관적 정의 : 0 또는 1일 확률이 최소, 0.5일 확률이 최대가 되게 하는 함수</p>
+</blockquote>
+</li>
+<li><p>Information Gain</p>
+<blockquote>
+<p>Information Gain = Entropy before - Entropy after<br>Decision Tree의 특정 node 이전과 이후의 Entropy 차이</p>
+</blockquote>
+</li>
+<li><p>Classification Tree</p>
+<blockquote>
+<p>Tree 조건에 따라, X가 가질 수 있는 영역을 Block으로 나누는 개념<br>나누어진 영역 안에 속하는 샘플의 특성을 통하여 Y를 추정</p>
+</blockquote>
+</li>
+<li><p>Rm의 구성</p>
+<ul>
+<li>각각의 독립변수에 대하여,</li>
+</ul>
+<ul>
+<li>범주형 : 각 범주에 따라</li>
+<li>연속형 : 여러 개의 영역으로 임의로 나눔</li>
+</ul>
+<ul>
+<li>나누어둔 영역들에 대해, 아래 measure를 가장 좋은 값으로 만드는 변수와 기준을 선택</li>
+</ul>
+<ul>
+<li>엔트로피</li>
+<li>오분류율</li>
+</ul>
+</li>
+<li><p>Regression Tree</p>
+<blockquote>
+<p>Tree 조건에 따라, X가 가질 수 있는 영역을 Block으로 나누는 개념<br>나누어진 영역 안에 속하는 샘플의 특성을 통하여 Y를 추정</p>
+</blockquote>
+</li>
+</ul>
+<p>8-1. 의사결정나무(Decision Tree) 실습</p>
+<h5 id="1-함수-익히기-및-모듈-불러오기"><a href="#1-함수-익히기-및-모듈-불러오기" class="headerlink" title="1. 함수 익히기 및 모듈 불러오기"></a>1. 함수 익히기 및 모듈 불러오기</h5><ul>
+<li>함수 익히기</li>
+</ul>
+<pre>
+<code>
+from sklearn import tree
+X = [[0, 0], [1, 1]]
+Y = [0, 1]
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X, Y)
+
+clf.predict([[1, 1]])
+</code>
+</pre>
+
+<ul>
+<li>모듈 불러오기</li>
+</ul>
+<pre>
+<code>
+from sklearn.datasets import load_iris
+from sklearn import tree
+from os import system
+
+system("pip install graphviz")
+
+import graphviz
+</code>
+</pre>
+
+<ul>
+<li>데이터 로드</li>
+</ul>
+<pre>
+<code>
+iris = load_iris()
+</code>
+</pre>
+
+<h5 id="2-의사결정나무-구축-및-시각화"><a href="#2-의사결정나무-구축-및-시각화" class="headerlink" title="2. 의사결정나무 구축 및 시각화"></a>2. 의사결정나무 구축 및 시각화</h5><ul>
+<li>트리 구축</li>
+</ul>
+<pre>
+<code>
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(iris.data, iris.target)
+</code>
+</pre>
+
+<ul>
+<li>트리의 시각화</li>
+</ul>
+<pre>
+<code>
+dot_data = tree.export_graphviz(clf,
+                                out_file=None,
+                             feature_names=iris.feature_names,
+                            class_names=iris.target_names,
+                              filled=True, rounded=True,
+                              special_characters=True
+                             )
+graph=graphviz.Source(dot_data)
+</code>
+</pre>
+
+<ul>
+<li>엔트로피를 활용한 트리</li>
+</ul>
+<pre>
+<code>
+clf2 = tree.DecisionTreeClassifier(criterion='entropy')
+clf2 = clf.fit(iris.data, iris.target)
+
+dot_data2 = tree.export_graphviz(clf2,
+                                out_file=None,
+                             feature_names=iris.feature_names,
+                            class_names=iris.target_names,
+                              filled=True, rounded=True,
+                              special_characters=True
+                             )
+graph2 = graphviz.Source(dot_data2)
+</code>
+</pre>
+
+<ul>
+<li>프루닝</li>
+</ul>
+<pre>
+<code>
+clf3 = tree.DecisionTreeClassifier(criterion='entropy', max_depth=2)
+
+clf3.fit(iris.data, iris.target)
+
+dot_data3 = tree.export_graphviz(clf3,
+                                out_file=None,
+                             feature_names=iris.feature_names,
+                            class_names=iris.target_names,
+                              filled=True, rounded=True,
+                              special_characters=True
+                             )
+graph3 = graphviz.Source(dot_data3)
+</code>
+</pre>
+
+<ul>
+<li>Confusion Matrix 구하기</li>
+</ul>
+<pre>
+<code>
+from sklearn.metrics import confusion_matrix
+confusion_matrix(iris.target,clf.predict(iris.data))
+
+confusion_matrix(iris.target,clf2.predict(iris.data))
+
+confusion_matrix(iris.target,clf3.predict(iris.data))
+</code>
+</pre>
+
+<h5 id="3-Training-Test-구분-및-Confusion-matrix-계산"><a href="#3-Training-Test-구분-및-Confusion-matrix-계산" class="headerlink" title="3. Training - Test 구분 및 Confusion matrix 계산"></a>3. Training - Test 구분 및 Confusion matrix 계산</h5><pre>
+<code>
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(iris.data,
+                                                    iris.target,
+                                                    stratify=iris.target,
+                                                    random_state=1)
+
+clf4 = tree.DecisionTreeClassifier(criterion='entropy')
+
+clf4.fit(X_train, y_train)
+
+confusion_matrix(y_test, clf4.predict(X_test))
+</code>
+</pre>
+
+<h5 id="4-Decision-regression-tree"><a href="#4-Decision-regression-tree" class="headerlink" title="4. Decision regression tree"></a>4. Decision regression tree</h5><ul>
+<li>모듈 불러오기 및 데이터 생성</li>
+</ul>
+<pre>
+<code>
+import numpy as np
+from sklearn.tree import DecisionTreeRegressor
+import matplotlib.pyplot as plt
+
+rng = np.random.RandomState(1)
+X = np.sort(5 * rng.rand(80, 1), axis=0)
+y = np.sin(X).ravel()
+y[::5] += 3 * (0.5 - rng.rand(16))
+</code>
+</pre>
+
+<ul>
+<li>Regression tree 구축</li>
+</ul>
+<pre>
+<code>
+regr1 = tree.DecisionTreeRegressor(max_depth=2)
+regr2 = tree.DecisionTreeRegressor(max_depth=5)
+
+regr1.fit(X, y)
+regr2.fit(X, y)
+
+X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
+X_test
+
+y_1 = regr1.predict(X_test)
+y_1
+
+y_2 = regr2.predict(X_test)
+y_2
+
+plt.figure()
+plt.scatter(X, y, s=20, edgecolor="black",
+            c="darkorange", label="data")
+plt.plot(X_test, y_1, color="cornflowerblue",
+         label="max_depth=2", linewidth=2)
+plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
+plt.xlabel("data")
+plt.ylabel("target")
+plt.title("Decision Tree Regression")
+plt.legend()
+plt.show()
+
+dot_data4 = tree.export_graphviz(regr2, out_file=None,
+                                filled=True, rounded=True,
+                                special_characters=True)
+
+graph4 = graphviz.Source(dot_data4)
+graph4
+
+dot_data5 = tree.export_graphviz(regr1, out_file=None,
+                                filled=True, rounded=True,
+                                special_characters=True)
+
+graph5 = graphviz.Source(dot_data5)
+</code>
+</pre>
+
+<ol start="9">
+<li>신경망 모형</li>
+</ol>
+<ul>
+<li><p>배경 : 인간의 뉴런</p>
+<blockquote>
+<p>시냅스를 통하여 여러 뉴런으로 부터 자극을 전달 받음<br>이를 종합하여 다른 뉴런에게 자극을 전달</p>
+</blockquote>
+</li>
+<li><p>뉴런의 구조를 모델링</p>
+<blockquote>
+<p>하나의 뉴런 : perceptron<br>여러 layer를 통하여 시냅스를 표현</p>
+</blockquote>
+</li>
+<li><p>Perceptron</p>
+<blockquote>
+<p>하나의 뉴런<br>입력 데이터 혹은 다른 레이어의 출력물을 받아 결과값을 내는 구조<br>input, weights, activation function(활성함수)로 구성</p>
+</blockquote>
+</li>
+<li><p>Multi Layer Perceptron</p>
+<blockquote>
+<p>하나의 Hidden layer(은닉노드) : 4 perceptron<br>2개의 종속변수 : 2 perceptron</p>
+</blockquote>
+</li>
+<li><p>인조 뉴런의 구조</p>
+<ul>
+<li>Activation function : 활성함수</li>
+</ul>
+<ul>
+<li>연속, 비선형, 단조증가, bounded, 점근성의 특성</li>
+<li>가장 기본적인 : step function, sigmoid function(미분이 쉬움. 딥러닝 이전에 많이 사용함)</li>
+<li>필요성 : 은닉 layer을 의미 있게 쌓아주는 역할</li>
+<li>선형의 layer만 쌓인다면 결국 하나의 선형식이 됨</li>
+<li>출력값의 range를 결정</li>
+</ul>
+<ul>
+<li>신경망 모형의 구조 이해</li>
+</ul>
+<ul>
+<li>input layer(입력층) : 입력 데이터를 의미</li>
+<li>hidden layer : 입력값 : 입력 데이터 혹은 또 다른 hidden layer의 출력값 : 위의 입력 값을 받는 perceptron들의 집합</li>
+<li>output layer : 입력값 : 마지막 hidden layer의 출력값 : 최종 결과물을 만들어내는 perceptron들의 집합</li>
+</ul>
+</li>
+<li><p>수학적 개념 이해 : 바이너리 논리연산과 perceptron</p>
+<ul>
+<li><p>바이너리 논리 연산 : AND, OR, XOR 연산이 존재</p>
+</li>
+<li><p>단층 perceptron (single-layer perceptron)</p>
+</li>
+</ul>
+<ul>
+<li>속성이 2개인 경우, 평면상의 직선으로 표현 가능</li>
+<li>perceptron의 classification</li>
+</ul>
+</li>
+<li><p>인조 뉴런 OR 연산 구축 - 알고리즘의 이해</p>
+<ul>
+<li><p>Weight 업데이트 알고리즘</p>
+</li>
+<li><p>LR : weight를 변화시키는 정도</p>
+</li>
+</ul>
+<ul>
+<li>값이 너무 크면 정확한 해를 찾기 힘듦</li>
+<li>값이 너무 작으면 수렴하기까지 시간이 오래 걸림</li>
+</ul>
+<ul>
+<li>E : 정의된 error 값. 주로 실제 값과 예측값의 차이를 사용</li>
+</ul>
+</li>
+<li><p>Backpropagation (역전파 알고리즘)</p>
+<blockquote>
+<p>Multi layer perceptron을 학습시키기 위한 방법<br>Output layer에서의 error의 변화량을 앞선 layer들로 전파한다는 개념<br>미분을 통해 접근</p>
+</blockquote>
+</li>
+<li><p>신경망 모형의 한계점</p>
+<ul>
+<li>gradient vanishing</li>
+</ul>
+<ul>
+<li>sigmoid 함수의 한계점</li>
+</ul>
+<ul>
+<li>중간해 멈춤 현상</li>
+</ul>
+<ul>
+<li>최적해(Global minima)에 이르기 전에 중간해(Local minima)에서 멈추는 현상</li>
+</ul>
+<ul>
+<li>과적합 문제</li>
+</ul>
+<ul>
+<li>Training set에 과하게 최적화 되는 문제</li>
+<li>일반화 되지 않음</li>
+</ul>
+</li>
+<li><p>신경망 모형의 해결책</p>
+<ul>
+<li>ReLU</li>
+</ul>
+<ul>
+<li>계산이 간단 : 학습 속도가 매우 빠름</li>
+<li>0 보다 큰 경우 기울기 유지</li>
+<li>0보다 작은 경우 기울기가 없는 문제점은 다른 ReLU 계열 함수 이용</li>
+</ul>
+<ul>
+<li>Pre-training : 미리 traning 시켜서 local minima 문제를 해결. 올바른 초기값 선정에 도움</li>
+<li>Drop out을 통한 과적합 문제 완화</li>
+</ul>
+<ul>
+<li>Hidden layer의 node를 임의의 확률에 따라 남김 (0.5~1 사이의 확률을 권장)</li>
+<li>계산 속도도 증가</li>
+</ul>
+</li>
+<li><p>신경망 모형의 심화적 이해</p>
+<ul>
+<li>초기값 문제</li>
+</ul>
+<ul>
+<li>Restricted Boltzmann Machine</li>
+<li>Y를 사용하지 않고 X만을 사용하여 weigth를 학습</li>
+<li>서로 인접한 층 사이에서만 학습하여 서로 예측하고, 예측한 값이 최소가 되는 weight를 찾음</li>
+<li>이 값을 초기값으로 선정</li>
+</ul>
+<ul>
+<li>과적합</li>
+</ul>
+<ul>
+<li>weight decay</li>
+<li>가중치가 최대한 작은 값을 가지도록 penalty 부여</li>
+<li>Ridge regression과 같은 아이디어</li>
+</ul>
+<ul>
+<li>Activation function의 선택</li>
+</ul>
+<ul>
+<li>ReLU의 단점 보완 : ELU</li>
+</ul>
+<ul>
+<li>은닉 층 개수, 은닉 노드의 개수, 의미</li>
+</ul>
+<ul>
+<li>은닉 노드를 지나치게 많이 늘리면 과적합의 문제 발성</li>
+<li>복잡한 문제를 푸는 경우 &gt; 충분한 은닉 층의 개수 필요</li>
+<li>다양한 입력 데이터 &gt; 충분한 은닉 노드의 수 필요</li>
+</ul>
+</li>
+</ul>
+<p>9-1. 인조 신경망 모형(NN_type) 실습</p>
+<h5 id="1-데이터-불러오기-및-Neural-Network-적합"><a href="#1-데이터-불러오기-및-Neural-Network-적합" class="headerlink" title="1. 데이터 불러오기, 및 Neural Network 적합"></a>1. 데이터 불러오기, 및 Neural Network 적합</h5><ul>
+<li>함수 불러오기</li>
+</ul>
+<pre>
+<code>
+X = [[0., 0.], [1., 1.]]
+y = [[0, 1], [1, 1]]
+
+from sklearn.neural_network import MLPClassifier
+</code>
+</pre>
+
+<ul>
+<li>모델 적합</li>
+</ul>
+<pre>
+<code>
+clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5,2), random_state=1)
+clf.fit(X,y)
+
+clf.predict([[2.,2.], [-1.,-2.]])
+
+clf.coefs_
+
+[coef.shape for coef in clf.coefs_]
+</code>
+</pre>
+
+<h5 id="2-model의-복잡도에-따른-퍼포먼스-비교"><a href="#2-model의-복잡도에-따른-퍼포먼스-비교" class="headerlink" title="2. model의 복잡도에 따른 퍼포먼스 비교"></a>2. model의 복잡도에 따른 퍼포먼스 비교</h5><ul>
+<li>라이브러리</li>
+</ul>
+<pre>
+<code>
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+from matplotlib.colors import ListedColormap
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_moons, make_circles, make_classification
+from sklearn.neural_network import MLPClassifier
+</code>
+</pre>
+
+<ul>
+<li>설정할 parameter들을 입력. h는 시각화를 얼마나 자세하게 할 것인가에 대한 위한 임의의 값.</li>
+</ul>
+<pre>
+<code>
+h = .02
+alphas = np.logspace(-5, 3, 5)
+names = ['alpha ' + str(i) for i in alphas]
+
+classifiers = []
+for i in alphas:
+    classifiers.append(MLPClassifier(solver='lbfgs', alpha=i, random_state=1,
+                                     hidden_layer_sizes=[100, 100]))
+</code>
+</pre>
+
+<ul>
+<li>데이터 생성</li>
+</ul>
+<pre>
+<code>
+X, y = make_classification(n_features=2, n_redundant=0, n_informative=2,
+                           random_state=0, n_clusters_per_class=1)
+
+pd.DataFrame(X).head()
+pd.DataFrame(y).head()
+
+rng = np.random.RandomState(2)
+X += 2 * rng.uniform(size=X.shape)
+linearly_separable = (X, y)
+</code>
+</pre>
+
+<ul>
+<li>여러 모양의 추가 데이터셋 생성</li>
+</ul>
+<pre>
+<code>
+datasets = [make_moons(noise=0.3, random_state=0),
+            make_circles(noise=0.2, factor=0.5, random_state=1),
+            linearly_separable]
+
+figure = plt.figure(figsize=(17, 9))
+i = 1
+
+for X, y in datasets:
+    # preprocess dataset, split into training and test part
+    X = StandardScaler().fit_transform(X)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.4)
+
+    x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
+    y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+
+    # just plot the dataset first
+    cm = plt.cm.RdBu
+    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+    ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
+    # Plot the training points
+    ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright)
+    # and testing points
+    ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6)
+    ax.set_xlim(xx.min(), xx.max())
+    ax.set_ylim(yy.min(), yy.max())
+    ax.set_xticks(())
+    ax.set_yticks(())
+    i += 1
+
+    # iterate over classifiers
+    for name, clf in zip(names, classifiers):
+        ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
+        clf.fit(X_train, y_train)
+        score = clf.score(X_test, y_test)
+
+        # Plot the decision boundary. For that, we will assign a color to each
+        # point in the mesh [x_min, x_max]x[y_min, y_max].
+        if hasattr(clf, "decision_function"):
+            Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
+        else:
+            Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+
+        # Put the result into a color plot
+        Z = Z.reshape(xx.shape)
+        ax.contourf(xx, yy, Z, cmap=cm, alpha=.8)
+
+        # Plot also the training points
+        ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright,
+                   edgecolors='black', s=25)
+        # and testing points
+        ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright,
+                   alpha=0.6, edgecolors='black', s=25)
+
+        ax.set_xlim(xx.min(), xx.max())
+        ax.set_ylim(yy.min(), yy.max())
+        ax.set_xticks(())
+        ax.set_yticks(())
+        ax.set_title(name)
+        ax.text(xx.max() - .3, yy.min() + .3, ('%.2f' % score).lstrip('0'),
+                size=15, horizontalalignment='right')
+        i += 1
+
+figure.subplots_adjust(left=.02, right=.98)
+plt.show()
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine/" rel="tag"># machine</a>
+              <a href="/tags/learning/" rel="tag"># learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/29/math-basic-2/" rel="prev" title="데이터 분석을 위한 기초 수학 2편">
+      <i class="fa fa-chevron-left"></i> 데이터 분석을 위한 기초 수학 2편
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-03-%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%A8%B8%EC%8B%A0-%EB%9F%AC%EB%8B%9D-%EB%AA%A8%ED%98%95"><span class="nav-number">1.</span> <span class="nav-text">Part.03 기본적인 머신 러닝 모형</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Linear-Discriminant-Analysis"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. Linear Discriminant Analysis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Quadratic-Discriminant-Analysis"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. Quadratic Discriminant Analysis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-LDA-QDA%EC%9D%98-%EC%8B%9C%EA%B0%81%EC%A0%81-%EB%B9%84%EA%B5%90"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. LDA, QDA의 시각적 비교</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-%EB%B0%8F-SVM-%EC%A0%81%ED%95%A9"><span class="nav-number">1.0.4.</span> <span class="nav-text">1. 데이터 불러오기, 및 SVM 적합</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-kernel-SVM-%EC%A0%81%ED%95%A9-%EB%B0%8F-%EB%B9%84%EA%B5%90"><span class="nav-number">1.0.5.</span> <span class="nav-text">2. kernel SVM 적합 및 비교</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%8B%9C%EA%B0%81%EC%A0%81-%EB%B9%84%EA%B5%90"><span class="nav-number">1.0.6.</span> <span class="nav-text">시각적 비교</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%ED%95%A8%EC%88%98-%EC%9D%B5%ED%9E%88%EA%B8%B0-%EB%B0%8F-%EB%AA%A8%EB%93%88-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">1.0.7.</span> <span class="nav-text">1. 함수 익히기 및 모듈 불러오기</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95%EB%82%98%EB%AC%B4-%EA%B5%AC%EC%B6%95-%EB%B0%8F-%EC%8B%9C%EA%B0%81%ED%99%94"><span class="nav-number">1.0.8.</span> <span class="nav-text">2. 의사결정나무 구축 및 시각화</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Training-Test-%EA%B5%AC%EB%B6%84-%EB%B0%8F-Confusion-matrix-%EA%B3%84%EC%82%B0"><span class="nav-number">1.0.9.</span> <span class="nav-text">3. Training - Test 구분 및 Confusion matrix 계산</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Decision-regression-tree"><span class="nav-number">1.0.10.</span> <span class="nav-text">4. Decision regression tree</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-%EB%B0%8F-Neural-Network-%EC%A0%81%ED%95%A9"><span class="nav-number">1.0.11.</span> <span class="nav-text">1. 데이터 불러오기, 및 Neural Network 적합</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-model%EC%9D%98-%EB%B3%B5%EC%9E%A1%EB%8F%84%EC%97%90-%EB%94%B0%EB%A5%B8-%ED%8D%BC%ED%8F%AC%EB%A8%BC%EC%8A%A4-%EB%B9%84%EA%B5%90"><span class="nav-number">1.0.12.</span> <span class="nav-text">2. model의 복잡도에 따른 퍼포먼스 비교</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/10/29/machine-learning-4/";
+    this.page.identifier = "2021/10/29/machine-learning-4/";
+    this.page.title = "머신러닝  4편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
