@@ -28,7 +28,7 @@
 <meta property="og:description" content="기본적인 머신 러닝 모형을 배우기 전에 가장 중요한 데이터 핸들링에 대해  배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-15T00:26:57.217Z">
-<meta property="article:modified_time" content="2021-11-15T02:50:04.263Z">
+<meta property="article:modified_time" content="2021-11-15T04:30:19.579Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="machine">
 <meta property="article:tag" content="learning">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-11-15 09:26:57 / Modified: 11:50:04" itemprop="dateCreated datePublished" datetime="2021-11-15T09:26:57+09:00">2021-11-15</time>
+              <time title="Created: 2021-11-15 09:26:57 / Modified: 13:30:19" itemprop="dateCreated datePublished" datetime="2021-11-15T09:26:57+09:00">2021-11-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1048,6 +1048,148 @@ df.iloc[:25]
 <blockquote>
 <p>여러 시트를 생성해야 하는 경우 ExcelWriter 사용<br>    - pd.ExcelWriter(xlsx file)</p>
 </blockquote>
+<h4 id="경로-확인하"><a href="#경로-확인하" class="headerlink" title="경로 확인하"></a>경로 확인하</h4><pre>
+<code>
+import os
+os.getcwd() # 현재 경로 확인
+
+os.chdir(r"C:\Users\user\Downloads")
+
+open("sample folder/sample data.txt")
+</code>
+</pre>
+
+<h4 id="read-를-이용한-데이터-불러오기"><a href="#read-를-이용한-데이터-불러오기" class="headerlink" title="read()를 이용한 데이터 불러오기"></a>read()를 이용한 데이터 불러오기</h4><pre>
+<code>
+f = open("data_reading.csv", "r")
+data = f.read()
+f.close()
+data[:1000]
+
+# list comprehension을 이용한 데이터 정제
+# 숫자로 바꿀 수 있는 것은 바꾸기 위한 함수 (첫 줄에는 문자이므로)
+def make_float(x):
+    try:
+        return float(x)
+    except:
+        return x
+
+data = [[make_float(value) for value in line.split(',')] for line in data.split('\n')]
+data
+
+new_data = []
+
+for line in data.split('\n'):
+    new_line = []
+    for value in line.split(','):
+        new_line.append(make_float(value))
+    new_data.append(new_line)
+
+new_data
+</code>
+</pre>
+
+<h4 id="readline을-이용한-데이터-불러오기"><a href="#readline을-이용한-데이터-불러오기" class="headerlink" title="readline을 이용한 데이터 불러오기"></a>readline을 이용한 데이터 불러오기</h4><pre>
+<code>
+f = open("data_reading.csv", "r")
+header = f.readline() # 첫 번째 row를 읽어옴
+data = []
+
+line = f.readline() # 두 번째 row를 읽음
+while line: # line이 빈 문자열이 될 때까지
+    data.append(list(map(float, line.split(','))))
+    line = f.readline()
+f.close()
+</code>
+</pre>
+
+<h4 id="write를-이용한-데이터-쓰기"><a href="#write를-이용한-데이터-쓰기" class="headerlink" title="write를 이용한 데이터 쓰기"></a>write를 이용한 데이터 쓰기</h4><pre>
+<code>
+','.join(list(map(str, data[2])))
+
+# f = open("written_data.csv", "w")
+
+# 파일 열고 닫기를 동시에 해줌
+with open("written_data.csv", "w") as f:
+    f.write(header)
+    for line in data:
+        f.write(','.join(list(map(str, line))))
+        f.write('\n')
+
+# f.close()
+##########
+</code>
+</pre>
+
+<h4 id="csv-데이터-불러오기"><a href="#csv-데이터-불러오기" class="headerlink" title="csv 데이터 불러오기"></a>csv 데이터 불러오기</h4><pre>
+<code>
+df = pd.read_csv("data_reading.csv")
+df.head()
+
+df = pd.read_csv("data_reading_tap.txt", sep = "\t")
+df.head()
+
+# header를 설정하지 않은 경우
+df = pd.read_csv("data_reading_without_header.csv")
+df.head()
+
+df = pd.read_csv("data_reading_without_header.csv", header = None)
+df.head()
+
+df.columns = ['X1', 'X2', 'X3', 'X4', 'X5']
+df.head() # 컬럼명 바꾸기
+</code>
+</pre>
+
+<h4 id="큰-규모의-데이터-불러오기"><a href="#큰-규모의-데이터-불러오기" class="headerlink" title="큰 규모의 데이터 불러오기"></a>큰 규모의 데이터 불러오기</h4><pre>
+<code>
+df = pd.read_csv("large_data_with_ID.csv",
+                 usecols = [0, 1, 5, 10], # ['ID', 'X1', 'X5', 'X10']으로 불러와도 무방
+                index_col = 'ID', # usecols을 사용하는 경우, index_col을 반드시 포함시켜야 함
+                nrows = 1000)
+
+df.head()
+</code>
+</pre>
+
+<h4 id="to-csv를-이용한-데이터-저장하기"><a href="#to-csv를-이용한-데이터-저장하기" class="headerlink" title="to_csv를 이용한 데이터 저장하기"></a>to_csv를 이용한 데이터 저장하기</h4><pre>
+<code>
+df = pd.DataFrame(&#123;"A":[1,2,3],
+                  "B":[4,5,6]&#125;,
+                  index = ['a', 'b', 'c'])
+
+df
+
+df.to_csv("to_csv를 이용한 데이터 저장_인덱스미포함.csv", sep = ",", index = False)
+__
+</code>
+</pre>
+
+<h4 id="read-excel을-사용한-데이터-불러오기-기초"><a href="#read-excel을-사용한-데이터-불러오기-기초" class="headerlink" title="read_excel을 사용한 데이터 불러오기 기초"></a>read_excel을 사용한 데이터 불러오기 기초</h4><pre>
+<code>
+# 시트를 정의하지 않으면, 첫 번째 시트가 불러와짐
+df = pd.read_excel("data_reading.xlsx")
+df
+
+# 시트 지정하기
+df = pd.read_excel("data_reading.xlsx", sheet_name = 'target_sheet')
+df.head()
+
+# 필요한 부분 데이터 불러오기
+df = pd.read_excel("월별매출데이터.xlsx", sheet_name = '6월', skiprows = range(6))
+df = df.iloc[:, 1:] # 첫 번째 컬럼이 불필요하므로 제거
+df.head()
+
+# to_excel을 이용한 데이터 저장
+df1 = pd.DataFrame(&#123;"A":[1,2,3,4], "B":[5,6,7,8]&#125;)
+df2 = pd.DataFrame(&#123;"A":[9,10,11,12], "B":[13,14,15,16]&#125;)
+
+with pd.ExcelWriter('written_excel.xlsx') as writer:
+    df1.to_excel(writer, sheet_name='First')
+    df2.to_excel(writer, sheet_name='Second')
+</code>
+</pre>
+
 <ol start="9">
 <li>데이터 통합 및 집계</li>
 </ol>
@@ -1153,6 +1295,133 @@ df.iloc[:25]
 </blockquote>
 </li>
 </ul>
+<h4 id="merge-기초"><a href="#merge-기초" class="headerlink" title="merge 기초"></a>merge 기초</h4><pre>
+<code>
+# Tip. OSError: Initializing from file failed가 발생하면 engine = "python"을 설정하면 피할 수 있음 (단, 속도 저하 문제가 있음)
+df1 = pd.read_csv("merge_실습_employee_group.csv", engine = "python")
+df2 = pd.read_csv("merge_실습_employee_hire_date.csv", engine = "python")
+__
+merged_df = pd.merge(df1, df2) # 컬럼명이 같아서 키를 employee로 인식함
+merged_df.head()
+</code>
+</pre>
+
+<h4 id="on을-사용한-경우"><a href="#on을-사용한-경우" class="headerlink" title="on을 사용한 경우"></a>on을 사용한 경우</h4><pre>
+<code>
+merged_df = pd.merge(df1, df2, on = ["employee"])
+merged_df.head()
+
+df1 = pd.read_csv("merge_실습_employee_group.csv", engine = "python")
+df2 = pd.read_csv("merge_실습_name_hire_date.csv", engine = "python")
+
+# 컬럼명을 바꿔도 똑같이 작동함
+merged_df = pd.merge(df1, df2, left_on = "employee", right_on = "name")
+merged_df.head() # employee와 name 모두 살아 있어서, 하나를 제거해줘야 함
+__
+merged_df.drop('name', axis = 1, inplace = True)
+merged_df.head()
+</code>
+</pre>
+
+<h4 id="index를-사용한-데이터-통합"><a href="#index를-사용한-데이터-통합" class="headerlink" title="index를 사용한 데이터 통합"></a>index를 사용한 데이터 통합</h4><pre>
+<code>
+df1 = pd.read_csv("merge_실습_employee_group.csv", engine = "python")
+df2 = pd.read_csv("merge_실습_name_hire_date.csv", engine = "python", index_col = "name")
+__
+merged_df = pd.merge(df1, df2, left_on = "employee", right_index = True)
+</code>
+</pre>
+
+<h4 id="concat-기초"><a href="#concat-기초" class="headerlink" title="concat 기초"></a>concat 기초</h4><pre>
+<code>
+df1 = pd.DataFrame(&#123;"A":[1,2,3,4], "B":[1,2,3,4]&#125;)
+df2 = pd.DataFrame(&#123;"A":[5,6,7,8], "B":[5,6,7,8]&#125;)
+
+merged_df = pd.concat([df1, df2], axis = 0, ignore_index = True)
+merged_df
+
+df1 = pd.DataFrame(&#123;"A":[1,2,3,4], "B":[5,6,7,8]&#125;)
+df2 = pd.DataFrame(&#123;"C":[1,2,3,4], "D":[5,6,7,8]&#125;)
+
+merged_df = pd.concat([df1, df2], axis = 1, ignore_index = False)
+merged_df
+
+df1 = pd.read_csv("일별 오염 데이터/2004-03-14_오염_수준.txt", sep = "\t", engine = "python")
+df2 = pd.read_csv("일별 오염 데이터/2004-03-20_오염_수준.txt", sep = "\t", engine = "python")
+__
+
+os.listdir("일별 오염 데이터")
+# for문을 이용한 데이터 병합
+# (코드가 김, 상대적으로 비효율적임, 메모리 문제가 생길 가능성이 적음)
+merged_df = pd.DataFrame() # 빈 데이터 프레임 생성
+
+for file in os.listdir("일별 오염 데이터"):
+    if '오염_수준.txt' in file:
+        df = pd.read_csv("일별 오염 데이터/" + file, sep = "\t", engine = "python")
+        merged_df = pd.concat([merged_df, df], axis = 0, ignore_index = True)
+
+merged_df.head()
+
+# list comprehension을 이용한 데이터 통합
+# (코드가 짧음, 효율적임, 메모리 문제가 생길 수 있음)
+merged_df = pd.concat([pd.read_csv("일별 오염 데이터/" + file, sep = "\t", engine = "python")
+                       for file in os.listdir("일별 오염 데이터") if '오염_수준.txt' in file])
+__
+
+import xlrd
+
+wb = xlrd.open_workbook("월별매출데이터.xlsx", on_demand = True)
+sheetnames = wb.sheet_names()
+sheetnames
+
+merged_df = pd.DataFrame()
+for sn in sheetnames:
+    df = pd.read_excel("월별매출데이터.xlsx", sheet_name = sn, skiprows = range(6))
+    df = df.iloc[:, 1:] # 첫 번째 컬럼이 불필요하므로 제거
+    merged_df = pd.concat([merged_df, df], axis = 0, ignore_index = True)
+merged_df
+
+# list comprehension을 이용한 데이터 통합
+merged_df = pd.concat([pd.read_excel("월별매출데이터.xlsx", sheet_name = sn, skiprows = range(6)).iloc[:, 1:] for sn in sheetnames])
+merged_df.shape
+</code>
+</pre>
+
+<h4 id="기초-통계-함수를-이용한-데이터-집계"><a href="#기초-통계-함수를-이용한-데이터-집계" class="headerlink" title="기초 통계 함수를 이용한 데이터 집계"></a>기초 통계 함수를 이용한 데이터 집계</h4><pre>
+<code>
+df[['수량', '판매금액']].mean()
+
+df[['수량', '판매금액']].quantile(0.1)
+
+df[['수량', '판매금액']].describe()
+</code>
+</pre>
+
+<h4 id="pivot을-이용한-데이터-집계"><a href="#pivot을-이용한-데이터-집계" class="headerlink" title="pivot을 이용한 데이터 집계"></a>pivot을 이용한 데이터 집계</h4><pre>
+<code>
+pt1 = pd.pivot_table(df, index = '제품', columns = '쇼핑몰 유형', values = '판매금액', aggfunc = 'mean')
+pt1
+
+pt2 = pd.pivot_table(df, index = ['제품'], columns = ['쇼핑몰 유형'], values = ['판매금액', '수량'], aggfunc = 'max')
+pt2
+</code>
+</pre>
+
+<h4 id="groupby를-이용한-데이터-집계"><a href="#groupby를-이용한-데이터-집계" class="headerlink" title="groupby를 이용한 데이터 집계"></a>groupby를 이용한 데이터 집계</h4><pre>
+<code>
+df.groupby(['쇼핑몰 유형'])['수량'].mean()
+
+df.groupby(['쇼핑몰 유형'], as_index = False)['수량'].mean()
+
+df.groupby(['쇼핑몰 유형'])['수량', '판매금액'].agg(['mean', 'max'])
+
+def my_func(value):
+    return max(value) - min(value)
+
+df.groupby(['쇼핑몰 유형', '제품'])['수량', '판매금액'].agg(my_func)
+</code>
+</pre>
+
 <ol start="10">
 <li>보고 싶은 데이터 찾아보기</li>
 </ol>
@@ -1214,6 +1483,95 @@ df.iloc[:25]
 </blockquote>
 </li>
 </ul>
+<h4 id="리스트와-튜플의-정렬"><a href="#리스트와-튜플의-정렬" class="headerlink" title="리스트와 튜플의 정렬"></a>리스트와 튜플의 정렬</h4><pre>
+<code>
+# sort 함수 사용
+L = [1, 4, 3, 5, 2, 5]
+L.sort() # 출력이 None이고 L자체가 수정됨
+
+L = [1, 4, 3, 5, 2, 5]
+L.sort(reverse = True) # 출력이 None이고 L자체가 수정됨
+L
+
+# sorted 함수 사용
+T = [(1, 2), (3, 1), (4, 5), (10, 4)]
+sorted(T, key = lambda x:x[1]) # x에서 1번째 요소를 기준으로 정렬
+
+L = [1, 4, 3, 5, 2, 5]
+sorted(L, key = lambda x:abs(x-3)) # |x-3|을 기준으로 정렬
+
+L = ['We', 'Use', 'Python', 'For', 'Data Preprocessing']
+sorted(L, key = lambda x:len(x), reverse = True) # 길이를 기준으로 내림차순 정렬
+</code>
+</pre>
+
+<h4 id="Series-정렬"><a href="#Series-정렬" class="headerlink" title="Series 정렬"></a>Series 정렬</h4><pre>
+<code>
+import pandas as pd
+import numpy as np
+
+S = pd.Series(np.random.randint(1, 10, 100)) # 1과 10 사이의 숫자를 100개 생성
+S.iloc[0:3] = np.nan # 0부터 3까지를 결측으로 바꾸기
+
+S.head(10)
+
+S.sort_values()
+# default: ascending = True, key = None, na_position = last
+
+S.sort_values(ascending = False, na_position = 'first')
+
+# 요약 함수
+S.value_counts(normalize = True)
+
+S.value_counts(normalize = True, ascending = True)
+
+S.unique()
+
+# dataframe 정렬
+df = pd.DataFrame(&#123;"A":[1,2,3,1,2,3], "B":[3,2,1,3,2,1], "C":[1,2,3,4,3,2]&#125;)
+df
+
+df.sort_values(by = 'A', ascending = True) # A를 기준으로 오름차순 정렬
+
+df.sort_values(by = ['C', 'B'], ascending = False) # C와 B를 기준으로 내림차순 정렬
+
+df.drop_duplicates(subset = ['A']) # A 기준 중복 제거 (첫 행 남김: 인덱스 주목)
+
+df.drop_duplicates(subset = ['A'], keep = 'last') # A 기준 중복 제거 (마지막 행 남김: 인덱스 주목)
+</code>
+</pre>
+
+<h4 id="마스킹-검색"><a href="#마스킹-검색" class="headerlink" title="마스킹 검색"></a>마스킹 검색</h4><pre>
+<code>
+df['제품'] == '제품_16'
+__
+
+df['쇼핑몰 유형'].unique()
+df.loc[df['쇼핑몰 유형'].isin(['온라인Il', '온라인사이트'])]
+
+df.loc[(df['수량'] >= 5) & (df['쇼핑몰 유형'] == '전시회')]
+</code>
+</pre>
+
+<h4 id="문자열-검색"><a href="#문자열-검색" class="headerlink" title="문자열 검색"></a>문자열 검색</h4><pre>
+<code>
+# 공정이 S인 제품의 개수
+df['시리얼번호'].str.contains('S').sum()
+
+df['시리얼번호'].str.split('-', expand = True).head() # 하이픈 기준 분할
+
+# 분할한 데이터 붙이기
+merged_df = pd.concat([df, df['시리얼번호'].str.split('-', expand = True)], axis = 1)
+merged_df.head()
+
+# 컬럼명 변경
+merged_df.rename(&#123;0:"공정", 1:"제품", 2:"식별자"&#125;, axis = 1, inplace = True)
+merged_df.head()
+
+pd.pivot_table(merged_df.loc[merged_df['불량 여부'] != '양품'], values = '불량 여부', index = '공정', columns = '제품', aggfunc = 'count')
+</code>
+</pre>
+
 <ol start="11">
 <li>데이터 예쁘게 보이기 : 데이터 시각화</li>
 </ol>
@@ -1407,6 +1765,205 @@ df.iloc[:25]
 <blockquote>
 <p>Pandas 객체의 method를 이용한 꺾은선 그래프<br>    - column : box plot을 그릴 컬럼 목록</p>
 </blockquote>
+<h4 id="꺽은-선-그래프"><a href="#꺽은-선-그래프" class="headerlink" title="꺽은 선 그래프"></a>꺽은 선 그래프</h4><pre>
+<code>
+# 기본 환경설정
+from matplotlib import pyplot as plt
+import numpy as np
+
+%matplotlib inline
+plt.rcParams["font.family"] = 'Malgun Gothic'
+plt.rcParams["font.size"] = 20
+plt.rcParams["figure.figsize"] = (30, 10)
+
+# pyplot을 사용한 그래프 그리기
+np.cumsum([1, 2, 3]) # 누적합 반환
+
+# 그래프 기본 설정
+plt.title("날짜별 상품 판매량")
+plt.xlabel("날짜")
+plt.ylabel("판매량 (개수)")
+
+xtick_range = np.cumsum([0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]) # 월별 일 수 누적을 통한 매월 1일 인덱스 정의 (12월 제외)
+plt.xticks(xtick_range, df['날짜'].loc[xtick_range])
+
+plt.plot(df['날짜'], df['상품1'], label = '상품1', color = 'b')
+plt.plot(df['날짜'], df['상품2'], label = '상품2', color = 'g')
+plt.plot(df['날짜'], df['상품3'], label = '상품3', color = 'r')
+
+plt.legend()
+
+# DataFrame을 이용하여 직접 그래프 그리기
+# 그래프 기본 설정
+xtick_range = np.cumsum([0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]) # 월별 일 수 누적을 통한 매월 1일 인덱스 정의 (12월 제외)
+df.plot(kind = 'line', x = '날짜', y = ['상품1', '상품2', '상품3'])
+
+plt.title("날짜별 상품 판매량")
+plt.xlabel("날짜")
+plt.ylabel("판매량 (개수)")
+plt.xticks(xtick_range, df['날짜'].loc[xtick_range]);
+
+# groupby를 이용한 그래프 그리기
+df['날짜'].str.split('-', expand = True).head()
+
+df['월'] = df['날짜'].str.split('-', expand = True).iloc[:, 1]
+
+df.groupby('월')[['상품1', '상품2', '상품3']].sum()
+
+df.groupby('월')[['상품1', '상품2', '상품3']].sum().plot(kind = 'line') # default를 썼으므로, 인덱스가 x축으로 모든 컬럼이 y축으로 들어감
+plt.title("날짜별 상품 판매량")
+plt.xlabel("날짜")
+plt.ylabel("판매량 (개수)")
+plt.xticks(range(12), [str(i + 1) + '월' for i in range(12)]);
+</code>
+</pre>
+
+<h1 id="산점도-그리기"><a href="#산점도-그리기" class="headerlink" title="산점도 그리기"></a>산점도 그리기</h1><pre>
+<code>
+from matplotlib import pyplot as plt
+import numpy as np
+%matplotlib inline
+plt.rcParams["font.family"] = 'Malgun Gothic'
+plt.rcParams["font.size"] = 20
+plt.rcParams["figure.figsize"] = (40, 15)
+
+'1' + '2'
+# 결과 : '12'
+
+# 년도 - 분기를 잇는 새로운 변수 생성
+df['분기'] = df['년도(year)'].astype(str) + '-' + df['분기(4)'].astype(str)
+df['분기'].head()
+
+grouped_df = df.groupby(['분기', '대리점'], as_index = False)['수량'].sum()
+grouped_df
+
+# pyplot을 이용한 그래프 그리기
+# 그래프 기본 설정
+
+plt.figure(figsize=(16,10));
+plt.title("날짜 및 대리점별 출하량")
+plt.xlabel("분기")
+plt.ylabel("출하량 (개수)")
+
+xtick_range = range(len(grouped_df['분기'].unique()))
+xtick_label = grouped_df['분기'].unique()
+plt.xticks(xtick_range, xtick_label)
+
+for agent in grouped_df['대리점'].unique():
+    cond = grouped_df['대리점'] == agent
+    plt.scatter(grouped_df.loc[cond]['분기'], grouped_df.loc[cond]['수량'], s = 100, marker = '*')
+
+# DataFrame을 이용하여 직접 그래프 그리기
+pivot_df = pd.pivot_table(data = grouped_df, values = '수량', index = '분기', columns = '대리점', aggfunc = 'sum')
+pivot_df = pivot_df.add_suffix("_출하량") # 대리점명이 전부 컬럼으로 되기 때문에, suffix를 추가시킴
+
+pivot_df
+__
+
+pivot_df['분기'] = list(range(len(pivot_df))) # x축에 쓰기 위해 임의의 변수를 생성함
+pivot_df['분기'].head()
+
+# 그래프 기본 설정
+pivot_df.plot(kind = 'scatter', x = '분기', y = '대리점 1_출하량')
+
+plt.title("날짜별 상품 판매량")
+plt.xlabel("분기")
+plt.ylabel("출하량 (개수)")
+
+xtick_range = range(len(grouped_df['분기'].unique()))
+xtick_label = grouped_df['분기'].unique()
+
+plt.xticks(xtick_range, xtick_label);
+</code>
+</pre>
+
+<h4 id="막대-차트-그리기"><a href="#막대-차트-그리기" class="headerlink" title="막대 차트 그리기"></a>막대 차트 그리기</h4><pre>
+<code>
+# 제품군별 수량합계 계산
+grouped_df1 = df.groupby(['제품군'], as_index = False)['수량'].sum()
+grouped_df1
+
+# 그래프 기본 설정
+from matplotlib import pyplot as plt
+import numpy as np
+%matplotlib inline
+plt.rcParams["font.family"] = 'Malgun Gothic'
+plt.rcParams["font.size"] = 20
+plt.rcParams["figure.figsize"] = (10, 8)
+
+# 제품군별 출하량 합계 계산
+plt.title("제품군별 출하량 합계")
+plt.xlabel("제품군")
+plt.ylabel("출하량 합계 (개수)")
+plt.bar(grouped_df1['제품군'], grouped_df1['수량'], width = 0.5)
+
+# 다중 bar chart 그리기
+plt.rcParams["figure.figsize"] = (40, 15)
+grouped_df2 = df.groupby(['제품군', '년도(year)'], as_index = True)['수량'].sum()
+grouped_df2
+
+grouped_df2.unstack().plot(kind = 'bar', figsize=(12,8));
+</code>
+</pre>
+
+<h4 id="파이-차트-그리기"><a href="#파이-차트-그리기" class="headerlink" title="파이 차트 그리기"></a>파이 차트 그리기</h4><pre>
+<code>
+# 제품군별 수량합계 계산
+grouped_df = df.groupby(['제품군'], as_index = False)['수량'].sum()
+
+# 기타 행 추가
+other_row = pd.DataFrame(&#123;"제품군":['기타'],
+                          '수량':[grouped_df.sort_values(by = '수량')['수량'].iloc[:4].sum()]&#125;)
+
+grouped_df = pd.concat([grouped_df, other_row], axis = 0, ignore_index = True)
+grouped_df = grouped_df.sort_values(by = '수량', ascending = False).iloc[:3]
+grouped_df
+
+# 그래프 기본 설정
+from matplotlib import pyplot as plt
+import numpy as np
+%matplotlib inline
+plt.rcParams["font.family"] = 'Malgun Gothic'
+plt.rcParams["font.size"] = 15
+plt.rcParams["figure.figsize"] = (10, 8)
+
+# 제품군별 출하량 합계 계산
+plt.title("제품군별 출하량 비율")
+
+plt.pie(x = grouped_df['수량'],
+        labels = grouped_df['제품군'],
+       labeldistance = 0.3,
+       autopct = '%1.1f%%');
+</code>
+</pre>
+
+<h4 id="박스-플롯-그리기"><a href="#박스-플롯-그리기" class="headerlink" title="박스 플롯 그리기"></a>박스 플롯 그리기</h4><pre>
+<code>
+# 그래프 기본 설정
+from matplotlib import pyplot as plt
+import numpy as np
+%matplotlib inline
+plt.rcParams["font.family"] = 'Malgun Gothic'
+plt.rcParams["font.size"] = 15
+plt.rcParams["figure.figsize"] = (15, 8)
+
+# pyplot을 이용한 boxplot 그리기
+X = df.groupby(['쇼핑몰 유형'])['판매금액'].apply(list) # 쇼핑몰 유형에 따른 판매 금액 목록을 리스트화
+X
+
+plt.title("쇼핑몰 유형에 따른 판매금액 분포")
+plt.boxplot(X.values)
+plt.xticks(np.arange(1, len(X)+1), X.index);
+
+# DataFrame method를 이용한 boxplot 그리기
+df = pd.DataFrame(&#123;"실험1": np.random.normal(10, 2, size = 100),
+                  "실험2": np.random.normal(8, 3, size = 100),
+                  "실험3": np.random.normal(9, 4, size = 100)&#125;)
+df.head()
+
+df.boxplot(column = ['실험1', '실험2', '실험3'], figsize=(12,8));
+</code>
+</pre>
 
     </div>
 
@@ -1497,7 +2054,7 @@ df.iloc[:25]
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%9C%EC%9A%94"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EA%B3%B5%ED%86%B5%EC%A0%90"><span class="nav-number">2.</span> <span class="nav-text">리스트와 튜플의 공통점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">3.</span> <span class="nav-text">리스트와 튜플의 차이점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">4.</span> <span class="nav-text">리스트 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">5.</span> <span class="nav-text">튜플 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for%EB%AC%B8-%EA%B8%B0%EC%B4%88-%EC%98%88%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">for문 기초 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#itertools-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C"><span class="nav-number">7.</span> <span class="nav-text">itertools 모듈 사용 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-comprehension"><span class="nav-number">8.</span> <span class="nav-text">List comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dictionary-comprehension"><span class="nav-number">9.</span> <span class="nav-text">dictionary comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B0%B0%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="nav-number">10.</span> <span class="nav-text">배열 만들기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1"><span class="nav-number">11.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">12.</span> <span class="nav-text">유니버셜 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0"><span class="nav-number">13.</span> <span class="nav-text">비교 연산</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Series%EC%9D%98-%EA%B8%B0%EB%B3%B8"><span class="nav-number">14.</span> <span class="nav-text">Series의 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame-%EA%B8%B0%EB%B3%B8"><span class="nav-number">15.</span> <span class="nav-text">DataFrame 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-1"><span class="nav-number">16.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%92-%EC%A1%B0%ED%9A%8C%ED%95%98%EA%B8%B0"><span class="nav-number">17.</span> <span class="nav-text">값 조회하기</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%9C%EC%9A%94"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EA%B3%B5%ED%86%B5%EC%A0%90"><span class="nav-number">2.</span> <span class="nav-text">리스트와 튜플의 공통점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">3.</span> <span class="nav-text">리스트와 튜플의 차이점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">4.</span> <span class="nav-text">리스트 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">5.</span> <span class="nav-text">튜플 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for%EB%AC%B8-%EA%B8%B0%EC%B4%88-%EC%98%88%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">for문 기초 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#itertools-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C"><span class="nav-number">7.</span> <span class="nav-text">itertools 모듈 사용 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-comprehension"><span class="nav-number">8.</span> <span class="nav-text">List comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dictionary-comprehension"><span class="nav-number">9.</span> <span class="nav-text">dictionary comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B0%B0%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="nav-number">10.</span> <span class="nav-text">배열 만들기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1"><span class="nav-number">11.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">12.</span> <span class="nav-text">유니버셜 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0"><span class="nav-number">13.</span> <span class="nav-text">비교 연산</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Series%EC%9D%98-%EA%B8%B0%EB%B3%B8"><span class="nav-number">14.</span> <span class="nav-text">Series의 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame-%EA%B8%B0%EB%B3%B8"><span class="nav-number">15.</span> <span class="nav-text">DataFrame 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-1"><span class="nav-number">16.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%92-%EC%A1%B0%ED%9A%8C%ED%95%98%EA%B8%B0"><span class="nav-number">17.</span> <span class="nav-text">값 조회하기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B2%BD%EB%A1%9C-%ED%99%95%EC%9D%B8%ED%95%98"><span class="nav-number">18.</span> <span class="nav-text">경로 확인하</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">19.</span> <span class="nav-text">read()를 이용한 데이터 불러오기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#readline%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">20.</span> <span class="nav-text">readline을 이용한 데이터 불러오기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#write%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%93%B0%EA%B8%B0"><span class="nav-number">21.</span> <span class="nav-text">write를 이용한 데이터 쓰기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#csv-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">22.</span> <span class="nav-text">csv 데이터 불러오기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%81%B0-%EA%B7%9C%EB%AA%A8%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0"><span class="nav-number">23.</span> <span class="nav-text">큰 규모의 데이터 불러오기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#to-csv%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0"><span class="nav-number">24.</span> <span class="nav-text">to_csv를 이용한 데이터 저장하기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read-excel%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-%EA%B8%B0%EC%B4%88"><span class="nav-number">25.</span> <span class="nav-text">read_excel을 사용한 데이터 불러오기 기초</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#merge-%EA%B8%B0%EC%B4%88"><span class="nav-number">26.</span> <span class="nav-text">merge 기초</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#on%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EA%B2%BD%EC%9A%B0"><span class="nav-number">27.</span> <span class="nav-text">on을 사용한 경우</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#index%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%86%B5%ED%95%A9"><span class="nav-number">28.</span> <span class="nav-text">index를 사용한 데이터 통합</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#concat-%EA%B8%B0%EC%B4%88"><span class="nav-number">29.</span> <span class="nav-text">concat 기초</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B8%B0%EC%B4%88-%ED%86%B5%EA%B3%84-%ED%95%A8%EC%88%98%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A7%91%EA%B3%84"><span class="nav-number">30.</span> <span class="nav-text">기초 통계 함수를 이용한 데이터 집계</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pivot%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A7%91%EA%B3%84"><span class="nav-number">31.</span> <span class="nav-text">pivot을 이용한 데이터 집계</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#groupby%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A7%91%EA%B3%84"><span class="nav-number">32.</span> <span class="nav-text">groupby를 이용한 데이터 집계</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EC%A0%95%EB%A0%AC"><span class="nav-number">33.</span> <span class="nav-text">리스트와 튜플의 정렬</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Series-%EC%A0%95%EB%A0%AC"><span class="nav-number">34.</span> <span class="nav-text">Series 정렬</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A7%88%EC%8A%A4%ED%82%B9-%EA%B2%80%EC%83%89"><span class="nav-number">35.</span> <span class="nav-text">마스킹 검색</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AC%B8%EC%9E%90%EC%97%B4-%EA%B2%80%EC%83%89"><span class="nav-number">36.</span> <span class="nav-text">문자열 검색</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%BA%BD%EC%9D%80-%EC%84%A0-%EA%B7%B8%EB%9E%98%ED%94%84"><span class="nav-number">37.</span> <span class="nav-text">꺽은 선 그래프</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%82%B0%EC%A0%90%EB%8F%84-%EA%B7%B8%EB%A6%AC%EA%B8%B0"><span class="nav-number"></span> <span class="nav-text">산점도 그리기</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A7%89%EB%8C%80-%EC%B0%A8%ED%8A%B8-%EA%B7%B8%EB%A6%AC%EA%B8%B0"><span class="nav-number">1.</span> <span class="nav-text">막대 차트 그리기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8C%8C%EC%9D%B4-%EC%B0%A8%ED%8A%B8-%EA%B7%B8%EB%A6%AC%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text">파이 차트 그리기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B0%95%EC%8A%A4-%ED%94%8C%EB%A1%AF-%EA%B7%B8%EB%A6%AC%EA%B8%B0"><span class="nav-number">3.</span> <span class="nav-text">박스 플롯 그리기</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
