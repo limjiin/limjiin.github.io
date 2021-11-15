@@ -28,7 +28,7 @@
 <meta property="og:description" content="기본적인 머신 러닝 모형을 배우기 전에 가장 중요한 데이터 핸들링에 대해  배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-15T00:26:57.217Z">
-<meta property="article:modified_time" content="2021-11-15T02:23:37.344Z">
+<meta property="article:modified_time" content="2021-11-15T02:50:04.263Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="machine">
 <meta property="article:tag" content="learning">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-11-15 09:26:57 / Modified: 11:23:37" itemprop="dateCreated datePublished" datetime="2021-11-15T09:26:57+09:00">2021-11-15</time>
+              <time title="Created: 2021-11-15 09:26:57 / Modified: 11:50:04" itemprop="dateCreated datePublished" datetime="2021-11-15T09:26:57+09:00">2021-11-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -701,6 +701,178 @@ for x, y in dic.items():
 </blockquote>
 </li>
 </ul>
+<h4 id="배열-만들기"><a href="#배열-만들기" class="headerlink" title="배열 만들기"></a>배열 만들기</h4><pre>
+<code>
+# 리스트에서 배열 만들기
+import numpy as np
+
+a = np.array([1, 4, 2, 5, 3])
+b = np.array([3.14, 4, 2, 3])
+c = np.array([1, 2, 3, 4], dtype = float)
+
+print(a, b, c)
+
+# 함수를 이용하여 배열 만들기
+a = np.zeros(10, dtype = int) # 0으로 채운 배열 생성
+b = np.ones((3, 5), dtype = float) #1로 채운 배열 생성
+c = np.full((3,5), 3.14) # 3.14로 채운 배열 만들기
+d = np.arange(0, 20, 2) # 0에서 시작해 2씩 더해 20까지 채우는 배열 생성
+e = np.linspace(0, 1, 5) # 0과 1 사이에 일정한 간격을 가진 다섯 개의 값으로 채운 배열 만들기
+f = np.random.random((3,3)) # 3x3 크기의 난수 배열 생성
+g = np.random.normal(0, 1, (3, 3)) # 평균 0, 표준 편차 1의 정규 분포를 따르는 3*3 난수 배열
+h = np.random.randint(0, 10, (3, 3)) # [0, 10) 구간의 임의로 정수로 채운 3*3 배열 만들기
+i = np.eye(3) # 크기 3의 단위 행렬 만들기
+
+print("np.zeros(10, dtype = int):\n", a)
+print("\nnp.ones((3, 5), dtype = float):\n", b)
+print("\nnp.full((3,5), 3.14):\n", c)
+print("\nnp.arange(0, 20, 2):\n", d)
+print("\nnp.linspace(0, 1, 5):\n", e)
+print("\nnp.random.random((3,3)):\n", f)
+print("\nnp.random.normal(0, 1, (3, 3)):\n", g)
+print("\nnp.random.randint(0, 10, (3, 3)):\n", h)
+print("\nnp.eye(3):\n", i)
+
+#결과
+np.zeros(10, dtype = int):
+ [0 0 0 0 0 0 0 0 0 0]
+
+np.ones((3, 5), dtype = float):
+ [[1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1.]]
+
+np.full((3,5), 3.14):
+ [[3.14 3.14 3.14 3.14 3.14]
+ [3.14 3.14 3.14 3.14 3.14]
+ [3.14 3.14 3.14 3.14 3.14]]
+
+np.arange(0, 20, 2):
+ [ 0  2  4  6  8 10 12 14 16 18]
+
+np.linspace(0, 1, 5):
+ [0.   0.25 0.5  0.75 1.  ]
+
+np.random.random((3,3)):
+ [[0.76280637 0.82939832 0.69987398]
+ [0.52054864 0.16380557 0.72284064]
+ [0.5007331  0.92089446 0.54809238]]
+
+np.random.normal(0, 1, (3, 3)):
+ [[-0.21360243  0.02910364 -0.25599073]
+ [ 0.78425474 -1.62196936  0.5722869 ]
+ [ 1.24378832  0.91543034 -1.20984274]]
+
+np.random.randint(0, 10, (3, 3)):
+ [[7 3 6]
+ [6 6 4]
+ [4 4 0]]
+
+np.eye(3):
+ [[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+</code>
+</pre>
+
+<h4 id="인덱싱과-슬라이싱"><a href="#인덱싱과-슬라이싱" class="headerlink" title="인덱싱과 슬라이싱"></a>인덱싱과 슬라이싱</h4><pre>
+<code>
+# 기본적인 인덱싱과 슬라이싱
+x1 = np.array([1, 3, 5, 7, 9])
+
+print("x1[0]:", x1[0]) # 양수 인덱스 (맨 앞 요소)
+print("x1[3]:", x1[3]) # 세 번째 요소
+print("x1[-1]:", x1[-1]) # 음수 인덱스 (맨 뒤 요소)
+print("x1[-2]:", x1[-2]) # 뒤에서 네 번째 요소
+
+print("x1[1:3]:", x1[1:3]) # 1번째 요소부터 3번째 요소까지 슬라이싱
+
+# 2차원 배열의 인덱싱 및 슬라이싱
+x2 = np.random.random(size = (10, 5))
+
+print("x2[0, 1]", x2[0, 1])
+print("x2[1:4, 2]\n", x2[1:4, 2])
+print("x2[0, 2:4]\n", x2[0, 2:4])
+print("x2[0:3, 2:4]\n", x2[0:3, 2:4])
+</code>
+</pre>
+
+<h4 id="유니버셜-함수"><a href="#유니버셜-함수" class="headerlink" title="유니버셜 함수"></a>유니버셜 함수</h4><pre>
+<code>
+# 사용 기초
+x = np.array([1, 2, 3, 4])
+y = np.array([4, 3, 2, 1])
+
+print("x + y = ", x + y)
+print("x - y = ", x - y)
+print("x * y = ", x * y)
+print("x / y = ", x / y)
+print("log x = ", np.log(x))
+
+# 루프와 유니버설 함수의 속도 비교
+arr_1 = np.random.randint(1, 10, size = 10 ** 8)
+arr_2 = np.random.randint(1, 10, size = 10 ** 8)
+
+import time
+
+### 리스트를 사용하여 벡터의 덧셈 구현
+t1 = time.time()
+output = []
+
+for val1, val2 in zip(arr_1, arr_2):
+    output.append(val1 + val2)
+
+t2 = time.time()
+
+print("반복문을 사용한 경우:", round(t2 - t1, 4))
+
+### 유니버설 함수를 사용하여 벡터의 덧셈 구현
+t1 = time.time()
+output = arr_1 + arr_2
+
+t2 = time.time()
+
+print("유니버설 함수를 사용한 경우:", round(t2 - t1, 4))
+
+# 브로드캐스팅
+print("np.arange(3) + 5:",
+      np.arange(3) + 5, '\n')
+
+print("np.ones((3, 3)) + np.arange(3)\n",
+      np.ones((3, 3)) + np.arange(3), '\n')
+
+print("np.arange(3).reshape(3, 1) + np.arange(3)\n",
+      np.arange(3).reshape(3, 1) + np.arange(3))
+
+# 브로드캐스팅 예시: z - normalization
+X = np.random.random((10, 3))
+Xmean = X.mean(axis = 0) # 열별 평균 크기: (1, 3)
+Xstd = X.std(axis = 0) # 열별 표준편차 크기: (1, 3)
+
+Z = (X - Xmean) / Xstd
+
+print("X:", X)
+print("\nXmean:\n", Xmean)
+print("\nXstd:\n", Xstd)
+print("\nZ:\n", Z)
+</code>
+</pre>
+
+<h4 id="비교-연산"><a href="#비교-연산" class="headerlink" title="비교 연산"></a>비교 연산</h4><pre>
+<code>
+L = np.array([1, 2, 3, 4, 5])
+L >= 3
+
+# 비교 연산자
+L = np.array([1, 2, 3, 4, 5])
+cond = L >= 3
+sum(cond) # 조건을 만족하는 요소의 개수
+# True = 1, False = 0
+
+L[cond] # 조건을 만족하는 요소만 반환
+</code>
+</pre>
+
 <ol start="7">
 <li>Pandas의 데이터 구조</li>
 </ol>
@@ -737,6 +909,74 @@ for x, y in dic.items():
 </blockquote>
 </li>
 </ul>
+<h4 id="Series의-기본"><a href="#Series의-기본" class="headerlink" title="Series의 기본"></a>Series의 기본</h4><pre>
+<code>
+import pandas as pd
+
+S = pd.Series(&#123;"a" : 1, "b" : 2, "c" : 3, "d" : 4&#125;)
+S = pd.Series([1, 2, 3, 4], index = ['a', 'b', 'c', 'd'])
+#결과
+a    1
+b    2
+c    3
+d    4
+
+S = pd.Series([1, 2, 3, 4])
+# 결과
+0    1
+1    2
+2    3
+3    4
+
+type(S.values)
+
+S ** 2 # 유니버설 함수와 브로드캐스팅이 적용됨
+</code>
+</pre>
+
+<h4 id="DataFrame-기본"><a href="#DataFrame-기본" class="headerlink" title="DataFrame 기본"></a>DataFrame 기본</h4><pre>
+<code>
+df = pd.DataFrame(&#123;"col1": [1, 2, 3, 4],
+                  "col2": [5, 6, 7, 8]&#125;,
+                  index = ['a', 'b', 'c', 'd'])
+
+type(df.values)
+</code>
+</pre>
+
+<h4 id="인덱싱과-슬라이싱-1"><a href="#인덱싱과-슬라이싱-1" class="headerlink" title="인덱싱과 슬라이싱"></a>인덱싱과 슬라이싱</h4><pre>
+<code>
+S.loc['a'] # 사전에서 키를 가지고 값을 찾는 것과 완벽히 동일
+
+df[['col1', 'col2']] # column name list => Data Frame
+
+df.loc['a':'c', 'col1']
+df.iloc[1:3, 1]
+</code>
+</pre>
+
+<h4 id="값-조회하기"><a href="#값-조회하기" class="headerlink" title="값 조회하기"></a>값 조회하기</h4><pre>
+<code>
+# 모든 행과 모든 열을 보여주기
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+
+import numpy as np
+df = pd.DataFrame(np.random.random(size = (500, 5)),
+                 columns = ['X1', 'X2', 'X3', 'X4', 'X5'])
+
+df.columns
+df.dtypes
+
+# 값 변경하기
+df.iloc[3, 4] = 'Changed'
+df.head()
+
+df.iloc[3:20, 2:4] = 'Changed2'
+df.iloc[:25]
+</code>
+</pre>
+
 <ol start="8">
 <li>재료 준비하기 : 데이터 불러오기</li>
 </ol>
@@ -1257,7 +1497,7 @@ for x, y in dic.items():
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%9C%EC%9A%94"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EA%B3%B5%ED%86%B5%EC%A0%90"><span class="nav-number">2.</span> <span class="nav-text">리스트와 튜플의 공통점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">3.</span> <span class="nav-text">리스트와 튜플의 차이점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">4.</span> <span class="nav-text">리스트 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">5.</span> <span class="nav-text">튜플 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for%EB%AC%B8-%EA%B8%B0%EC%B4%88-%EC%98%88%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">for문 기초 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#itertools-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C"><span class="nav-number">7.</span> <span class="nav-text">itertools 모듈 사용 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-comprehension"><span class="nav-number">8.</span> <span class="nav-text">List comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dictionary-comprehension"><span class="nav-number">9.</span> <span class="nav-text">dictionary comprehension</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%9C%EC%9A%94"><span class="nav-number">1.</span> <span class="nav-text">개요</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EA%B3%B5%ED%86%B5%EC%A0%90"><span class="nav-number">2.</span> <span class="nav-text">리스트와 튜플의 공통점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90"><span class="nav-number">3.</span> <span class="nav-text">리스트와 튜플의 차이점</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">4.</span> <span class="nav-text">리스트 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"><span class="nav-number">5.</span> <span class="nav-text">튜플 관련 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for%EB%AC%B8-%EA%B8%B0%EC%B4%88-%EC%98%88%EC%A0%9C"><span class="nav-number">6.</span> <span class="nav-text">for문 기초 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#itertools-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%A0%9C"><span class="nav-number">7.</span> <span class="nav-text">itertools 모듈 사용 예제</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-comprehension"><span class="nav-number">8.</span> <span class="nav-text">List comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dictionary-comprehension"><span class="nav-number">9.</span> <span class="nav-text">dictionary comprehension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B0%B0%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="nav-number">10.</span> <span class="nav-text">배열 만들기</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1"><span class="nav-number">11.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"><span class="nav-number">12.</span> <span class="nav-text">유니버셜 함수</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0"><span class="nav-number">13.</span> <span class="nav-text">비교 연산</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Series%EC%9D%98-%EA%B8%B0%EB%B3%B8"><span class="nav-number">14.</span> <span class="nav-text">Series의 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame-%EA%B8%B0%EB%B3%B8"><span class="nav-number">15.</span> <span class="nav-text">DataFrame 기본</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1-1"><span class="nav-number">16.</span> <span class="nav-text">인덱싱과 슬라이싱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EA%B0%92-%EC%A1%B0%ED%9A%8C%ED%95%98%EA%B8%B0"><span class="nav-number">17.</span> <span class="nav-text">값 조회하기</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
