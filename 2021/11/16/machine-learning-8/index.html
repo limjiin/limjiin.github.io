@@ -28,7 +28,7 @@
 <meta property="og:description" content="머신 러닝 모델의 성능 향상을 위한 전처리에 대해 배워보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-16T07:52:44.229Z">
-<meta property="article:modified_time" content="2021-11-16T10:52:55.002Z">
+<meta property="article:modified_time" content="2021-11-16T11:48:18.340Z">
 <meta property="article:author" content="limjiin">
 <meta property="article:tag" content="machine">
 <meta property="article:tag" content="learning">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-11-16 16:52:44 / Modified: 19:52:55" itemprop="dateCreated datePublished" datetime="2021-11-16T16:52:44+09:00">2021-11-16</time>
+              <time title="Created: 2021-11-16 16:52:44 / Modified: 20:48:18" itemprop="dateCreated datePublished" datetime="2021-11-16T16:52:44+09:00">2021-11-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,21 +235,701 @@
 <span id="more"></span>
 
 <ol>
-<li><p>변수 분포 문제<br>변수 분포 문제란 일반화된 모델을 학습하는데 어려움이 있는 분포를 가지는 변수가 있어서 일반화된 모델을 학습하지 못하는 문제<br>특징과 라벨 간 약한 관계 및 비선형 관계<br>이상치 포함<br>특징 간 상관성<br>일반 분포<br>변수 간 스케일 차이<br>특징과 라벨 간 약한 관계 및 비선형 관계<br>문제 정의<br>특징과 라벨 간 관계가 없거나 약하면 어떤 전처리 및 모델링을 하더라도 예측력이 높은 모델을 학습할 수 없음<br>특징과 라벨 간 비선형 관계가 존재한다면, 적절한 전처리를 통해 모델 성능을 크게 향상시킬 수 있음<br>대다수의 머신러닝 모델은 선형식을 포함함 : wx + b<br>해결 방안<br>특징과 라벨 간 관계를 나타내는 그래프를 통해 적절한 특징 변환을 수행해야 함<br>하지만 특징 개수가 많고 다른 특징에 의한 영향도 존재하는 등 그래프를 통해 적절한 변환 방법을 선택하는 것이 쉽지 않아서 다양한 변환 방법을 사용하여 특징 선택을 수행해야 함<br>이상치 제거<br>문제 정의 및 해결 방안<br>변수 범위에서 많이 벗어난 아주 작은 값이나 아주 큰 값으로, 일반화된 모델을 생성하는데 악영향을 끼치는 값으로 이상치를 포함하는 레코드를 제거하는 방법으로 이상치를 제거함 (절대 추정의 대상이 아님에 주의)<br>이상치 판단 방법 : IQR(Q3 - Q1) 규칙 활용<br>변수별 IQR 규칙을 만족하지 않은 샘플을 판단하여 삭제하는 방법<br>직관적 사용과 간편함<br>단일 변수로 이상치를 판단하기 어려운 경우에는 문제가 있음<br>numpy.quantile<br>이상치 판단 방법 : 밀도 기반 군집화 활용<br>DBSCAN 등의 밀도 기반 군집화 기법은 군집에 속하지 않은 샘플을 이상치라고 간주하므로, 밀도 기반 군집화 결과를 활용하여 이상치를 판단할 수 있음<br>DBSCAN 등의 밀도 기반 군집화 모델의 파라미터 튜닝이 쉽지 않다는 단점<br>sklearn.cluster.DBSCAN : 군집화를 수행하는 인스턴스를 생성하는 함수<br>특징 간 상관성 제거<br>문제 정의<br>회귀 모델, 신경망, SVM과 같이 wx + b 형태의 선형식이 모델에 포함되는 경우, 특징 간 상관성이 높으면 강건한 파라미터 추정이 어려움<br>트리 계열의 모델은 사실 특징 간 상관성이 높다고 해서 모델 예측 성능에 영향을 받지 않지만, 상관성이 높은 변수 중 소수만 모델에 포함되기 때문에 설명력에 크게 영향을 받을 수 있음<br>해결 방법 : VIF 활용<br>Variance inflation factors는 한 특징을 라벨로 간주하고, 해당 라벨을 예측하는데 다른 특징을 사용한 회귀 모델이 높은 결정 계수를 보이는 경우 해당 특징이 다른 특징과 상관성이 있다고 판단함<br>VIF가 높은 순서대로 특징을 제거하거나, VIF가 10 이상인 경우 주로 삭제함<br>해결 방법 : 주성분 분석<br>특징이 서로 직교하도록 만들어 특징 간 상관성을 줄이는 방법<br>n차원의 데이터는 총 n개의 주성분이 존재하지만, 차원 축소 등을 위해 분산의 대부분을 설명하는 주성분만 사용<br>sklearn.decomposition.PCA : 주성분 분석을 수행하는 인스턴스를 생성하는 함수<br>변수 치우침 제거<br>문제 정의<br>모델링에 가장 적합한 확률분포는 정규분포이나, 실제로 많은 변수가 특정 방향으로 치우쳐 있음<br>한 쪽으로 치우친 변수에서 치우친 반대 방향의 값 (꼬리 부분)들이 이상치처럼 작용할 수 있으므로, 이러한 치우침을 제거해야 함<br>탐색 방법 : 왜도(skewness)<br>변수 치우침을 확인하기 가장 적절한 척도로는 왜도가 있음<br>왜도는 분포의 비대칭도를 나타내는 통계량<br>왜도의 절대값이 1.5 이상이면 치우쳤다고 판단함<br>scipy.stats<br>해결 방안<br>변수 치우침을 해결하는 기본 아이디어는 값 간 차이를 줄이는데 있음<br>스케일링<br>문제 정의<br>스케일이 달라서 발생하는 문제로, 스케일이 큰 변수에 의해 작은 변수에 의해 모델이 크게 영향을 받는 문제<br>스케일이 큰 변수 : k-최근접 이웃<br>스케일이 작은 변수 : 회귀 모델, 서포트 벡터 머신, 신경망<br>스케일에 영향을 받지 않는 모델 : 나이브 베이즈, 의사결정나무<br>해결 방법<br>스케일링을 사용하여 변수 간 스케일 차이를 줄이는 방법<br>모델에 따른 스케일러 선택 : Standard Scaler(특징의 정규분포), Min-Max Scaler(특정 분포를 가정하지 않음)<br>sklearn.preprocessing.MinMaxScaler &amp; StandardScaler<br>단 스케일의 문제가 아니라 변수 자체가 쓸모 없는 경우에는 삭제 처리 해줘야 함(판단이 중요!)</p>
-</li>
-<li><p>클래스 불균형 문제<br>문제 정의 및 탐색 방법<br>클래스 변수가 하나의 값에 치우친 데이터로 학습한 분류 모델이 치우친 클래스에 대해 편향되는 문제<br>모델은 대부분 샘플을 치우친 클래시 값으로만 분류하게 됨<br>클래스 불균형 문제가 있는 모델은 정확도가 높고, 재현율이 매우 낮은 경향이 있음<br>용어 정의<br>다수 클래스 : 대부분의 샘플이 속한 클래스<br>소수 클래스 : 대부분의 샘플이 속하지 않은 클래스<br>위양성 비용(TP) : 부정 클래스 -&gt; 긍정 클래스 샘플(정상인 -&gt; 암환자 : 돈, 시간)<br>위음성 비용(TN) : 긍정 클래스 -&gt; 부정 클래스 샘플(암환자 -&gt; 정상인 : 생명)<br>보통은 위음성 비용이 위양성 비용보다 훨씬 큼<br>절대 부족 : 소수 클래스에 속한 샘플 개수가 절대적으로 부족한 상황<br>발생 원인<br>대부분의 분류 모형의 학습 목적식은 정확도를 최대화하는 것으로, 대부분 샘플을 다수 클래스라고 분류하도록 학습됨<br>탐색 방법 : 클래스 불균형 비율<br>클래스 불균형 비율 = 다수 클래스 / 소수 클래스<br>클래스 불균형 비율이 9 이상이면 편향된 모델이 학습될 가능성이 있음<br>다만 클래스 불균형 비율이 높다고 해서 반드시 편향된 모델을 학습하는 것은 아님<br>탐색 방법 : K-최근접 이웃을 활용하는 방법<br>이웃의 클래스 정보를 바탕으로 분류를 하기에 클래스 불균형에 매우 민감하므로, 클래스 불균형 문제를 진단하는데 적절함<br>k값이 크면 클수록 더욱 민감하므로, 보통 5~11 정도의 k를 설정하여 문제를 진단함<br>문제 해결의 기본 아이디어<br>소수 클래스에 대한 결정 공간을 넓히는 것임</p>
-</li>
+<li>변수 분포 문제</li>
 </ol>
-<p>재샘플링<br>오버 샘플링 : 소수 클래스 샘플 생성 : 원본 데이터가 작을 때 유용<br>언더 샘플링 : 다수 클래스 샘플 삭제 : 원본 데이터가 클 때 유용<br>결정 경계에 가까운 다수 클래스 샘플을 제거하고, 결정 경계에 가까운 소수 클래스 샘플을 생성해야 함<br>평가 데이터에 대해 절대로 재샘플링을 적용하면 안 됨</p>
-<p>대표적인 오버샘플링 알고리즘 : SMOTE<br>소수 클래스 샘플을 임의로 선택하고, 선택된 샘플의 이웃 가운데 하나의 샘플을 또 임의로 선택하여 그 중간에 샘플을 생성하는 과정을 반복하는 방법<br>imblearn.over_sampling.SMOTE<br>sampling_strategy : 입력하지 않으면 1:1 비율이 맞을 때까지 샘플을 생성하며, 사전 형태로 입력하여 클래스 별로 생성하는 샘플 개수 조절 가능<br>k_neighbors : 이웃 수로 보통 1, 3, 5 정도로 작게 설정<br>.fit_sample(X, Y) : X와 Y에 대해 SMOTE를 적용한 결과를 ndarray 형태로 반환</p>
-<p>[O대표적인 언더샘플링 알고리즘 : NearMiss<br>가장 가까운 n개의 소수 클래스 샘플까지 평균 거리가 짧은 다수 클래스 샘플을 순서대로 제거하는방법<br>a + b &lt; c + d : 1번 샘플을 2번 샘플보다 먼저 삭제<br>sampling_strategy : 입력하지 않으면 1:1 비율이 맞을 때까지 샘플을 생성하며, 사전 형태로 입력하여 클래스 별로 생성하는 샘플 개수 조절 가능<br>n_neighbors : 평균 거리를 구하는 소수 클래스 샘플 수<br>version : NearMiss의 version으로 2를 설정하면 모든 소수 클래스 샘플까지의 평균 거리를 사용<br>.fit_sample(X, Y) : X와 Y에 대해 NearMiss를 적용한 결과를 ndarray 형태로 반환</p>
-<p>비용 민감 모델<br>정의 : 학습 목적식에 위음성 비용(긍정 -&gt; 부정 클래스 오분류)과 위양성 비용(부정 -&gt; 긍정 클래스 오분류)을 다르게 설정하는 모델로, 보통 위음성 비용을 위양성 비용보다 크게 설정<br>위음성 비용 = w * 위양성 비용 ( w &gt; 1)<br>확률 모델<br>로지스틱 회귀, 나이브 베이즈의 확률 모델을 cut off value, c를 조정하는 방식으로 비용 민감 모델 구현<br>정확한 확률 추정 불가하지만 그 개념을 도입할 수 있는 모델(K-최근접 이웃, 신경망, 의사결정나무, 앙상블 모델 등)에도 적용 가능함<br>predict_proba<br>Numpy와 Pandas를 잘 쓰는 기본 원칙 : 가능하면 배열 단위 연산하기 : 유니버설 함수, 브로드캐스팅, 마스크 연산 활용<br>비 확률 모델<br>서포트 벡터 머신<br>의사결정나무 : 소수 클래스에 가중치를 부여하는 방식으로 가능하면 소수 클래스로 분류하도록 유도<br> class_weight</p>
+<ul>
+<li><p>변수 분포 문제란 일반화된 모델을 학습하는데 어려움이 있는 분포를 가지는 변수가 있어서 일반화된 모델을 학습하지 못하는 문제 </p>
+<blockquote>
+<p>특징과 라벨 간 약한 관계 및 비선형 관계<br>이상치 포함<br>특징 간 상관성<br>일반 분포<br>변수 간 스케일 차이</p>
+</blockquote>
+</li>
+<li><p>특징과 라벨 간 약한 관계 및 비선형 관계</p>
+<blockquote>
+<p>문제 정의</p>
+</blockquote>
+<ul>
+<li>특징과 라벨 간 관계가 없거나 약하면 어떤 전처리 및 모델링을 하더라도 예측력이 높은 모델을 학습할 수 없음</li>
+<li>특징과 라벨 간 비선형 관계가 존재한다면, 적절한 전처리를 통해 모델 성능을 크게 향상시킬 수 있음</li>
+<li>대다수의 머신러닝 모델은 선형식을 포함함 : wx + b</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>해결 방안<br>    - 특징과 라벨 간 관계를 나타내는 그래프를 통해 적절한 특징 변환을 수행해야 함<br>    - 하지만 특징 개수가 많고 다른 특징에 의한 영향도 존재하는 등 그래프를 통해 적절한 변환 방법을 선택하는 것이 쉽지 않아서 다양한 변환 방법을 사용하여 특징 선택을 수행해야 함</p>
+</blockquote>
+<ul>
+<li>이상치 제거<blockquote>
+<p>문제 정의 및 해결 방안</p>
+</blockquote>
+<ul>
+<li>변수 범위에서 많이 벗어난 아주 작은 값이나 아주 큰 값으로, 일반화된 모델을 생성하는데 악영향을 끼치는 값으로 이상치를 포함하는 레코드를 제거하는 방법으로 이상치를 제거함 (절대 추정의 대상이 아님에 주의)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>이상치 판단 방법 : IQR(Q3 - Q1) 규칙 활용<br>    - 변수별 IQR 규칙을 만족하지 않은 샘플을 판단하여 삭제하는 방법<br>    - 직관적 사용과 간편함<br>    - 단일 변수로 이상치를 판단하기 어려운 경우에는 문제가 있음<br>    - numpy.quantile</p>
+</blockquote>
+<blockquote>
+<p>이상치 판단 방법 : 밀도 기반 군집화 활용<br>    - DBSCAN 등의 밀도 기반 군집화 기법은 군집에 속하지 않은 샘플을 이상치라고 간주하므로, 밀도 기반 군집화 결과를 활용하여 이상치를 판단할 수 있음<br>    - DBSCAN 등의 밀도 기반 군집화 모델의 파라미터 튜닝이 쉽지 않다는 단점<br>    - sklearn.cluster.DBSCAN : 군집화를 수행하는 인스턴스를 생성하는 함수</p>
+</blockquote>
+<ul>
+<li>특징 간 상관성 제거<blockquote>
+<p>문제 정의</p>
+</blockquote>
+<ul>
+<li>회귀 모델, 신경망, SVM과 같이 wx + b 형태의 선형식이 모델에 포함되는 경우, 특징 간 상관성이 높으면 강건한 파라미터 추정이 어려움</li>
+<li>트리 계열의 모델은 사실 특징 간 상관성이 높다고 해서 모델 예측 성능에 영향을 받지 않지만, 상관성이 높은 변수 중 소수만 모델에 포함되기 때문에 설명력에 크게 영향을 받을 수 있음</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>해결 방법 : VIF 활용<br>    - Variance inflation factors는 한 특징을 라벨로 간주하고, 해당 라벨을 예측하는데 다른 특징을 사용한 회귀 모델이 높은 결정 계수를 보이는 경우 해당 특징이 다른 특징과 상관성이 있다고 판단함<br>    - VIF가 높은 순서대로 특징을 제거하거나, VIF가 10 이상인 경우 주로 삭제함</p>
+</blockquote>
+<blockquote>
+<p>해결 방법 : 주성분 분석<br>    - 특징이 서로 직교하도록 만들어 특징 간 상관성을 줄이는 방법<br>    - n차원의 데이터는 총 n개의 주성분이 존재하지만, 차원 축소 등을 위해 분산의 대부분을 설명하는 주성분만 사용<br>    - sklearn.decomposition.PCA : 주성분 분석을 수행하는 인스턴스를 생성하는 함수</p>
+</blockquote>
+<ul>
+<li>변수 치우침 제거<blockquote>
+<p>문제 정의</p>
+</blockquote>
+<ul>
+<li>모델링에 가장 적합한 확률분포는 정규분포이나, 실제로 많은 변수가 특정 방향으로 치우쳐 있음</li>
+<li>한 쪽으로 치우친 변수에서 치우친 반대 방향의 값 (꼬리 부분)들이 이상치처럼 작용할 수 있으므로, 이러한 치우침을 제거해야 함</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>탐색 방법 : 왜도(skewness)<br>    - 변수 치우침을 확인하기 가장 적절한 척도로는 왜도가 있음<br>    - 왜도는 분포의 비대칭도를 나타내는 통계량<br>    - 왜도의 절대값이 1.5 이상이면 치우쳤다고 판단함<br>    - scipy.stats</p>
+</blockquote>
+<blockquote>
+<p>해결 방안<br>    - 변수 치우침을 해결하는 기본 아이디어는 값 간 차이를 줄이는데 있음</p>
+</blockquote>
+<ul>
+<li>스케일링<blockquote>
+<p>문제 정의</p>
+</blockquote>
+<ul>
+<li>스케일이 달라서 발생하는 문제로, 스케일이 큰 변수에 의해 작은 변수에 의해 모델이 크게 영향을 받는 문제</li>
+<li>스케일이 큰 변수 : k-최근접 이웃</li>
+<li>스케일이 작은 변수 : 회귀 모델, 서포트 벡터 머신, 신경망</li>
+<li>스케일에 영향을 받지 않는 모델 : 나이브 베이즈, 의사결정나무</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>해결 방법<br>    - 스케일링을 사용하여 변수 간 스케일 차이를 줄이는 방법<br>    - 모델에 따른 스케일러 선택 : Standard Scaler(특징의 정규분포), Min-Max Scaler(특정 분포를 가정하지 않음)<br>    - sklearn.preprocessing.MinMaxScaler &amp; StandardScaler<br>    - 단 스케일의 문제가 아니라 변수 자체가 쓸모 없는 경우에는 삭제 처리 해줘야 함(판단이 중요!)</p>
+</blockquote>
+<ol start="2">
+<li>클래스 불균형 문제</li>
+</ol>
+<ul>
+<li><p>문제 정의 및 탐색 방법</p>
+<blockquote>
+<p>클래스 변수가 하나의 값에 치우친 데이터로 학습한 분류 모델이 치우친 클래스에 대해 편향되는 문제<br>모델은 대부분 샘플을 치우친 클래시 값으로만 분류하게 됨<br>클래스 불균형 문제가 있는 모델은 정확도가 높고, 재현율이 매우 낮은 경향이 있음</p>
+</blockquote>
+</li>
+<li><p>용어 정의</p>
+<blockquote>
+<p>다수 클래스 : 대부분의 샘플이 속한 클래스<br>소수 클래스 : 대부분의 샘플이 속하지 않은 클래스<br>위양성 비용(TP) : 부정 클래스 -&gt; 긍정 클래스 샘플(정상인 -&gt; 암환자 : 돈, 시간)<br>위음성 비용(TN) : 긍정 클래스 -&gt; 부정 클래스 샘플(암환자 -&gt; 정상인 : 생명)<br>보통은 위음성 비용이 위양성 비용보다 훨씬 큼<br>절대 부족 : 소수 클래스에 속한 샘플 개수가 절대적으로 부족한 상황</p>
+</blockquote>
+</li>
+<li><p>발생 원인</p>
+<blockquote>
+<p>대부분의 분류 모형의 학습 목적식은 정확도를 최대화하는 것으로, 대부분 샘플을 다수 클래스라고 분류하도록 학습됨</p>
+</blockquote>
+</li>
+<li><p>탐색 방법 : 클래스 불균형 비율</p>
+<blockquote>
+<p>클래스 불균형 비율 = 다수 클래스 / 소수 클래스<br>클래스 불균형 비율이 9 이상이면 편향된 모델이 학습될 가능성이 있음<br>다만 클래스 불균형 비율이 높다고 해서 반드시 편향된 모델을 학습하는 것은 아님</p>
+</blockquote>
+</li>
+<li><p>탐색 방법 : K-최근접 이웃을 활용하는 방법</p>
+<blockquote>
+<p>이웃의 클래스 정보를 바탕으로 분류를 하기에 클래스 불균형에 매우 민감하므로, 클래스 불균형 문제를 진단하는데 적절함<br>k값이 크면 클수록 더욱 민감하므로, 보통 5~11 정도의 k를 설정하여 문제를 진단함</p>
+</blockquote>
+</li>
+<li><p>문제 해결의 기본 아이디어</p>
+<blockquote>
+<p>소수 클래스에 대한 결정 공간을 넓히는 것임</p>
+</blockquote>
+</li>
+<li><p>재샘플링</p>
+<blockquote>
+<p>오버 샘플링 : 소수 클래스 샘플 생성 : 원본 데이터가 작을 때 유용<br>언더 샘플링 : 다수 클래스 샘플 삭제 : 원본 데이터가 클 때 유용<br>결정 경계에 가까운 다수 클래스 샘플을 제거하고, 결정 경계에 가까운 소수 클래스 샘플을 생성해야 함<br>평가 데이터에 대해 절대로 재샘플링을 적용하면 안 됨</p>
+</blockquote>
+</li>
+<li><p>대표적인 오버샘플링 알고리즘 : SMOTE</p>
+<blockquote>
+<p>소수 클래스 샘플을 임의로 선택하고, 선택된 샘플의 이웃 가운데 하나의 샘플을 또 임의로 선택하여 그 중간에 샘플을 생성하는 과정을 반복하는 방법<br>imblearn.over_sampling.SMOTE</p>
+</blockquote>
+<ul>
+<li>sampling_strategy : 입력하지 않으면 1:1 비율이 맞을 때까지 샘플을 생성하며, 사전 형태로 입력하여 클래스 별로 생성하는 샘플 개수 조절 가능</li>
+<li>k_neighbors : 이웃 수로 보통 1, 3, 5 정도로 작게 설정</li>
+<li>.fit_sample(X, Y) : X와 Y에 대해 SMOTE를 적용한 결과를 ndarray 형태로 반환</li>
+</ul>
+</li>
+<li><p>대표적인 언더샘플링 알고리즘 : NearMiss</p>
+<blockquote>
+<p>가장 가까운 n개의 소수 클래스 샘플까지 평균 거리가 짧은 다수 클래스 샘플을 순서대로 제거하는방법<br>a + b &lt; c + d : 1번 샘플을 2번 샘플보다 먼저 삭제<br>sampling_strategy : 입력하지 않으면 1:1 비율이 맞을 때까지 샘플을 생성하며, 사전 형태로 입력하여 클래스 별로 생성하는 샘플 개수 조절 가능<br>n_neighbors : 평균 거리를 구하는 소수 클래스 샘플 수<br>version : NearMiss의 version으로 2를 설정하면 모든 소수 클래스 샘플까지의 평균 거리를 사용<br>.fit_sample(X, Y) : X와 Y에 대해 NearMiss를 적용한 결과를 ndarray 형태로 반환</p>
+</blockquote>
+</li>
+<li><p>비용 민감 모델</p>
+<blockquote>
+<p>정의 : 학습 목적식에 위음성 비용(긍정 -&gt; 부정 클래스 오분류)과 위양성 비용(부정 -&gt; 긍정 클래스 오분류)을 다르게 설정하는 모델로, 보통 위음성 비용을 위양성 비용보다 크게 설정<br>위음성 비용 = w * 위양성 비용 ( w &gt; 1)<br>확률 모델</p>
+</blockquote>
+<ul>
+<li>로지스틱 회귀, 나이브 베이즈의 확률 모델을 cut off value, c를 조정하는 방식으로 비용 민감 모델 구현</li>
+<li>정확한 확률 추정 불가하지만 그 개념을 도입할 수 있는 모델(K-최근접 이웃, 신경망, 의사결정나무, 앙상블 모델 등)에도 적용 가능함</li>
+<li>predict_proba</li>
+<li>Numpy와 Pandas를 잘 쓰는 기본 원칙 : 가능하면 배열 단위 연산하기 : 유니버설 함수, 브로드캐스팅, 마스크 연산 활용</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>비 확률 모델<br>    - 서포트 벡터 머신<br>    - 의사결정나무 : 소수 클래스에 가중치를 부여하는 방식으로 가능하면 소수 클래스로 분류하도록 유도<br>    - class_weight</p>
+</blockquote>
+<h4 id="오버샘플링"><a href="#오버샘플링" class="headerlink" title="오버샘플링"></a>오버샘플링</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("Secom.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Y', axis = 1)
+Y = df['Y']
+
+# 학습 데이터와 평가 데이터 분할
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 특징이 매우 많음을 확인
+Train_X.shape
+
+# 클래스 불균형 확인 => 언더샘플링을 적용하기에는 부적절
+Train_Y.value_counts()
+
+# 클래스 불균형 비율 계산
+Train_Y.value_counts().iloc[0] / Train_Y.value_counts().iloc[-1]
+
+# kNN을 사용한 클래스 불균형 테스트
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(Train_X, Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 재현율이 0%로 불균형이 심각한 수준이라 보임
+
+from imblearn.over_sampling import SMOTE
+# SMOTE 인스턴스 생성
+oversampling_instance = SMOTE(k_neighbors = 3)
+
+# 오버샘플링 적용
+o_Train_X, o_Train_Y = oversampling_instance.fit_resample(Train_X, Train_Y)
+
+# ndarray 형태가 되므로 다시 DataFrame과 Series로 변환 (남은 전처리가 없다면 하지 않아도 무방)
+o_Train_X = pd.DataFrame(o_Train_X, columns = X.columns)
+o_Train_Y = pd.Series(o_Train_Y)
+
+!pip install imblearn
+
+# 비율이 1:1이 됨을 확인
+o_Train_Y.value_counts()
+
+# 같은 모델로 다시 평가: 정확도는 감소했으나, 재현율이 크게 오름을 확인
+kNN_model = KNN(n_neighbors = 11).fit(o_Train_X, o_Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+from imblearn.over_sampling import SMOTE
+# SMOTE 인스턴스 생성
+oversampling_instance = SMOTE(k_neighbors = 3, sampling_strategy = &#123;1:int(Train_Y.value_counts().iloc[0] / 2),
+                                                                    -1:Train_Y.value_counts().iloc[0]&#125;)
+
+# 오버샘플링 적용
+o_Train_X, o_Train_Y = oversampling_instance.fit_resample(Train_X, Train_Y)
+
+# ndarray 형태가 되므로 다시 DataFrame과 Series로 변환 (남은 전처리가 없다면 하지 않아도 무방)
+o_Train_X = pd.DataFrame(o_Train_X, columns = X.columns)
+o_Train_Y = pd.Series(o_Train_Y)
+
+kNN_model = KNN(n_neighbors = 11).fit(o_Train_X, o_Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+</code>
+</pre>
+
+<h4 id="언더샘플링"><a href="#언더샘플링" class="headerlink" title="언더샘플링"></a>언더샘플링</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("page-blocks0.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Class', axis = 1)
+Y = df['Class']
+
+# 학습 데이터와 평가 데이터 분할
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 클래스 불균형 확인
+Train_Y.value_counts()
+
+Train_Y.replace(&#123;"negative":-1, "positive":1&#125;, inplace = True)
+Test_Y.replace(&#123;"negative":-1, "positive":1&#125;, inplace = True)
+
+# 클래스 불균형 비율 계산
+Train_Y.value_counts().iloc[0] / Train_Y.value_counts().iloc[-1]
+
+# kNN을 사용한 클래스 불균형 테스트
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(Train_X, Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 재현율이 60%로 불균형이 심각한 수준은 아니라고 보임
+
+from imblearn.under_sampling import NearMiss
+NM_model = NearMiss(version = 2) # version = 2: 모든 소수 클래스 샘플까지의 평균 거리를 활용
+
+# NearMiss 적용
+u_Train_X, u_Train_Y = NM_model.fit_resample(Train_X, Train_Y)
+u_Train_X = pd.DataFrame(u_Train_X, columns = X.columns)
+u_Train_Y = pd.Series(u_Train_Y)
+
+u_Train_Y.value_counts()
+
+# kNN 재적용을 통한 성능 변화 확인
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(u_Train_X, u_Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 재현율은 크게 올랐으나, 정확도가 크게 떨어짐 => 적당한 비율에 맞게 설정해야 함
+
+from imblearn.under_sampling import NearMiss
+NM_model = NearMiss(version = 2, sampling_strategy = &#123;1:u_Train_Y.value_counts().iloc[-1],
+                                                      -1:u_Train_Y.value_counts().iloc[-1] * 5&#125;) # 5:1 정도의 비율로 언더샘플링 재수행
+
+u_Train_X, u_Train_Y = NM_model.fit_resample(Train_X, Train_Y)
+u_Train_X = pd.DataFrame(u_Train_X, columns = X.columns)
+u_Train_Y = pd.Series(u_Train_Y)
+
+u_Train_Y.value_counts()
+
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(u_Train_X, u_Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+</code>
+</pre>
+
+<h4 id="Cut-off-value"><a href="#Cut-off-value" class="headerlink" title="Cut-off value"></a>Cut-off value</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("Secom.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Y', axis = 1)
+Y = df['Y']
+
+# 학습 데이터와 평가 데이터 분할
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 특징이 매우 많음을 확인
+Train_X.shape
+
+# 클래스 불균형 확인
+Train_Y.value_counts()
+
+# 클래스 불균형 비율 계산
+Train_Y.value_counts().iloc[0] / Train_Y.value_counts().iloc[-1]
+
+# kNN을 사용한 클래스 불균형 테스트
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(Train_X, Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 재현율이 0%로 불균형이 심각한 수준이라 보임
+
+# 비용 민감 모델 적용전 Logistic Regression 모델 테스트
+from sklearn.linear_model import LogisticRegression as LR
+model = LR(max_iter = 100000).fit(Train_X, Train_Y)
+pred_Y = model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# cut off value를 조정
+probs = model.predict_proba(Test_X)
+probs = pd.DataFrame(probs, columns = model.classes_)
+
+cut_off_value = 0.3
+
+pred_Y = 2 * (probs.iloc[:, -1] >= cut_off_value) - 1
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# cut off value를 조정하는 함수 작성
+def cost_sensitive_model(model, cut_off_value, Test_X, Test_Y):
+    probs = model.predict_proba(Test_X)
+    probs = pd.DataFrame(probs, columns = model.classes_)
+    pred_Y = 2 * (probs.iloc[:, -1] >= cut_off_value) - 1
+    recall = recall_score(Test_Y, pred_Y)
+    accuracy = accuracy_score(Test_Y, pred_Y)
+    return recall, accuracy
+
+# cut off value에 따른 recall과 accuracy 변화 확인
+from matplotlib import pyplot as plt
+import numpy as np
+
+cut_off_value_list = np.linspace(0, 1, 101)
+recall_list = []
+accuracy_list = []
+
+for c in cut_off_value_list:
+    recall, accuracy = cost_sensitive_model(model, c, Test_X, Test_Y)
+    recall_list.append(recall)
+    accuracy_list.append(accuracy)
+
+%matplotlib inline
+plt.plot(cut_off_value_list, recall_list, label = 'recall')
+plt.plot(cut_off_value_list, accuracy_list, label = 'accuracy')
+plt.legend();
+</code>
+</pre>
+
+<h4 id="Class-weight"><a href="#Class-weight" class="headerlink" title="Class weight"></a>Class weight</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("page-blocks0.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Class', axis = 1)
+Y = df['Class']
+
+# 학습 데이터와 평가 데이터 분할
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 클래스 불균형 확인 => 오버/언더샘플링을 적용하기에는 부적절
+Train_Y.value_counts()
+
+Train_Y.replace(&#123;"negative":-1, "positive":1&#125;, inplace = True)
+Test_Y.replace(&#123;"negative":-1, "positive":1&#125;, inplace = True)
+
+# 클래스 불균형 비율 계산
+Train_Y.value_counts().iloc[0] / Train_Y.value_counts().iloc[-1]
+
+# kNN을 사용한 클래스 불균형 테스트
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.metrics import *
+kNN_model = KNN(n_neighbors = 11).fit(Train_X, Train_Y)
+pred_Y = kNN_model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 재현율이 68%로 불균형이 심각한 수준은 아니라고 보임
+
+from sklearn.svm import SVC
+
+model = SVC().fit(Train_X, Train_Y)
+pred_Y = model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+
+# 클래스 웨이트 조정
+model = SVC(class_weight = &#123;1:8, -1:1&#125;).fit(Train_X, Train_Y)
+pred_Y = model.predict(Test_X)
+print(recall_score(Test_Y, pred_Y))
+print(accuracy_score(Test_Y, pred_Y))
+</code>
+</pre>
+
 <ol start="3">
-<li><p>차원의 저주 문제<br>문제 정의<br>차원이 증가함에 따라 필요한 데이터의 양과 시간 복잡도가 기하급수적으로 증가하는 문제<br>차원을 줄여야 하는 이유<br>차원이 증가함에 따라 모델 학습 시간이 정비례하게 증가<br>차원이 증가하면 각 결정 공간에 포함되는 샘플 수가 적어져서 과적합으로 이어지고 성능 저하가 발생함<br>특징 선택<br>개요 : 분류 및 예측에 효과적인 특징만 선택하여 차원을 축소하는 방법<br>적용 대상 : 특징 선택은 특징이 많은 데이터에만 적용하지 않는다!<br>주먹구구식 특징 선택<br>선택 가능한 모든 특징 집합을 비교/평가하여 가장 좋은 특징 집합을 선택<br>그러나 특징 개수가 n개라면, 2n-1번의 모형 학습이 필요하므로, 현실적으로 적용 불가함.<br>필터링 기반의 특징 선택<br>특징과 라벨이 얼마나 관련이 있는지를 나타내는 클래스 관련성이 높은 특징을 우선 선택하는 방법<br>클래스 관련성<br>한 특징이 클래스를 얼마나 잘 설명하는지를 나타내는 척도로, 상관계수, 카이제곱 통계량, 상호 정보량 등의 특징과 라벨 간 독립성을 나타내는 통계량을 사용하여 측정<br>즉 클래스 관련성이 높은 특징은 분류 및 예측에 도움이 되는 특징이며, 그렇지 않은 특징은 도움이 되지 않은 특징<br>F-통계량 : 집단 간 평균 차이 측정<br>클래스 관련성 척도 분류<br>카이제곱 통계량, 상호정보량, F-통계량<br>sklearn.feature_selection.SelectKBest</p>
-</li>
-<li><p>실전 모델 개발 프로세스<br>큰 그림<br>실제 프로세스에서는 탐색과 전처리 사이에 피드백 루프 존재함<br>탐색을 한 번에 다하고 전처리를 한 번에 다하는 것이 아님<br>전처리에도 다양한 하이퍼 파라미터가 있기에 모델의 하이퍼 파라미터와 같이 튜닝해야 함<br>필수 전처리<br>특별한 튜닝이 필요하지 않으므로 순차 진행<br>데이터 파편화 여부 확인 &gt; 데이터 통합<br>결측 여부 확인 &gt; 결측치 제거/대체/예측<br>범주형 변수 확인 &gt; 범주형 변수 처리(더미화, 연속형 변수 처리)<br>라벨 문자 여부 확인 &gt; 라벨 변환<br>성능 향상을 위한 전처리<br>특징과 라벨 간 상관관계 확인 &gt; 신규 특징 추가<br>이상치 확인 &gt; 이상치 제거<br>특징 간 상관관계 확인 &gt; 특징 간 상관성 제거<br>왜도 확인 &gt; 변수 치우침 제거<br>특징 간 스케일 차이 확인 &gt; 스케일링<br>클래스 불균형 확인 &gt; 재샘플링 및 비용 민감 모델 고려<br>데이터 크기 확인 &gt; 특징 선택 &amp; 모델 목록 정의<br>파라미터 그리드 설계<br>탐색을 제대로 하지 않으면 파라미터 그리드에 포함된 파라미터 개수가 수십 ~ 수백만개도 됨<br>이상치 제거 파라미터 &gt; 재샘플링 모델 및 파라미터 &gt; 특징 선택 파라미터 &gt; 모델 및 파라미터</p>
-</li>
+<li>차원의 저주 문제</li>
 </ol>
+<ul>
+<li><p>문제 정의</p>
+<blockquote>
+<p>차원이 증가함에 따라 필요한 데이터의 양과 시간 복잡도가 기하급수적으로 증가하는 문제</p>
+</blockquote>
+</li>
+<li><p>차원을 줄여야 하는 이유</p>
+<blockquote>
+<p>차원이 증가함에 따라 모델 학습 시간이 정비례하게 증가<br>차원이 증가하면 각 결정 공간에 포함되는 샘플 수가 적어져서 과적합으로 이어지고 성능 저하가 발생함</p>
+</blockquote>
+</li>
+<li><p>특징 선택</p>
+<blockquote>
+<p>개요 : 분류 및 예측에 효과적인 특징만 선택하여 차원을 축소하는 방법<br>적용 대상 : 특징 선택은 특징이 많은 데이터에만 적용하지 않는다!</p>
+</blockquote>
+</li>
+<li><p>주먹구구식 특징 선택</p>
+<blockquote>
+<p>선택 가능한 모든 특징 집합을 비교/평가하여 가장 좋은 특징 집합을 선택<br>그러나 특징 개수가 n개라면, 2n-1번의 모형 학습이 필요하므로, 현실적으로 적용 불가함.</p>
+</blockquote>
+</li>
+<li><p>필터링 기반의 특징 선택</p>
+<blockquote>
+<p>특징과 라벨이 얼마나 관련이 있는지를 나타내는 클래스 관련성이 높은 특징을 우선 선택하는 방법</p>
+</blockquote>
+</li>
+<li><p>클래스 관련성</p>
+<blockquote>
+<p>한 특징이 클래스를 얼마나 잘 설명하는지를 나타내는 척도로, 상관계수, 카이제곱 통계량, 상호 정보량 등의 특징과 라벨 간 독립성을 나타내는 통계량을 사용하여 측정<br>즉 클래스 관련성이 높은 특징은 분류 및 예측에 도움이 되는 특징이며, 그렇지 않은 특징은 도움이 되지 않은 특징<br>F-통계량 : 집단 간 평균 차이 측정</p>
+</blockquote>
+</li>
+<li><p>클래스 관련성 척도 분류</p>
+<blockquote>
+<p>카이제곱 통계량, 상호정보량, F-통계량<br>sklearn.feature_selection.SelectKBest</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>실전 모델 개발 프로세스</li>
+</ol>
+<ul>
+<li><p>큰 그림</p>
+<blockquote>
+<p>실제 프로세스에서는 탐색과 전처리 사이에 피드백 루프 존재함<br>탐색을 한 번에 다하고 전처리를 한 번에 다하는 것이 아님<br>전처리에도 다양한 하이퍼 파라미터가 있기에 모델의 하이퍼 파라미터와 같이 튜닝해야 함</p>
+</blockquote>
+</li>
+<li><p>필수 전처리</p>
+<blockquote>
+<p>특별한 튜닝이 필요하지 않으므로 순차 진행<br>데이터 파편화 여부 확인 &gt; 데이터 통합<br>결측 여부 확인 &gt; 결측치 제거/대체/예측<br>범주형 변수 확인 &gt; 범주형 변수 처리(더미화, 연속형 변수 처리)<br>라벨 문자 여부 확인 &gt; 라벨 변환</p>
+</blockquote>
+</li>
+<li><p>성 능 향상을 위한 전처리</p>
+<blockquote>
+<p>특징과 라벨 간 상관관계 확인 &gt; 신규 특징 추가<br>이상치 확인 &gt; 이상치 제거<br>특징 간 상관관계 확인 &gt; 특징 간 상관성 제거<br>왜도 확인 &gt; 변수 치우침 제거<br>특징 간 스케일 차이 확인 &gt; 스케일링<br>클래스 불균형 확인 &gt; 재샘플링 및 비용 민감 모델 고려<br>데이터 크기 확인 &gt; 특징 선택 &amp; 모델 목록 정의</p>
+</blockquote>
+</li>
+<li><p>파라미터 그리드 설계</p>
+<blockquote>
+<p>탐색을 제대로 하지 않으면 파라미터 그리드에 포함된 파라미터 개수가 수십 ~ 수백만개도 됨<br>이상치 제거 파라미터 &gt; 재샘플링 모델 및 파라미터 &gt; 특징 선택 파라미터 &gt; 모델 및 파라미터</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="주먹구구식-특징-선택"><a href="#주먹구구식-특징-선택" class="headerlink" title="주먹구구식 특징 선택"></a>주먹구구식 특징 선택</h4><pre>
+<code>
+import os
+os.chdir(r"C:\Users\user\Downloads")
+
+import pandas as pd
+df = pd.read_csv("appendicitis.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Class', axis = 1)
+Y = df['Class']
+
+# 학습 데이터와 평가 데이터 분리
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 특징에 따른 SVM 모델 테스트 함수 작성
+from sklearn.svm import SVC
+from sklearn.metrics import f1_score
+
+def feature_test(Train_X, Test_X, Train_Y, Test_Y, features):
+    s_Train_X = Train_X[features]
+    s_Test_X = Test_X[features]
+
+    model = SVC().fit(s_Train_X, Train_Y)
+    pred_Y = model.predict(s_Test_X)
+    return f1_score(Test_Y, pred_Y)
+
+base_score = feature_test(Train_X, Test_X, Train_Y, Test_Y, Train_X.columns) # 모든 특징을 썼을 때의 점수
+print(base_score)
+
+import itertools
+c_list = list(range(1, len(Train_X.columns)))
+outperform_ratio_list = []
+best_score = 0
+
+for c in range(1, len(Train_X.columns)): # c = 선택한 특징 개수
+    print(c)
+    c_num = 0 # 특징을 c개 뽑았을 때, 원본보다 성능이 좋은 경우
+    c_dem = 0 # 특징을 c개 뽑는 경우의 수
+
+    for features in itertools.combinations(Train_X.columns, c):
+        score = feature_test(Train_X, Test_X, Train_Y, Test_Y, list(features)) # itertools은 tuple 형태로 값을 반환해서 형변환을 해준 것
+        if score > best_score:
+            best_score = score
+            best_feature = list(features)
+
+        if score > base_score:
+            c_num += 1
+        c_dem += 1
+
+    outperform_ratio_list.append(c_num / c_dem)
+
+%matplotlib inline
+from matplotlib import pyplot as plt
+plt.bar(c_lisat, outperform_ratio_list);
+
+best_feature, best_score
+</code>
+</pre>
+
+<h4 id="모든-특징-유형이-같은-경우의-특징-선택"><a href="#모든-특징-유형이-같은-경우의-특징-선택" class="headerlink" title="모든 특징 유형이 같은 경우의 특징 선택"></a>모든 특징 유형이 같은 경우의 특징 선택</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("Sonar_Mines_Rocks.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Y', axis = 1)
+Y = df['Y']
+
+Y.replace(&#123;"M":-1, "R":1&#125;, inplace = True)
+
+# 학습 데이터와 평가 데이터 분리
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+Train_X.shape # 샘플 대비 특징이 매우 많음 => 특징 선택 필요
+
+# 특징 선택 전 성능 확인
+from sklearn.neighbors import KNeighborsClassifier as KNN
+model = KNN().fit(Train_X, Train_Y)
+pred_Y = model.predict(Test_X)
+
+from sklearn.metrics import f1_score
+print(f1_score(Test_Y, pred_Y))
+
+# 특징 선택 수행
+from sklearn.feature_selection import *
+selector = SelectKBest(f_classif, k = 30)
+selector.fit(Train_X, Train_Y)
+selected_features = Train_X.columns[selector.get_support()]
+
+s_Train_X = pd.DataFrame(selector.transform(Train_X), columns = selected_features)
+s_Test_X = pd.DataFrame(selector.transform(Test_X), columns = selected_features)
+
+# s_Train_X = Train_X[selected_features]
+# s_Test_X = Test_X[selected_features]
+
+# 특징 선택 후 성능 확인
+from sklearn.neighbors import KNeighborsClassifier as KNN
+model = KNN().fit(s_Train_X, Train_Y)
+pred_Y = model.predict(s_Test_X)
+
+from sklearn.metrics import f1_score
+print(f1_score(Test_Y, pred_Y))
+
+# 특징 개수 튜닝
+best_score = 0
+for k in range(5, 50, 5):    
+    selector = SelectKBest(f_classif, k = k)
+    selector.fit(Train_X, Train_Y)
+    selected_features = Train_X.columns[selector.get_support()]
+
+    s_Train_X = pd.DataFrame(selector.transform(Train_X), columns = selected_features)
+    s_Test_X = pd.DataFrame(selector.transform(Test_X), columns = selected_features)   
+    
+    model = KNN().fit(s_Train_X, Train_Y)
+    pred_Y = model.predict(s_Test_X)
+    score = f1_score(Test_Y, pred_Y)
+    if score > best_score:
+        best_score = score
+        best_k = k 
+
+print(best_score, best_k)
+</code>
+</pre>
+
+<h4 id="특징-유형이-다른-경우의-특징-선택"><a href="#특징-유형이-다른-경우의-특징-선택" class="headerlink" title="특징 유형이 다른 경우의 특징 선택"></a>특징 유형이 다른 경우의 특징 선택</h4><pre>
+<code>
+import os
+import pandas as pd
+
+os.chdir(r"C:\Users\user\Downloads")
+
+df = pd.read_csv("australian.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Class', axis = 1)
+Y = df['Class']
+
+# 학습 데이터와 평가 데이터 분리
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+Train_X.shape # 샘플 대비 특징이 약간 더 많은 정도
+
+# 특징 선택 전 성능 확인
+from sklearn.neighbors import KNeighborsClassifier as KNN
+model = KNN().fit(Train_X, Train_Y)
+pred_Y = model.predict(Test_X)
+
+from sklearn.metrics import f1_score
+print(f1_score(Test_Y, pred_Y))
+
+# 유니크한 값의 개수를 바탕으로 연속형과 이진형 변수 구분
+continuous_cols = [col for col in Train_X.columns if len(Train_X[col].unique()) > 3]
+binary_cols = [col for col in Train_X.columns if len(Train_X[col].unique()) <= 3]
+
+# 연속형 변수에 대해서는 f_classif을, 이진형 변수에 대해서는 chi2를 적용
+from sklearn.feature_selection import *
+
+# f_regression(X, Y) => (statistics, p-value)
+continous_cols_pvals = f_classif(Train_X[continuous_cols], Train_Y)[1]
+binary_cols_pvals = chi2(Train_X[binary_cols], Train_Y)[1]
+
+# 각각을 Series로 변환 (value: pvalue, index: colum name)
+cont_pvals = pd.Series(continous_cols_pvals, index = continuous_cols)
+binary_pvals = pd.Series(binary_cols_pvals, index = binary_cols)
+
+# cont_pvals과 binary_pvals을 합친 뒤, 오름차순으로 정렬 (앞에 나오는 특징부터 좋은 특징)
+pvals = pd.concat([cont_pvals, binary_pvals])
+pvals.sort_values(ascending = True, inplace = True)
+
+# 특징 선택
+k = 10
+
+s_Train_X = Train_X[pvals.iloc[:k].index]
+s_Test_X = Test_X[pvals.iloc[:k].index]
+
+# 특징 선택 후 성능 확인
+from sklearn.neighbors import KNeighborsClassifier as KNN
+model = KNN().fit(s_Train_X, Train_Y)
+pred_Y = model.predict(s_Test_X)
+
+from sklearn.metrics import f1_score
+print(f1_score(Test_Y, pred_Y))
+</code>
+</pre>
 
     </div>
 
@@ -340,6 +1020,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%98%A4%EB%B2%84%EC%83%98%ED%94%8C%EB%A7%81"><span class="nav-number">1.</span> <span class="nav-text">오버샘플링</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%96%B8%EB%8D%94%EC%83%98%ED%94%8C%EB%A7%81"><span class="nav-number">2.</span> <span class="nav-text">언더샘플링</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cut-off-value"><span class="nav-number">3.</span> <span class="nav-text">Cut-off value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Class-weight"><span class="nav-number">4.</span> <span class="nav-text">Class weight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%A3%BC%EB%A8%B9%EA%B5%AC%EA%B5%AC%EC%8B%9D-%ED%8A%B9%EC%A7%95-%EC%84%A0%ED%83%9D"><span class="nav-number">5.</span> <span class="nav-text">주먹구구식 특징 선택</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%AA%A8%EB%93%A0-%ED%8A%B9%EC%A7%95-%EC%9C%A0%ED%98%95%EC%9D%B4-%EA%B0%99%EC%9D%80-%EA%B2%BD%EC%9A%B0%EC%9D%98-%ED%8A%B9%EC%A7%95-%EC%84%A0%ED%83%9D"><span class="nav-number">6.</span> <span class="nav-text">모든 특징 유형이 같은 경우의 특징 선택</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8A%B9%EC%A7%95-%EC%9C%A0%ED%98%95%EC%9D%B4-%EB%8B%A4%EB%A5%B8-%EA%B2%BD%EC%9A%B0%EC%9D%98-%ED%8A%B9%EC%A7%95-%EC%84%A0%ED%83%9D"><span class="nav-number">7.</span> <span class="nav-text">특징 유형이 다른 경우의 특징 선택</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
