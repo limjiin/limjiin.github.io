@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"limjiin.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="지도학습의 주요 모델과 개념에 대해 배워보쟈!! 아자자! 어렵지만 차근차근 하다보면 끝내 이해될 것이다,,,ㅎ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="머신러닝  6편">
+<meta property="og:url" content="https://limjiin.github.io/2021/11/16/machine-learning-6/index.html">
+<meta property="og:site_name" content="야무진의 기술 블로그">
+<meta property="og:description" content="지도학습의 주요 모델과 개념에 대해 배워보쟈!! 아자자! 어렵지만 차근차근 하다보면 끝내 이해될 것이다,,,ㅎ">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-16T00:23:58.498Z">
+<meta property="article:modified_time" content="2021-11-16T01:58:24.294Z">
+<meta property="article:author" content="limjiin">
+<meta property="article:tag" content="machine">
+<meta property="article:tag" content="learning">
+<meta property="article:tag" content="test">
+<meta property="article:tag" content="train">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://limjiin.github.io/2021/11/16/machine-learning-6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>머신러닝  6편 | 야무진의 기술 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">야무진의 기술 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">데이터 마케터 짜그리이지만, 계속 해보겠습니다.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://limjiin.github.io/2021/11/16/machine-learning-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="limjiin">
+      <meta itemprop="description" content="All stories about git, sql, python">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="야무진의 기술 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          머신러닝  6편
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-11-16 09:23:58 / Modified: 10:58:24" itemprop="dateCreated datePublished" datetime="2021-11-16T09:23:58+09:00">2021-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine-learning</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/11/16/machine-learning-6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/16/machine-learning-6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>지도학습의 주요 모델과 개념에 대해 배워보쟈!! 아자자! 어렵지만 차근차근 하다보면 끝내 이해될 것이다,,,ㅎ </p>
+<span id="more"></span>
+
+<ol>
+<li>지도학습 모델의 핵심 개념</li>
+</ol>
+<ul>
+<li><p>지도학습</p>
+<blockquote>
+<p>컴퓨터에게 입력과 출력을 주고, 입력과 출력 간 관계를 학습하여 새로운 입력에 대해 적절한 출력을 내도록 하는 기계학습의 한 분야<br>입력을 특징 혹은 특징 벡터 라고 하며, 출력을 라벨이라고 함<br>라벨이 범주형 변수면 분류라고 하며, 연속형 변수면 예측 혹은 희귀라고 함</p>
+</blockquote>
+</li>
+<li><p>과적합</p>
+<blockquote>
+<p>지도학습 모델은 학습 데이터를 분류하고 예측하는 수준으로, 학습에 사용되지 않은 데이터도 정확히 분류하고 예측하리라 기대하며, 이러한 기대가 충족되는 경우 일반화되었다고 함<br>모델이 너무 복잡해서 학습 데이터에 대해서만 정확히 분류하고 예측하는 모델을 과적합 되었다고 하며, 반대로 너무 단순해서 어떠한 데이터에 대해서도 부적합한 모델을 과소적합되었다고 함<br>과적합과 과소적합에 영향을 끼치는 주요 인자로는 모델의 복잡도, 샘플 수 , 차원의 크기 등이 있음</p>
+</blockquote>
+</li>
+<li><p>데이터 분할</p>
+<blockquote>
+<p>과적합된 모델을 좋게 평가하는 것을 방지하기 위해서, 데이터를 학습 데이터와 평가 데이터로 분할함<br>데이터 &gt; 데이터 분할(학습데이터, 평가 데이터) &gt; 학습데이터 &gt; 탐색 전처리 모델 학습 &gt; 모델 &gt; 전처리 및 모델 적용 &gt; 평가 데이터 &gt; 평가 결과 도출 &gt; 평가 결과<br>학습 데이터와 평가 데이터가 지나치게 유사하거나 특정 패턴을 갖지 않도록 분할해야 함</p>
+</blockquote>
+</li>
+<li><p>파라미터와 하이퍼 파라미터</p>
+<blockquote>
+<p>하이퍼 파라미터는 일종의 사용자 옵션으로, 모델 성능에 직접적으로 영향을 끼치므로 자세한 데이터 탐색 결과를 바탕으로 선택해야 함</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>파라미터</th>
+<th>하이퍼 파라미터</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>정의</td>
+<td>모델 내부에서 결정되는 변수</td>
+<td>파라미터에 영향을 주는 파라미터</td>
+</tr>
+<tr>
+<td>예시</td>
+<td>신경망의 가중치, SVM의 가중치</td>
+<td>신경망의 은닉층 구조, SVM의 커널</td>
+</tr>
+<tr>
+<td>추정</td>
+<td>비용 함수를 최소화하는 값으로 미리 정의된 컴퓨터 연산을 통해 추정</td>
+<td>사용자가 직접 설정하며, 최적의 설정 방법은 없고, 휴리스틱한 방법이나 경험에 의한 설정이 대부분임</td>
+</tr>
+</tbody></table>
+<ul>
+<li>이진 분류 모델 평가 : 혼동 행렬<blockquote>
+<p>이진 분류 : 클래스 변수의 상태 공간이 크기가 2인 분류<br>혼동 행렬 : 분류 모델을 평가하는 데 사용하는 표</p>
+</blockquote>
+<ul>
+<li>Positive class : 분석의 관심 대상 (보통 1로 설정)</li>
+<li>Negative class : 분석의 관심 대상 외 (보통 0이나 -1로 설정)</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>예측값</th>
+<th>Predicted Class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>Positive</td>
+<td>Negative</td>
+</tr>
+<tr>
+<td>실제값 Actual Class</td>
+<td>Positive</td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr>
+<td>실제값 Actual Class</td>
+<td>Negative</td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>각 지표의 한계 때문에, 가능한 여러 지표를 사용하여 모델을 평가해야 함</p>
+<blockquote>
+<p>정확도 : TP + TN / TP + FN + FP + TN<br>정밀도 : TP / TP + FP<br>재현율 : TP / TP + FN<br>F-1 score : 2 * Pre * Rec / Pre + Rec</p>
+</blockquote>
+</li>
+<li><p>다중 분류 모델 평가</p>
+<blockquote>
+<p>다중 분류 : 클래스 변수의 상태 공간이 크기가 3 이상인 분류<br>각 클래스를 긍정으로 간주하여 평가 지표를 계산한 뒤, 이들의 산술 평균이나 가중 평균으로 평가</p>
+</blockquote>
+</li>
+<li><p>예측 모델 평가</p>
+<blockquote>
+<p>대표적인 예측 모델 평가 지표로 루트 평균 제곱 오차(root mean squared error RMSE)와 평균 절대 오차(mean absolute error MAE)가 있으며, 두 지표 모두 값이 작을수록 좋음<br>RMSE와 MAE를 정확히 평가하려면 해당 분야의 도메인 지식이나 클래스 변수의 스케일을 고려해야 함</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>모델 개발 프로세스</li>
+</ol>
+<ul>
+<li>프로세스 : 문제 정의 &gt; 데이터 수집 &gt; 데이터 탐색 &gt; 데이터 전처리 &gt; 모델링 &gt; 모델 평가 &gt; 결과 보고서 작성<blockquote>
+<p>문제 정의</p>
+</blockquote>
+<ul>
+<li>전체 프로세스 가운데 가장 중요한 단계로, 명확한 목적 의식을 가지고 프로세스를 시작해야 함</li>
+<li>과업 종류 결정, 클래스 정의, 도메인 지식 기반의 특징 정의, 사용 데이터 정의</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>데이터 수집<br>    - 문제 정의에서 정의한 데이터를 수집하는 단계로, 크롤링, 센서 활용, 로그 활용 등으로 데이터를 수집<br>    - 기업내 구축된 DB에서 SQL을 통해 추출하는 경우가 가장 많으며, 이때는 클래스를 중심으로 수집</p>
+</blockquote>
+<blockquote>
+<p>데이터 탐색<br>    - 데이터가 어떻게 생겼는지를 확인하며, 프로세스를 구체화하는 단계<br>    - 데이터 탐색 단계에서 변수별 분포, 변수 간 상관성, 이상치와 결측치, 변수 개수, 클래스 변수 분포 등을 확인하며 이 탐색 결과는 데이터 전처리 및 모델 선택에 크게 영향을 미침</p>
+</blockquote>
+<blockquote>
+<p>데이터 전처리<br>    - 원활한 모델링을 위해 데이터를 가공하는 단계<br>    - 결측 값 처리, 데이터 통합, 이상치 제거, 재샘플링, 특징 선택, 더미 변수 생성</p>
+</blockquote>
+<blockquote>
+<p>모델링<br>    - 모델 선택 : 데이터 특성, 성능, 설명력 등을 기준으로 모델 선택<br>    - 하이퍼 파라미터 설정 : 모델의 성능을 결정짓는 하이퍼 파라미터를 설정<br>    - 모델 학습 : 모델에 포함된 파라미터를 추정</p>
+</blockquote>
+<blockquote>
+<p>모델 평가<br>    - 분류 모델의 대표적인 지표 : 정확도, 정밀도, 재현율, F1 점수<br>    - 예측 모델의 대표적인 지표 : 평균 제곱 오차, 평균 절대 오차, 평균 절대 퍼센트 오차<br>    - 잘못된 평가를 피하기 위해, 둘 이상의 평가 지표를 쓰는 것이 바람직함</p>
+</blockquote>
+<blockquote>
+<p>결과 보고서 작성<br>    - 지금까지의 분석 결과를 바탕으로 보고서를 작성하는 단계<br>    - 분석 목적, 데이터 탐색 및 전처리, 분석 방법, 분석 결과 및 활용 방안</p>
+</blockquote>
+<blockquote>
+<p>부적절한 문제 정의<br>    - 구체적이지 않은 문제 정의<br>    - 부적절한 특징 정의<br>    - 수집 불가한 데이터 정의</p>
+</blockquote>
+<blockquote>
+<p>부적절한 데이터 수집<br>    - 측정 오류 등으로 수집한 데이터가 실제 상황을 반영하지 못하는 경우<br>    - 해결하고자 하는 문제와 무관한 데이터를 수집한 경우<br>    - 특정 이벤트가 데이터에 누락된 경우</p>
+</blockquote>
+<blockquote>
+<p>부적절한 데이터 탐색<br>    - 피드백 루프를 발생시키는 핵심 원인이 부적절한 데이터 탐색 혹은 데이터 탐색 생략임<br>    - 데이터 탐색을 제대로 하지 않으며, 적절한 모델 선택 및 전처리를 할 수 없어, 모델 평가 단계에서 좋은 성능을 내는 것이 거의 불가능함</p>
+</blockquote>
+<blockquote>
+<p>부적절한 데이터 전처리<br>    - 데이터 전처리는 크게 모델 개발을 위해 필수적인 전처리와 모델 성능 향상을 위한 전처리로 구분됨<br>    - 보통 모델 성능 향상을 위한 전처리를 생략해서 이전 단계로 되돌아가는 경우가 가장 흔함</p>
+</blockquote>
+<blockquote>
+<p>부적절한 모델링 및 모델 평가<br>    - 모델링에서 주로 부적절한 모델 및 파라미터 선택으로 잘못되는 경우가 대부분이며, 모델링 자체가 잘못되는 경우는 매우 드물다<br>    - 모델 평가는 적절하지 않은 지표를 사용해서 잘못되는 경우가 대부분이며, 대표적인 사례로 단일 지표만 써서 부적절한 모델을 우수한 모델이라고 판단하는 경우가 있음</p>
+</blockquote>
+<ol start="3">
+<li>주요 모델의 구조 및 특성</li>
+</ol>
+<ul>
+<li><p>선형 회귀 모델과 정규화 회귀 모델</p>
+<blockquote>
+<p>비용 함수 : 오차 제곱합<br>특징과 라벨 간 비선형 관계가 무시될 수 있으므로, 특징 변환이 필요<br>특징 간 스케일 차이에 크게 영향을 받아, 예측 모델링을 할 때 스케일링이 필요함</p>
+</blockquote>
+</li>
+<li><p>로지스틱 회귀 모델</p>
+<blockquote>
+<p>비용 함수 : 크로스 엔트로피<br>특징의 구간 별로 라벨의 분포가 달라지는 경우, 적절한 구간을 나타낼 수 있도록 특징 변환이 필요함</p>
+</blockquote>
+</li>
+<li><p>K-최근접 이웃(K-Nearest Neighbors KNN)</p>
+<blockquote>
+<p>분류 / 예측<br>주요 파라미터와 설정 방법</p>
+</blockquote>
+<ul>
+<li>이웃 수 : 홀수로 설정하여, 특징 수 대비 샘플 수가 적은 경우에는 k를 작게 설정하는 것이 바람직함</li>
+<li>거리 및 유사도 척도 : 맨하탄 거리, 코사인 유사도, 매칭 유사도, 자카드 유사도, 유클리디안 거리</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>특징 추출이 어려우나 유사도 및 거리 계산만 가능한 경우(시퀀스 데이터)에 주로 활용<br>모든 특징이 연속형이고 샘플 수가 많지 않은 경우에는 좋은 성능을 보인다고 알려져 있음<br>특징 간 스케일 차이에 크게 영향을 받아, 스케일링이 반드시 필요함 (코사인 유사도는 방향성을 보기에 제외함)<br>거리 및 유사도 계산에 문제가 없다면 별다른 특징 변환이 필요하지 않음</p>
+</blockquote>
+<ul>
+<li>의사결정나무 (Decision Tree)<blockquote>
+<p>나무 구조 / 규칙 집합<br>예측 과정을 잘 설명할 수 있다는 장점 때문에 많은 프로젝트에서 활용<br>선형 분류기라는 한계로 예측력이 좋은 편에 속하지는 못하나, 최근 각광받고 있는 아상블 모델 : XGBoost, LightGBM의 기본 모형으로 사용됨</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>주요 파라미터<br>    - max_depth : 최대 깊이<br>    - min_samples_leaf : 앞 노드에 있어야 하는 최소 샘플 수</p>
+</blockquote>
+<ul>
+<li>나이브 베이즈 <blockquote>
+<p>베이즈 정리를 사용하고 특징 간 독립을 가정하여 사후 확률을 계산<br>가능도는 조건부 분포를 가정하여 추정함 : 이진형, 범주형, 연속형</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>모델 특성<br>    - 특징 간 독립 가정이 실제로는 굉장히 비현실적이므로, 높은 성능을 기대하긴 어려움<br>    - 설정한 분포에 따라 성능 차이가 크므로, 특징 타입이 서로 같은 경우에 사용하기 바람직<br>    - 특징이 매우 많고 그 타입이 같은 문제(이진형 텍스트 분류)에 주로 사용됨</p>
+</blockquote>
+<ul>
+<li><p>서포트 벡터 머신</p>
+<blockquote>
+<p>최적화 모델 : 목적식, 제약식<br>오차를 최소화 하면서 동시에 마진을 최대화 하는 분류 모델로, 커널 트릭을 활용하여 저차원 공간을 고차원 공간으로 매핑함<br>마진의 개념을 회귀에 활용한 모델을 서포트 벡터 회귀이라 함<br>주요 파라미터 : kernel, C, r<br>파라미터 튜닝이 까다로운 모델이지만, 튜닝만 잘하면 좋은 성능을 보장하는 모델임</p>
+</blockquote>
+</li>
+<li><p>신경망 (Neural Network)</p>
+<blockquote>
+<p>입력 노드 : 입력 값을 받는 역할<br>은닉 노드 및 출력 노드 : 입력 노드 혹은 다른 은닉 노드로부터 들어온 값들을 가중합하고 활성함수를 적용하여 출력을 냄<br>초기 가중치에 크게 영향을 받음<br>은닉 노드가 하나 추가되면 그에 따라 하나 이상의 가중치가 추가되어 복잡도가 크게 증가함<br>모든 변수 타입이 연속형인 경우 성능이 잘 나오는 것으로 알려져 있으며, 은닉 층 구조에 따른 복잡도 조절이 파라미터 튜닝에서 고려해야 할 가장 중요한 요소<br>최근 딥러닝 발전으로 크게 주목받는 모델이나 특정 주제를 제외하고는 깊은 층의 신경망은 과적합으로 인한 성능 이슈가 자주 발생함</p>
+</blockquote>
+</li>
+<li><p>트리 기반의 앙상블 모델</p>
+<blockquote>
+<p>램덤 포레스트 : 배깅 방식 : 트리의 개수와 나무의 최대 깊이 조정 필요<br>XGboost &amp; LightGBM : 부스팅 방식 : 트리의 개수, 나무의 최대 깊이, 학습률을 조정해야 함</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="선형회귀에서-특징-변환의-필요성"><a href="#선형회귀에서-특징-변환의-필요성" class="headerlink" title="선형회귀에서 특징 변환의 필요성"></a>선형회귀에서 특징 변환의 필요성</h4><pre>
+<code>
+# 필요 모듈 불러오기
+import numpy as np
+from sklearn.linear_model import LinearRegression as LR
+from matplotlib import pyplot as plt
+
+# 가상 데이터 생성
+X = np.linspace(-5, 10, 500) # -5부터 10까지 등간격으로 500개의 요소를 갖는 벡터
+X_2 = X ** 2 # X_2: X의 모든 요소에 제곱이 된 형태 (참고: 유니버설 함수와 브로드캐스팅)
+# Y = 3X^2 + e
+Y = 3 * X ** 2 + np.random.normal(0, 4, size = len(X)) # Y는 X^2을 바탕으로 생성함 (즉, X와 Y는 자연스레 2차식 관계가 존재)
+
+plt.scatter(X, Y);
+
+# 모델 학습
+# X는 1차원이어서 sklearn의 인풋 구조와 맞지 않아, reshape를 사용함
+# .fit(X, Y) => X = [[record1], [record2], ..., [record n]]
+# 1차원: X = [record1, record2, ..., record n]
+
+model_1 = LR().fit(X.reshape(-1, 1), Y) 
+# model_1: X를 특징을 그대로 사용한 모델
+model_2 = LR().fit(X_2.reshape(-1, 1), Y) 
+# model_2: X의 제곱을 특징으로 사용한 모델
+
+# 모델 적용
+model_1_Y = model_1.predict(X.reshape(-1, 1))
+model_2_Y = model_2.predict(X_2.reshape(-1, 1)) 
+# model_2의 입력도 제곱으로 들어감에 주의
+
+# 결과 시각화
+%matplotlib inline
+plt.xlabel("X")
+plt.ylabel("Y") # x축과 y축의 이름 설정
+
+plt.plot(X, Y, label = "data")
+plt.plot(X, model_1_Y, label = "Y = f(x)")
+plt.plot(X, model_2_Y, label = "Y = f(x**2)")
+
+plt.legend(loc = 'upper left'):
+
+********
+</code>
+</pre>
+
+<h4 id="로지스틱회귀에서-특징변환의필요성"><a href="#로지스틱회귀에서-특징변환의필요성" class="headerlink" title="로지스틱회귀에서 특징변환의필요성"></a>로지스틱회귀에서 특징변환의필요성</h4><pre>
+<code>
+# 필요 모듈 불러오기
+import numpy as np
+from sklearn.linear_model import LogisticRegression as LR
+from matplotlib import pyplot as plt
+
+# 가상 데이터 생성
+X = np.random.random(size = 10).tolist() + (np.random.random(size = 10) + 1).tolist() + (np.random.random(size = 10) + 2).tolist()
+Y = [0] * 9 + [1] * 1 + [0] * 2 + [1] * 8 + [0] * 9 + [1] * 1
+
+plt.scatter(X, Y);
+
+X = np.array(X)
+Y = np.array(Y)
+
+cond = np.logical_and(X > 1, X <= 2)
+
+X_tilda = X.copy()
+
+# X_tilda = X => 사본이 아니라 view를 반환하기 때문. 
+X_tilda[cond] = 1
+X_tilda[~cond] = 0
+
+X_tilda
+
+# 모델 학습
+# X는 1차원이어서 sklearn의 인풋 구조와 맞지 않아, reshape를 사용함
+
+model_1 = LR().fit(X.reshape(-1, 1), Y) # model_1: X를 특징을 그대로 사용한 모델
+model_2 = LR().fit(X_tilda.reshape(-1, 1), Y) # model_2: 변환한 특징을 사용한 모델
+
+# 결과 시각화
+%matplotlib inline
+# decision boundary 유도
+# Pr(y = 1 | x) >= 0.5
+# <=> 1 / (1 + exp(-coef * x - intercept)) >= 0.5
+# <=> (1 + exp(-coef * x - intercept)) <= 2
+# <=> exp(-coef * x - intercept) <= 1
+# <=> -coef * x - intercept <= 0
+# <=> x >= - intercept / coef
+
+decision_boundary = (- model_1.intercept_[0] / model_1.coef_[0])
+plt.plot([decision_boundary, decision_boundary], [-0.1, 1.1], color = 'red')
+plt.scatter(X[Y == 0], Y[Y == 0])
+plt.scatter(X[Y == 1], Y[Y == 1]);
+
+--------------------------------------
+
+decision_boundary = (- model_2.intercept_[0] / model_2.coef_[0])
+plt.plot([decision_boundary, decision_boundary], [-0.1, 1.1], color = 'red')
+plt.scatter(X[Y == 0], Y[Y == 0])
+plt.scatter(X[Y == 1], Y[Y == 1]);
+</code>
+</pre>
+
+<ol start="4">
+<li>지도학습 모델 &amp; 파라미터 선택 : 그리드 서치</li>
+</ol>
+<ul>
+<li><p>모델 및 파라미터 선정 문제</p>
+<blockquote>
+<p>어떠한 데이터에 대해서도 우수한 모델과 그 하이퍼 파라미터는 절대 존재하지 않음<br>분석적 방법으로 좋은 모델과 하이퍼 파라미터를 선정하는 것도 불가능함</p>
+</blockquote>
+</li>
+<li><p>그리드 서치 개요</p>
+<blockquote>
+<p>하이퍼 파라미터 그리드는 한 모델의 하이퍼 파라미터 조합이며, 그리드 서치란 하이퍼 파라미터 그리드에 속한 모든 파라미터 조합을 비교 평가하는 방법을 의미함</p>
+</blockquote>
+</li>
+<li><p>그리드 서치 코드 구현</p>
+<blockquote>
+<p>sklearn을 활용하여 그리드 서치를 구현하려면 사전 형태로 하이퍼 파라미터 그리드를 정의해야 함 : key, value<br>GridSearchCV : 사용이 편하다는 장점이 있지만, k-겹 교차 검증 방식을 사용하기에 느리고, 성능 향상을 위한 전처리 적용할 수 없다는 단점이 있음</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>ParameterGrid : GridSearchCV에 비해 사용이 어렵다는 단점이 있지만, 성능 향상을 위한 전처리 기법을 적용하는데 문제가 없어서 실무에서 훨씬 자주 사용함<br>    - 사전 앞에 **를 붙여야 함<br>    - 최소 값/ 최대값을 찾는 알고리즘</p>
+</blockquote>
+<hr>
+<h4 id="ParameterGrid-문법"><a href="#ParameterGrid-문법" class="headerlink" title="ParameterGrid 문법"></a>ParameterGrid 문법</h4><pre>
+<code>
+# ParameterGrid 기초
+from sklearn.model_selection import ParameterGrid
+
+grid = &#123;"n_neighbors": [3, 5, 7],
+        "metric": ["Manhattan", "Euclidean"]&#125;
+
+#ParameterGrid(grid)
+list(ParameterGrid(grid))
+
+# 함수의 입력으로 사전을 입력받기: **의 사용
+def f(a, b):
+    return a + b
+
+input_f = &#123;"a": 1, "b": 2&#125;
+#input_f = &#123;"b": 2, "a": 1&#125;
+f(**input_f)
+
+# 최대값 찾기 알고리즘 예시
+L = [10, 20, 30, 10, 20]
+max_value = -999999  # 매우 작은 값으로 설정
+for value in L:    # Value_list를 순서대로 탐색
+    print(value, max_value)
+    if max_value < value:
+        max_value = value # 탐색한 값이 현재 최대 값보다 크면 업데이트
+
+print(max_value)
+
+# 최소값 찾기 알고리즘 예시
+L = [10, 20, 30, 10, 20]
+min_value = 999999  # 매우 큰 값으로 설정
+for value in L:    # Value_list를 순서대로 탐색
+    if min_value > value:
+        min_value = value # 탐색한 값이 현재 최소 값보다 작으면 업데이트
+
+print(min_value)
+
+# 그리드 서치 실습 예제
+- 사용 데이터: iris dataset (sklearn 제공 데이터)<br><br>
+- 사용 모델: (1) k-최근접 이웃
+    - n_neighbors (3, 5, 7)
+    - metric (euclidean, manhattan)<br><br>
+- 사용 모델: (2) 서포트 벡터 머신
+    - kernel: rbf, linear
+    - C: 0.1, 1, 10
+<br><br>
+- 평가 척도: F1 score
+
+# 예제 데이터 불러오기
+from sklearn.datasets import load_iris
+X = load_iris()['data'] # feature
+Y = load_iris()['target'] # label
+
+# 학습 데이터와 평가 데이터 분할
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+# 모델 불러오기
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.svm import SVC
+
+# 파라미터 그리드 생성
+param_grid = dict()
+# 입력: 모델 함수, 출력: 모델의 하이퍼 파라미터 그리드
+
+# 모델별 파라미터 그리드 생성
+param_grid_for_knn = ParameterGrid(&#123;"n_neighbors": [3, 5, 7],
+                           "metric":['euclidean', 'manhattan']&#125;)
+
+param_grid_for_svm = ParameterGrid(&#123;"C": [0.1, 1, 10],
+                           "kernel":['rbf', 'linear']&#125;)
+
+# 모델 - 하이퍼 파라미터 그리드를 param_grid에 추가
+param_grid[KNN] = param_grid_for_knn
+param_grid[SVC] = param_grid_for_svm
+
+# 하이퍼 파라미터 튜닝
+best_score = -1 # 현재까지 찾은 가장 높은 f1_score (f1 score는 절대 0보다 작을수 없기에, -1로 설정해도 무방)
+
+from sklearn.metrics import f1_score
+
+for model_func in [KNN, SVC]:
+    for param in param_grid[model_func]:
+        model = model_func(**param).fit(Train_X, Train_Y)
+        pred_Y = model.predict(Test_X)
+        score = f1_score(Test_Y, pred_Y, average = 'micro')
+
+        if score > best_score:
+            # 현재 점수가 지금까지 찾은 최고 점수보다 좋으면, 최고 모델, 파라미터, 점수 업데이트
+            best_model_func = model_func
+            best_score = score
+            best_param = param
+
+            # best_model = model
+
+# 최종 모델 학습: 전체 X와 전체 Y에 대해.
+final_model = best_model_func(**best_param).fit(X, Y)
+
+</code>
+</pre>
+
+<ol start="5">
+<li>지도학습 모델 &amp; 파라미터 선택 : 기준 변수 타입</li>
+</ol>
+<ul>
+<li><p>변수 타입 확인 방법</p>
+<blockquote>
+<p>DataFrame.dtypes<br>Data Frame.objects().dtypes<br>string type이라고 해서 반드시 범주형이 아니며, int 혹은 float type이라고 해서 반드시 연속형은 아님. 반드시 상태 공간의 크기와 도메인 지식 등을 고려해야 함</p>
+</blockquote>
+</li>
+<li><p>변수 타입</p>
+</li>
+<li><p>변수 타입에 따른 적절한 모델</p>
+</li>
+<li><p>혼합형 변수에 적절하지 않은 모델</p>
+<blockquote>
+<p>회귀 모델</p>
+</blockquote>
+<ul>
+<li>혼합형 변수인 경우에는 변수의 스케일 차이가 존재하는 경우가 흔함</li>
+<li>변수의 스케일에 따라 계수 값이 크게 달라지므로, 예측 안정성이 크게 떨어짐</li>
+<li>스케일링을 하더라도 이진형 특징의 분포가 변하지 않으므로, 이진형 특징의 값에 따른 영향력이 크게 줄지 않음</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>나이브 베이즈<br>    - 하나의 확률 분포를 가정하기에 혼합형 변수를 가지는 데이터에 부적절함<br>    - 혼합형 변수에는 절대 고려하면 안되는 모델</p>
+</blockquote>
+<blockquote>
+<p>K-최근접 이웃<br>    - 스케일이 큰 변수에 의해 거리가 사실상 결정되므로, K-NN은 혼합형 변수에 적절하지 않음<br>    - 단, 코사인 유사도를 사용하는 경우나, 스케일링을 적용하는 경우에는 무리 없이 사용 가능함</p>
+</blockquote>
+<h4 id="변수-타입-확인-방법"><a href="#변수-타입-확인-방법" class="headerlink" title="변수 타입 확인 방법"></a>변수 타입 확인 방법</h4><pre>
+<code>
+# 변수 타입 확인 방법
+- 사용 데이터: Telco_churn_prediction.csv
+
+# 데이터 경로 설정 및 데이터 불러오기
+import os
+os.chdir(r"C:\Users\user\Downloads\파이썬을 활용한 비즈니스 데이터 분석가\[강의자료]데이터전처리\part-3.-지도학습-주요모델-및-개념\Part 3. 지도학습 주요모델 및 개념\데이터")
+
+import pandas as pd
+df = pd.read_csv("Telco_churn_prediction.csv")
+
+df.dtypes # TotalCharges 타입이 object임 (도메인 지식과 상충)
+
+df.infer_objects().dtypes
+# 추론 결과도 TotalCharges 타입이 object임
+
+df['TotalCharges'] # 아무리봐도 연속형 변수 같음 => 문자가 섞여 있을 수 있겠다란 결론
+
+def find_str_element(val):
+    try:
+        float(val) # 만약 val이 문자라면 여기서 오류가 발생할 것이므로 except로 넘어감
+        return False
+    except:
+        return True
+
+# 공백이 섞여 있음을 확인
+# apply 함수는 자주 사용되는 굉장히 중요한 함수이므로 반드시 숙지해야 함
+# apply 함수는 각 요소에 함수를 일괄 적용하는 함수임
+print(df['TotalCharges'][df['TotalCharges'].apply(find_str_element)].values)
+
+# apply 사용 예제
+def f(x):
+    return x**2
+
+import pandas as pd
+S = pd.Series([1, 2, 3, 4])
+S.apply(f)
+
+def getting_unique_val(col):
+    return len(col.unique())
+
+df.apply(getting_unique_val, axis = 0)
+# 유니크한 값 개수 기준으로 판단
+# 일반적으로 그 개수가 많으면 연속형, 그렇지 않으면 범주형인 경우가 대다수 (ID 관련 컬럼 제외)
+
+# 혼합형 변수가 존재하는 경우
+# 데이터 불러오기
+import pandas as pd
+df = pd.read_csv("baseball.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Salary', axis = 1)
+Y = df['Salary']
+
+# 모델 리스트 정의
+from sklearn.neural_network import MLPRegressor as MLP
+from sklearn.linear_model import LinearRegression as LR
+from sklearn.tree import DecisionTreeRegressor as DTR
+from sklearn.ensemble import RandomForestRegressor as RFR
+from sklearn.neighbors import KNeighborsRegressor as KNR
+
+# 공정한 비교를 위해 전부 default 값을 사용
+# random_state가 있는 모델은 모두 같은 값으로 설정
+
+MLP_model = MLP(random_state = 100)
+LR_model = LR()
+DTR_model = DTR(random_state = 100)
+RFR_model = RFR(random_state = 100)
+KNR_model = KNR()
+
+model_list = [MLP_model, LR_model, DTR_model, RFR_model, KNR_model]
+model_name_list = ['MLP', 'LR', 'DTR', 'RFR', 'KNR']
+
+# 모델별 k겹 교차 검증 기반(k = 5)의 MAE값 계산
+from sklearn.model_selection import cross_val_score
+for (model, model_name) in zip(model_list, model_name_list):
+    score = -cross_val_score(model, X, Y, cv = 5, scoring = 'neg_mean_absolute_error').mean() # -MAE이므로 다시 -를 붙인 것
+    print(model_name, score)
+</code>
+</pre>
+
+<ol start="6">
+<li>지도학습 모델 &amp; 파라미터 선택 : 기준 데이터 크기</li>
+</ol>
+<ul>
+<li><p>샘플 개수와 특징 개수에 따른 과적합</p>
+</li>
+<li><p>샘플 개수와 특징 개수에 따른 적절한 모델</p>
+<blockquote>
+<p>매우 단순<br>매우 복잡<br>적당히 단순<br>적당히 복잡</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="데이터-크기에-따른-모델-선택"><a href="#데이터-크기에-따른-모델-선택" class="headerlink" title="데이터 크기에 따른 모델 선택"></a>데이터 크기에 따른 모델 선택</h4><pre>
+<code>
+# 데이터 경로 설정 및 데이터 불러오기
+import os
+os.chdir(r"C:\Users\user\Downloads\파이썬을 활용한 비즈니스 데이터 분석가\[강의자료]데이터전처리\part-3.-지도학습-주요모델-및-개념\Part 3. 지도학습 주요모델 및 개념\데이터")
+
+import pandas as pd
+
+# 데이터 크기에 따른 모델 선택: 특징 개수가 매우 적은 경우
+# 데이터 불러오기
+import numpy as np
+df = pd.read_csv("Combined_Cycle_Power_Plant.csv")
+df.shape
+# 특징이 5개로 적은 편
+
+# 특징과 라벨 분리
+X = df.drop('EP', axis = 1)
+Y = df['EP']
+
+# 모델 리스트 정의
+from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor as MLP
+from sklearn.linear_model import LinearRegression as LR
+from sklearn.tree import DecisionTreeRegressor as DTR
+from sklearn.ensemble import RandomForestRegressor as RFR
+from sklearn.neighbors import KNeighborsRegressor as KNR
+
+# 공정한 비교를 위해 전부 default 값을 사용
+# random_state가 있는 모델은 모두 같은 값으로 설정
+
+SVR_model = SVR()
+MLP_model = MLP(random_state = 100)
+LR_model = LR()
+DTR_model = DTR(random_state = 100)
+RFR_model = RFR(random_state = 100)
+KNR_model = KNR()
+
+model_list = [SVR_model, MLP_model, LR_model, DTR_model, RFR_model, KNR_model]
+model_name_list = ['SVR', 'MLP', 'LR', 'DTR', 'RFR', 'KNR']
+
+# 모델별 k겹 교차 검증 기반(k = 5)의 MAE값 계산
+from sklearn.model_selection import cross_val_score
+for (model, model_name) in zip(model_list, model_name_list):
+    score = -cross_val_score(model, X, Y, cv = 5, scoring = 'neg_mean_absolute_error').mean() # -MAE이므로 다시 -를 붙인 것
+    print(model_name, score)
+
+#샘플이 매우 적고, 특징이 상대적으로 많은 경우
+#  데이터 불러오기
+import pandas as pd
+df = pd.read_csv("baseball.csv")
+df.shape
+
+# 특징과 라벨 분리
+X = df.drop('Salary', axis = 1)
+Y = df['Salary']
+
+# 모델 리스트 정의
+from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor as MLP
+from sklearn.linear_model import LinearRegression as LR
+from sklearn.tree import DecisionTreeRegressor as DTR
+from sklearn.ensemble import RandomForestRegressor as RFR
+from sklearn.neighbors import KNeighborsRegressor as KNR
+
+# 공정한 비교를 위해 전부 default 값을 사용
+# random_state가 있는 모델은 모두 같은 값으로 설정
+
+SVR_model = SVR()
+MLP_model = MLP(random_state = 100)
+LR_model = LR()
+DTR_model = DTR(random_state = 100)
+RFR_model = RFR(random_state = 100)
+KNR_model = KNR()
+
+model_list = [SVR_model, MLP_model, LR_model, DTR_model, RFR_model, KNR_model]
+model_name_list = ['SVR', 'MLP', 'LR', 'DTR', 'RFR', 'KNR']
+
+# 모델별 k겹 교차 검증 기반(k = 5)의 MAE값 계산
+# SVR의 성능이 최악
+# MLP에서 max_iter 이슈 발생
+from sklearn.model_selection import cross_val_score
+for (model, model_name) in zip(model_list, model_name_list):
+    score = - cross_val_score(model, X, Y, cv = 5, scoring = 'neg_mean_absolute_error').mean() # -MAE이므로 다시 -를 붙인 것
+    print(model_name, score)
+</code>
+</pre>
+
+<ol start="7">
+<li>지도학습 모델 &amp; 파라미터 선택 : 복잡도 파라미터 튜닝 방법</li>
+</ol>
+<ul>
+<li>복잡도 파라미터<blockquote>
+<p>복잡도에 영향을 주는 파라미터로, 이 값에 따라 과적합 정도가 결정되므로 매우 신중하게 튜닝해야 함</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>파라미터</th>
+<th>영향</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>휴리스틱하게 학습되는 모든 모델</td>
+<td>max_iter</td>
+<td>복잡한 모델의 경우 이 값이 클수록 학습 시간이 오래 소요되고 과적합으로 이어질 수 있음, 따라서 복잡한 모델을 학습 할 때 일부러 max_iter를 작게 잡아서 과적합을 회피하기도 함</td>
+</tr>
+<tr>
+<td>정규화 회귀모델</td>
+<td>alpha</td>
+<td>복잡도와 정비례 관계</td>
+</tr>
+<tr>
+<td>의사결정나무</td>
+<td>max_depth</td>
+<td>복잡도와 정비례 관계</td>
+</tr>
+<tr>
+<td>의사결정나무</td>
+<td>min_samples_leaf</td>
+<td>복잡도와 반비례 관계</td>
+</tr>
+<tr>
+<td>SVM</td>
+<td>C.gamma, degree</td>
+<td>복잡도와 약한 정비례 관계 (영향을 줄 수도 아닐 수도 있음)</td>
+</tr>
+<tr>
+<td>SVM</td>
+<td>kernel</td>
+<td>poly &gt; rbf &gt; linear 순으로 과적합 가능성이 높음</td>
+</tr>
+<tr>
+<td>로지스틱 회귀</td>
+<td>C</td>
+<td>복잡도와 반비례 관계</td>
+</tr>
+<tr>
+<td>신경망</td>
+<td>hidden_layer_sizes</td>
+<td>복잡도와 강한 정비례 관계, hidden_layer_sizes에 따라 가중치 개수가 결정되고 가중치 개수가 복잡도를 결정함</td>
+</tr>
+<tr>
+<td>SVR</td>
+<td>epsilon</td>
+<td>복잡도와 강한 반비례 관계</td>
+</tr>
+<tr>
+<td>Tree Ensemble</td>
+<td>max_depth</td>
+<td>복잡도와 정비례 관계, 과적합을 피하기 위해 보통 4이하로 설정</td>
+</tr>
+<tr>
+<td>Tree Ensemble</td>
+<td>learning rate(랜덤 포레스트 제외)</td>
+<td>복잡도와 정비례 관계</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>학습 시 우연성이 개입되는 모델의 복잡도 파라미터 튜닝<br>    - 경사하강법 등의 방법으로 학습되는 모델은 초기값에 의한 영향이 매우 큼<br>    - 따라서 복잡도 파라미터 변화에 따른 성능 변화의 패턴을 확인하기 어려운 경우가 많아서, seed를 고정한 뒤 튜닝을 수행해야 함</p>
+</blockquote>
+<blockquote>
+<p>복잡도 파라미터 튜닝<br>    - seed가 고정되어 있거나 학습 시 우연 요소가 개입되지 않는 모델의 경우 복잡도 파라미터에 따른 성능 변화 패턴 확인이 상대적으로 쉬움<br>    - 복잡도 파라미터가 둘 이상인 경우에 서로 영향을 주기 때문에 반드시 두 파라미터를 같이 조정해야 함<br>    - 파라미터 그리드 크기를 줄이기 위해 몇 가지 파라미터 값을 테스트 한 후 범위를 설정하는 것이 바람직함</p>
+</blockquote>
+<h4 id="복잡도-파라미터-튜닝"><a href="#복잡도-파라미터-튜닝" class="headerlink" title="복잡도 파라미터 튜닝"></a>복잡도 파라미터 튜닝</h4><pre>
+<code>
+# 데이터 경로 설정 및 데이터 불러오기
+import os
+os.chdir(r"C:\Users\user\Downloads\파이썬을 활용한 비즈니스 데이터 분석가\[강의자료]데이터전처리\part-3.-지도학습-주요모델-및-개념\Part 3. 지도학습 주요모델 및 개념\데이터")
+
+import pandas as pd
+import numpy as np
+df = pd.read_csv("Sonar_Mines_Rocks.csv")
+
+# 특징과 라벨 분리
+X = df.drop('Y', axis = 1)
+Y = df['Y']
+
+# 학습 데이터와 평가 데이터 분리
+from sklearn.model_selection import train_test_split
+Train_X, Test_X, Train_Y, Test_Y = train_test_split(X, Y)
+
+Train_X.shape # 샘플 156개, 특징 60개 => 단순한 모델 필요
+
+Train_Y.value_counts()
+
+Train_Y.replace(&#123;"M":-1, "R":1&#125;, inplace = True)
+Test_Y.replace(&#123;"M":-1, "R":1&#125;, inplace = True)
+
+from sklearn.metrics import f1_score
+from sklearn.model_selection import ParameterGrid
+
+# Case 1. 복잡도 파라미터가 한 개이면서, 단순하고, 우연성이 어느정도 있는 모델 (Logistic Regression)
+from sklearn.linear_model import LogisticRegression as LR
+
+def LR_model_test(C):
+    model = LR(C = C, max_iter = 100000, random_state = 10).fit(Train_X, Train_Y) # 가벼운 모델이므로 max_iter를 크게 잡음
+    pred_Y = model.predict(Test_X)
+    return f1_score(Test_Y, pred_Y)
+
+print("C = 0.1:\t&#123;&#125;".format(LR_model_test(C = 0.1)))
+print("C = 1:\t&#123;&#125;".format(LR_model_test(C = 1))) 
+print("C = 5:\t&#123;&#125;".format(LR_model_test(C = 5)))
+
+# 튜닝 범위: 0.1 < C < 5
+# 아직 확정짓기에는 범위가 넓다 => 더 탐색
+
+print("C = 0.5:\t&#123;&#125;".format(LR_model_test(C = 0.5)))
+print("C = 2:\t&#123;&#125;".format(LR_model_test(C = 2)))
+
+# 튜닝 범위: 0.1 < C < 1
+
+# 파라미터 그리드 설정
+LR_parameter_grid = ParameterGrid(&#123;"C":np.linspace(0.1, 1, 50),
+                                  "max_iter":[100000],
+                                  "random_state":[10]&#125;)
+
+# 파라미터 튜닝 수행
+best_score = -1
+for parameter in LR_parameter_grid:
+    model = LR(**parameter).fit(Train_X, Train_Y)
+    pred_Y = model.predict(Test_X)
+    score = f1_score(Test_Y, pred_Y)
+
+    if score > best_score:
+        best_score = score
+        best_parameter = parameter
+
+print(best_parameter, best_score)
+
+# Case 2. 복잡도 파라미터가 두 개이면서, 단순하고, 우연성이 거의 없는 모델 (Decision Tree)
+from sklearn.tree import DecisionTreeClassifier as DTC
+
+def DTC_model_test(max_depth, min_samples_leaf):
+    model = DTC(max_depth = max_depth, min_samples_leaf = min_samples_leaf).fit(Train_X, Train_Y)
+    pred_Y = model.predict(Test_X)
+    return f1_score(Test_Y, pred_Y)
+
+for max_depth in [3, 6, 9]:
+    for min_samples_leaf in [1, 2, 3]:
+        score = DTC_model_test(max_depth = max_depth, min_samples_leaf = min_samples_leaf)
+        print("&#123;&#125;-&#123;&#125;:&#123;&#125;".format(max_depth, min_samples_leaf, score))
+
+# max depth가 크고 (복잡도 증가) min_samples_leaf가 큰 경우 (복잡도 감소) 좋은 성능이 나옴을 확인
+
+# 파라미터 그리드 설정
+DTC_parameter_grid = ParameterGrid(&#123;"max_depth": np.arange(6, 15),
+                                  "min_samples_leaf": np.arange(2, 5)&#125;)
+
+# 파라미터 튜닝 수행 
+best_score = -1
+for parameter in DTC_parameter_grid:
+    model = DTC(**parameter).fit(Train_X, Train_Y)
+    pred_Y = model.predict(Test_X)
+    score = f1_score(Test_Y, pred_Y)
+    
+    if score > best_score:
+        best_score = score
+        best_parameter = parameter
+
+print(best_parameter, best_score)
+
+# Case 3. 복잡도 파라미터가 하나이면서, 우연성이 있는 모델 (신경망)
+from sklearn.neural_network import MLPClassifier as MLP
+def MLP_model_test(hidden_layer_sizes):
+    model = MLP(hidden_layer_sizes = hidden_layer_sizes, random_state = 12).fit(Train_X, Train_Y)
+    pred_Y = model.predict(Test_X)
+    return f1_score(Test_Y, pred_Y)
+
+    for hidden_layer_sizes in [(5, ), (10, ), (3, 3), (5, 5), (10, 10)]:
+    score = MLP_model_test(hidden_layer_sizes = hidden_layer_sizes)
+    print(hidden_layer_sizes, score)
+
+# max_iter warning 발생
+# (5, 5)에서는 f1-score가 0이 나옴 => 초기값 영향으로 보여짐 (근거: 더 단순한 모델과 복잡한 모델에서는 성능이 나왔으므로)
+# (10, )와 (10, 10)에서 best_score가 나옴 => 더 복잡한 모델이 필요할지 판단이 필요
+
+# 파라미터 그리드 설정
+MLP_parameter_grid = ParameterGrid(&#123;"random_state": [41, 102, 15],
+                                  "hidden_layer_sizes": [(5, 5), (10, 10), (5, 5, 5), (10, 10, 10)],
+                                   "max_iter":[200, 2000, 20000]&#125;)
+
+# 파라미터 튜닝 수행
+best_score = -1
+for parameter in MLP_parameter_grid:
+    model = MLP(**parameter).fit(Train_X, Train_Y)
+    pred_Y = model.predict(Test_X)
+    score = f1_score(Test_Y, pred_Y)
+
+    if score > best_score:
+        best_score = score
+        best_parameter = parameter
+
+print(best_parameter, best_score)
+</code>
+</pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/machine/" rel="tag"># machine</a>
+              <a href="/tags/learning/" rel="tag"># learning</a>
+              <a href="/tags/test/" rel="tag"># test</a>
+              <a href="/tags/train/" rel="tag"># train</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/15/machine-learning-5/" rel="prev" title="머신러닝  5편">
+      <i class="fa fa-chevron-left"></i> 머신러닝  5편
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/16/machine-learning-7/" rel="next" title="머신러닝  7편">
+      머신러닝  7편 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A7%95-%EB%B3%80%ED%99%98%EC%9D%98-%ED%95%84%EC%9A%94%EC%84%B1"><span class="nav-number">1.</span> <span class="nav-text">선형회귀에서 특징 변환의 필요성</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1%ED%9A%8C%EA%B7%80%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A7%95%EB%B3%80%ED%99%98%EC%9D%98%ED%95%84%EC%9A%94%EC%84%B1"><span class="nav-number">2.</span> <span class="nav-text">로지스틱회귀에서 특징변환의필요성</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ParameterGrid-%EB%AC%B8%EB%B2%95"><span class="nav-number">3.</span> <span class="nav-text">ParameterGrid 문법</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B3%80%EC%88%98-%ED%83%80%EC%9E%85-%ED%99%95%EC%9D%B8-%EB%B0%A9%EB%B2%95"><span class="nav-number">4.</span> <span class="nav-text">변수 타입 확인 방법</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%AC%EA%B8%B0%EC%97%90-%EB%94%B0%EB%A5%B8-%EB%AA%A8%EB%8D%B8-%EC%84%A0%ED%83%9D"><span class="nav-number">5.</span> <span class="nav-text">데이터 크기에 따른 모델 선택</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EB%B3%B5%EC%9E%A1%EB%8F%84-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%ED%8A%9C%EB%8B%9D"><span class="nav-number">6.</span> <span class="nav-text">복잡도 파라미터 튜닝</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">limjiin</p>
+  <div class="site-description" itemprop="description">All stories about git, sql, python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/limjiin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;limjiin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:limjiin0413@gmail.com" title="E-Mail → mailto:limjiin0413@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.naver.com/lljin0413" title="Blog → https:&#x2F;&#x2F;blog.naver.com&#x2F;lljin0413" rel="noopener" target="_blank"><i class="fab fa-blog fa-fw"></i>Blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/ji_in_l" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;ji_in_l" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">limjiin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jin.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://limjiin.github.io/2021/11/16/machine-learning-6/";
+    this.page.identifier = "2021/11/16/machine-learning-6/";
+    this.page.title = "머신러닝  6편";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jin.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
